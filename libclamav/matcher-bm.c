@@ -54,7 +54,7 @@ int cli_bm_addpatt(struct cli_matcher *root, struct cli_bm_patt *pattern, const 
         //CHR
         //cli_infomsg(NULL,"DEBUG in cli_bm_addpatt load %s\n",pattern->virname);
         //test_hdb
-        char * vname=pattern->virname;
+        char * vname=pattern->virname; //CHR
         if(vname) // && vname[5]=='C' && vname[4]=='.'
         if(vname[0]=='t') {
             cli_infomsg(NULL,"DEBUG: in cli_bm_addpatt loading virname=%s\n",pattern->virname);
