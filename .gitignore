@@ -11,8 +11,12 @@ libclamav.pc
 .libs
 libtool
 *.l[oa]
+*.lo
+*.la
 Makefile
 *.[oa]
+*.a
+*.o
 platform.h
 stamp-h1
 *.swp
