@@ -119,6 +119,7 @@ int cli_parse_add(struct cli_matcher *root, const char *virname, const char *hex
 	unsigned int i, j, hexlen, parts = 0;
 	int mindist = 0, maxdist = 0, error = 0;
 
+//if(virname[0]=='t')  cli_infomsg(NULL,"DEBUG: in cli_parse_add wc mode with hex sig: %s\n",hexsig);//CHR
 
     hexlen = strlen(hexsig);
     //case signature start with '$' CHR
@@ -167,6 +168,7 @@ int cli_parse_add(struct cli_matcher *root, const char *virname, const char *hex
     }
     //case signature have wildcard  CHR
     if((wild = strchr(hexsig, '{'))) {
+      if(virname[0]=='t')  cli_infomsg(NULL,"DEBUG: in cli_parse_add wc mode with hex sig: %s\n",hexsig);//CHR
 	if(sscanf(wild, "%c%u%c", &l, &range, &r) == 3 && l == '{' && r == '}' && range > 0 && range < 128) {
 	    hexcpy = cli_calloc(hexlen + 2 * range, sizeof(char));
 	    if(!hexcpy)
@@ -180,6 +182,9 @@ int cli_parse_add(struct cli_matcher *root, const char *virname, const char *hex
 		return CL_EMALFDB;
 	    }
 	    strcat(hexcpy, ++wild);
+        /*CHR
+            change from "6f6f6f{4}6b6b6b" to "6f6f6f????????6b6b6b"
+        */
 	    ret = cli_parse_add(root, virname, hexcpy, rtype, type, offset, target, lsigid, options);
 	    free(hexcpy);
 	    return ret;
@@ -307,6 +312,7 @@ int cli_parse_add(struct cli_matcher *root, const char *virname, const char *hex
 	}
     //case signature applies AC algo
     } else if(root->ac_only || type || lsigid || strpbrk(hexsig, "?([") || (root->bm_offmode && (!strcmp(offset, "*") || strchr(offset, ','))) || strstr(offset, "VI") || strchr(offset, '$')) {
+ if(virname[0]=='t')   cli_infomsg(NULL,"DEBUG: in cli_parse_add in misc condition \"?([\": offset=%s\n",offset);//CHR
 	if((ret = cli_ac_addsig(root, virname, hexsig, 0, 0, 0, rtype, type, 0, 0, offset, lsigid, options))) {
 	    cli_errmsg("cli_parse_add(): Problem adding signature (3).\n");
 	    return ret;
@@ -376,7 +382,7 @@ int cli_initroots(struct cl_engine *engine, unsigned int options)
 	    }
 
 	    if(!root->ac_only) {
-		cli_dbgmsg("cli_initroots: Initializing BM tables of root[%d]\n", i);
+		//cli_dbgmsg("cli_initroots: Initializing BM tables of root[%d]\n", i);
 		if((ret = cli_bm_init(root))) {
 		    cli_errmsg("cli_initroots: Can't initialise BM pattern matcher\n");
 		    return ret;

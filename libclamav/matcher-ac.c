@@ -88,6 +88,8 @@ int cli_ac_addpatt(struct cli_matcher *root, struct cli_ac_patt *pattern)
         uint8_t i, match;
         uint16_t len = MIN(root->ac_maxdepth, pattern->length);
 
+     //  char * vname= pattern->virname; if(vname[0]=="t") cli_infomsg(NULL,"DEBUG: in cli_ac_addpatt\n");//CHR
+      //  cli_infomsg(NULL,"DEBUG: in cli_ac_addpatt %st\n", vname);
 
         for(i = 0; i < len; i++) {
                 if(pattern->pattern[i] & CLI_MATCH_WILDCARD) {
@@ -1449,6 +1451,7 @@ static int qcompare(const void *a, const void *b)
 /* FIXME: clean up the code */
 int cli_ac_addsig(struct cli_matcher *root, const char *virname, const char *hexsig, uint32_t sigid, uint16_t parts, uint16_t partno, uint16_t rtype, uint16_t type, uint32_t mindist, uint32_t maxdist, const char *offset, const uint32_t *lsigid, unsigned int options)
 {
+        if(virname[0]=='t') cli_infomsg(NULL,"DEBUG: in cli_ac_addsig\n");//CHR
         struct cli_ac_patt *new;
         char *pt, *pt2, *hex = NULL, *hexcpy = NULL;
         uint16_t i, j, ppos = 0, pend, *dec, nzpos = 0;
@@ -1765,6 +1768,7 @@ int cli_ac_addsig(struct cli_matcher *root, const char *virname, const char *hex
         if (root->filter) {
                 /* so that we can show meaningful messages */
                 new->virname = (char*)virname;
+                if(virname[0]=='t') cli_infomsg(NULL,"DEBUG: call filter_add_acpatt\n");//CHR
                 if (filter_add_acpatt(root->filter, new) == -1) {
                         cli_warnmsg("cli_ac_addpatt: cannot use filter for trie\n");
                         mpool_free(root->mempool, root->filter);
@@ -1842,8 +1846,9 @@ int cli_ac_addsig(struct cli_matcher *root, const char *virname, const char *hex
 
         if(new->lsigid[0])
                 root->ac_lsigtable[new->lsigid[1]]->virname = new->virname;
-
+if(virname[0]=='t') cli_infomsg(NULL,"DEBUG: call cli_caloff\n");//CHR
         ret = cli_caloff(offset, NULL, root->type, new->offdata, &new->offset_min, &new->offset_max);
+        if(virname[0]=='t') cli_infomsg(NULL,"DEBUG: in cli_ac_addsig min=%d, max=%d\n",new->offset_min,new->offset_max);
         if(ret != CL_SUCCESS) {
                 mpool_free(root->mempool, new->prefix ? new->prefix : new->pattern);
                 mpool_ac_free_special(root->mempool, new);
@@ -1852,6 +1857,7 @@ int cli_ac_addsig(struct cli_matcher *root, const char *virname, const char *hex
                 return ret;
         }
 
+        if(virname[0]=='t') cli_infomsg(NULL,"DEBUG: call cli_ac_addpatt\n");//CHR
         if((ret = cli_ac_addpatt(root, new))) {
                 mpool_free(root->mempool, new->prefix ? new->prefix : new->pattern);
                 mpool_free(root->mempool, new->virname);
@@ -1861,6 +1867,8 @@ int cli_ac_addsig(struct cli_matcher *root, const char *virname, const char *hex
         }
 
         if(new->offdata[0] != CLI_OFF_ANY && new->offdata[0] != CLI_OFF_ABSOLUTE && new->offdata[0] != CLI_OFF_MACRO) {
+                if(virname[0]=='t') cli_infomsg(NULL,"DEBUG: in cli_ac_addsig, do ac_reloff stuff\n");//CHR
+
                 root->ac_reloff = (struct cli_ac_patt **) mpool_realloc2(root->mempool, root->ac_reloff, (root->ac_reloff_num + 1) * sizeof(struct cli_ac_patt *));
                 if(!root->ac_reloff) {
                         cli_errmsg("cli_ac_addsig: Can't allocate memory for root->ac_reloff\n");
