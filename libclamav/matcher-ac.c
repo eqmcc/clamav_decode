@@ -411,7 +411,7 @@ int cli_ac_init(struct cli_matcher *root, uint8_t mindepth, uint8_t maxdepth, ui
 
         if (cli_mtargets[root->type].enable_prefiltering && dconf_prefiltering) {
                 root->filter = mpool_malloc(root->mempool, sizeof(*root->filter));
-                cli_infomsg(NULL,"DEBUG: init filter in cli_ac_init for type %s\n",cli_mtargets[root->type].name); //CHR
+    //            cli_infomsg(NULL,"DEBUG: init filter in cli_ac_init for type %s\n",cli_mtargets[root->type].name); //CHR
                 if (!root->filter) {
                         cli_errmsg("cli_ac_init: Can't allocate memory for ac_root->filter\n");
                         mpool_free(root->mempool, root->ac_root->trans);
@@ -906,8 +906,8 @@ inline static int ac_findmatch(const unsigned char *buffer, uint32_t offset, uin
 
 int cli_ac_initdata(struct cli_ac_data *data, uint32_t partsigs, uint32_t lsigs, uint32_t reloffsigs, uint8_t tracklen)
 {
-
-        cli_infomsg(NULL,"DEBUG: in cli_ac_initdata\n");//CHR
+//
+     //   cli_infomsg(NULL,"DEBUG: in cli_ac_initdata\n");//CHR
         unsigned int i, j;
 
 

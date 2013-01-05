@@ -367,7 +367,7 @@ int cli_initroots(struct cl_engine *engine, unsigned int options)
 	    if(cli_mtargets[i].ac_only || engine->ac_only)
 		root->ac_only = 1;
 
-	    cli_dbgmsg("Initialising AC pattern matcher of root[%d]\n", i);
+	    //cli_dbgmsg("Initialising AC pattern matcher of root[%d]\n", i);
         //CHR in "libclamav/dconf.c", by default 'PREFILTERING' is ture
 	    if((ret = cli_ac_init(root, engine->ac_mindepth, engine->ac_maxdepth, engine->dconf->other&OTHER_CONF_PREFILTERING))) {
 		/* no need to free previously allocated memory here */
@@ -2550,7 +2550,7 @@ int cli_load(const char *filename, struct cl_engine *engine, unsigned int *signo
     else
 	dbname = filename;
 
-    cli_infomsg(NULL,"DEBUG: loading %s from %s\n",dbname,filename); //CHR
+ //   cli_infomsg(NULL,"DEBUG: loading %s from %s\n",dbname,filename); //CHR
     if(cli_strbcasestr(dbname, ".db")) {
 	ret = cli_loaddb(fs, engine, signo, options, dbio, dbname);
 

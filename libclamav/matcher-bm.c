@@ -54,7 +54,7 @@ int cli_bm_addpatt(struct cli_matcher *root, struct cli_bm_patt *pattern, const 
         //CHR
         //cli_infomsg(NULL,"DEBUG in cli_bm_addpatt load %s\n",pattern->virname);
         //test_hdb
-        char * vname=pattern->virname; //CHR
+    /*    char * vname=pattern->virname; //CHR
         if(vname) // && vname[5]=='C' && vname[4]=='.'
         if(vname[0]=='t') {
             cli_infomsg(NULL,"DEBUG: in cli_bm_addpatt loading virname=%s\n",pattern->virname);
@@ -64,7 +64,7 @@ int cli_bm_addpatt(struct cli_matcher *root, struct cli_bm_patt *pattern, const 
             if(root->filter)cli_infomsg(NULL,"DEBUG: filter=1\n"); else cli_infomsg(NULL,"DEBUG: filter=0\n");
         }
         //CHR
-
+*/
         if(pattern->length < BM_MIN_LENGTH) {
                 cli_errmsg("cli_bm_addpatt: Signature for %s is too short\n", pattern->virname);
                 return CL_EMALFDB;
@@ -76,9 +76,9 @@ int cli_bm_addpatt(struct cli_matcher *root, struct cli_bm_patt *pattern, const 
         }
 
         //dediacted for virus name as 'test_hdb'
-        if(vname) if(vname[0]=='t') cli_infomsg(NULL,"DEBUG: offset=%d\n",offset&&0xFF); //CHR
+  /*      if(vname) if(vname[0]=='t') cli_infomsg(NULL,"DEBUG: offset=%d\n",offset&&0xFF); //CHR
         if(vname) if(vname[0]=='t') cli_infomsg(NULL,"DEBUG: offdata[0]=%d(1=CLI_OFF_ABSOLUTE)\n",pattern->offdata[0]); //CHR
-
+*/
         if(pattern->offdata[0] != CLI_OFF_ANY) {
                 if(pattern->offdata[0] == CLI_OFF_ABSOLUTE)
                         root->bm_absoff_num++;
@@ -105,11 +105,8 @@ int cli_bm_addpatt(struct cli_matcher *root, struct cli_bm_patt *pattern, const 
         /* try to load balance bm_suffix (at the cost of bm_shift) */
         for(i = 0; i < pattern->length - BM_BLOCK_SIZE + 1; i++) {
                 idx = HASH(pt[i], pt[i + 1], pt[i + 2]);
-                if(vname) if(vname[0]=='t') cli_infomsg(NULL,"DEBUG: hash idx=%d\n",idx);
                 if(!root->bm_suffix[idx]) {
-                        if(vname) if(vname[0]=='t') cli_infomsg(NULL,"DEBUG: no such idx at i=%d, will break out\n",i); //CHR
                         if(i) {
-                                if(vname) if(vname[0]=='t') cli_infomsg(NULL,"DEBUG: load balance i=%d\n",i); //CHR
                                 pattern->prefix = pattern->pattern;
                                 pattern->prefix_length = i;
                                 pattern->pattern = &pattern->pattern[i];
@@ -125,7 +122,7 @@ int cli_bm_addpatt(struct cli_matcher *root, struct cli_bm_patt *pattern, const 
                 idx = HASH(pt[i], pt[i + 1], pt[i + 2]);
                 //CHR calc shift with WM algo
                 root->bm_shift[idx] = MIN(root->bm_shift[idx], BM_MIN_LENGTH - BM_BLOCK_SIZE - i);
-                if(vname) if(vname[0]=='t') cli_infomsg(NULL,"DEBUG: calc shift with WM algo root->bm_shift[%d]=%d\n",idx,root->bm_shift[idx]); //CHR
+          //      if(vname) if(vname[0]=='t') cli_infomsg(NULL,"DEBUG: calc shift with WM algo root->bm_shift[%d]=%d\n",idx,root->bm_shift[idx]); //CHR
                 //CHR cli_infomsg(NULL,"bm_shift=%d\n", root->bm_shift[idx]);
         }
 
@@ -179,7 +176,7 @@ int cli_bm_addpatt(struct cli_matcher *root, struct cli_bm_patt *pattern, const 
 int cli_bm_init(struct cli_matcher *root)
 {
  
-        cli_infomsg(NULL,"DEBUG: init bm shift in cli_ac_init for type %s\n",cli_mtargets[root->type].name); //CHR
+ //       cli_infomsg(NULL,"DEBUG: init bm shift in cli_ac_init for type %s\n",cli_mtargets[root->type].name); //CHR
 
         uint16_t i, size = HASH(255, 255, 255) + 1;
 #ifdef USE_MPOOL
@@ -209,7 +206,7 @@ int cli_bm_initoff(const struct cli_matcher *root, struct cli_bm_off *data, cons
         unsigned int i;
         struct cli_bm_patt *patt;
         //CHR
-        cli_infomsg(NULL,"DEBUG in cli_bm_initoff\n");
+        //cli_infomsg(NULL,"DEBUG in cli_bm_initoff\n");
 
         if(!root->bm_patterns) {
                 data->offtab = data->offset = NULL;
@@ -303,10 +300,10 @@ int cli_bm_scanbuff(const unsigned char *buffer, uint32_t length, const char **v
         const unsigned char *bp, *pt;
         unsigned char prefix;
         int ret;
-
+/*
         if(viroffset) cli_infomsg(NULL,"DEBUG: in cli_bm_scanbuff viroffset=%d\n",*viroffset); //CHR
         if(viroffset) cli_infomsg(NULL,"DEBUG: buffer=%s",buffer);
-        if(offdata)  cli_infomsg(NULL,"DEBUG: in cli_bm_scanbuff have offdata\n"); //CHR
+        if(offdata)  cli_infomsg(NULL,"DEBUG: in cli_bm_scanbuff have offdata\n"); //CHR */
         if(!root || !root->bm_shift)
                 return CL_CLEAN;
 
@@ -337,7 +334,7 @@ int cli_bm_scanbuff(const unsigned char *buffer, uint32_t length, const char **v
                         p = root->bm_suffix[idx];
                         if(p && p->cnt == 1 && p->pattern0 != prefix) {
                                 if(offdata) {
-                                        cli_infomsg(NULL,"DEBUG: in cli_bm_scanbuff have offdata\n");//CHR
+ //                                       cli_infomsg(NULL,"DEBUG: in cli_bm_scanbuff have offdata\n");//CHR
                                         off = offset + i - BM_MIN_LENGTH + BM_BLOCK_SIZE;
                                         for(; offdata->pos < offdata->cnt && off >= offdata->offtab[offdata->pos]; offdata->pos++);
                                         if(offdata->pos == offdata->cnt || off >= offdata->offtab[offdata->pos])
@@ -405,10 +402,10 @@ int cli_bm_scanbuff(const unsigned char *buffer, uint32_t length, const char **v
                                 //CHR 2. (off >= length) off is beyond the string
                                 for(j = 0; j < p->length + p->prefix_length && off < length; j++, off++) {
                                         //CHR
-                                        if(viroffset){
-                                            if(bp[j] == pt[j])
-                                            cli_infomsg(NULL,"DEBUG: in cli_bm_scanbuff matching: bp[%d]==pt[%d]==%c\n",j,j,bp[j]);
-                                        }
+                                    //    if(viroffset){
+                                      //      if(bp[j] == pt[j])
+                                        //    cli_infomsg(NULL,"DEBUG: in cli_bm_scanbuff matching: bp[%d]==pt[%d]==%c\n",j,j,bp[j]);
+                                       // }
                                         //CHR
                                         if(bp[j] != pt[j]) { // CHR break on any mismatch along the way
                                                 found = 0;
@@ -417,7 +414,7 @@ int cli_bm_scanbuff(const unsigned char *buffer, uint32_t length, const char **v
                                 }
 
                                 //CHR at this point a full match is assumed
-                                if(viroffset) cli_infomsg(NULL,"DEBUG: in cli_bm_scanbuff p->boundary=%d\n",p->boundary);
+                           //     if(viroffset) cli_infomsg(NULL,"DEBUG: in cli_bm_scanbuff p->boundary=%d\n",p->boundary);
                                 //CHR boundary==0 in this case
                                 if(found && (p->boundary & BM_BOUNDARY_EOL)) {
                                         if(off != length) {
@@ -425,7 +422,7 @@ int cli_bm_scanbuff(const unsigned char *buffer, uint32_t length, const char **v
                                                 continue;
                                         }
                                 }
-                                if(viroffset) cli_infomsg(NULL,"DEBUG: in cli_bm_scanbuff offdata=%d, p->offset_min=%d, p->offdata[0]=%d\n",offdata,p->offset_min,p->offdata[0]);//CHR
+                             //   if(viroffset) cli_infomsg(NULL,"DEBUG: in cli_bm_scanbuff offdata=%d, p->offset_min=%d, p->offdata[0]=%d\n",offdata,p->offset_min,p->offdata[0]);//CHR
                                 if(found && p->length + p->prefix_length == j) {
                                         if(!offdata && (p->offset_min != CLI_OFF_ANY)) {
                                                 if(p->offdata[0] != CLI_OFF_ABSOLUTE) { //CHR p->offdata[0]==CLI_OFF_ABSOLUTE in this case
@@ -442,9 +439,9 @@ int cli_bm_scanbuff(const unsigned char *buffer, uint32_t length, const char **v
                                                         off_min = p->offset_min;
                                                         off_max = p->offset_max;
                                                 }
-                                                if(viroffset) cli_infomsg(NULL,"DEBUG: in cli_bm_scanbuff off_min=%d, off_max=%d\n",off_min,off_max);//CHR
+                               //                 if(viroffset) cli_infomsg(NULL,"DEBUG: in cli_bm_scanbuff off_min=%d, off_max=%d\n",off_min,off_max);//CHR
                                                 off = offset + i - p->prefix_length - BM_MIN_LENGTH + BM_BLOCK_SIZE;
-                                                if(viroffset) cli_infomsg(NULL,"DEBUG: in cli_bm_scanbuff off=%d, offset=%d, i=%d,  p->prefix_length=%d\n",off,offset,i,p->prefix_length);//CHR
+                                 //               if(viroffset) cli_infomsg(NULL,"DEBUG: in cli_bm_scanbuff off=%d, offset=%d, i=%d,  p->prefix_length=%d\n",off,offset,i,p->prefix_length);//CHR
                                                 if(off_min == CLI_OFF_NONE || off_max < off || off_min > off) {
                                                         p = p->next;
                                                         continue;
@@ -457,8 +454,8 @@ int cli_bm_scanbuff(const unsigned char *buffer, uint32_t length, const char **v
                                         }
                                         if(patt)
                                                 *patt = p;
-                                        if(viroffset) cli_infomsg(NULL,"DEBUG: pattern=%s",p->pattern);
-                                        if(viroffset) cli_infomsg(NULL,"DEBUG: virus=%s\n",p->virname); //CHR
+                                   //     if(viroffset) cli_infomsg(NULL,"DEBUG: pattern=%s",p->pattern);
+                                     //   if(viroffset) cli_infomsg(NULL,"DEBUG: virus=%s\n",p->virname); //CHR
                                         return CL_VIRUS;
                                 }
                                 p = p->next;
@@ -478,6 +475,6 @@ int cli_bm_scanbuff(const unsigned char *buffer, uint32_t length, const char **v
 
         }
 
-        if(viroffset) cli_infomsg(NULL,"DEBUG: CL_CLEAN\n"); //CHR
+     //   if(viroffset) cli_infomsg(NULL,"DEBUG: CL_CLEAN\n"); //CHR
         return CL_CLEAN;
 }

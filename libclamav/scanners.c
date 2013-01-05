@@ -1666,7 +1666,7 @@ static int cli_scanmail(cli_ctx *ctx)
 
 static int cli_scan_structured(cli_ctx *ctx)
 {
-    cli_infomsg(NULL,"DEBUG: in cli_scan_structured\n");//CHR
+ //   cli_infomsg(NULL,"DEBUG: in cli_scan_structured\n");//CHR
 	char buf[8192];
 	int result = 0;
 	unsigned int cc_count = 0;
@@ -1982,7 +1982,7 @@ static inline void perf_done(cli_ctx* ctx){}
 
 static int cli_scanraw(cli_ctx *ctx, cli_file_t type, uint8_t typercg, cli_file_t *dettype, unsigned char *refhash)
 {
-    cli_infomsg(NULL,"DEBUG: in cli_scanraw\n");//CHR
+ //   cli_infomsg(NULL,"DEBUG: in cli_scanraw\n");//CHR
 	int ret = CL_CLEAN, nret = CL_CLEAN;
 	struct cli_matched_type *ftoffset = NULL, *fpt;
 	uint32_t lastrar;
@@ -2257,7 +2257,7 @@ static void emax_reached(cli_ctx *ctx) {
 
 static int magic_scandesc(cli_ctx *ctx, cli_file_t type)
 {
-    cli_infomsg(NULL,"DEBUG: in magic_scandesc with type=%d (CL_TYPE_ANY=0)\n",type);//CHR
+ //   cli_infomsg(NULL,"DEBUG: in magic_scandesc with type=%d (CL_TYPE_ANY=0)\n",type);//CHR
 	int ret = CL_CLEAN;
 	cli_file_t dettype = 0;
 	uint8_t typercg = 1;
@@ -2361,7 +2361,7 @@ static int magic_scandesc(cli_ctx *ctx, cli_file_t type)
     ctx->recursion++;
     perf_nested_start(ctx, PERFT_CONTAINER, PERFT_SCAN);
     ctx->container_size = (*ctx->fmap)->len;
-    cli_infomsg(NULL,"DEBUG: type=%d(CL_TYPE_TEXT_ASCII=CL_TYPENO=500)\n",type);//CHR
+ //   cli_infomsg(NULL,"DEBUG: type=%d(CL_TYPE_TEXT_ASCII=CL_TYPENO=500)\n",type);//CHR
     switch(type) {
 	case CL_TYPE_IGNORED:
 	    break;
@@ -2617,14 +2617,14 @@ static int magic_scandesc(cli_ctx *ctx, cli_file_t type)
 	    break;
 
 	case CL_TYPE_TEXT_ASCII:
-        cli_infomsg(NULL,"DEBUG: in CL_TYPE_TEXT_ASCII \n"); //CHR
+ //       cli_infomsg(NULL,"DEBUG: in CL_TYPE_TEXT_ASCII \n"); //CHR
 	    if(SCAN_STRUCTURED && (DCONF_OTHER & OTHER_CONF_DLP)){
 		/* TODO: consider calling this from cli_scanscript() for
 		 * a normalised text
 		 */
 		ret = cli_scan_structured(ctx);}
-        else{cli_infomsg(NULL,"DEBUG: not doing cli_scan_structured\n");//CHR
-        }
+   //     else{cli_infomsg(NULL,"DEBUG: not doing cli_scan_structured\n");//CHR
+        //}
 	    break;
 
 	default:
@@ -2755,7 +2755,7 @@ static int magic_scandesc(cli_ctx *ctx, cli_file_t type)
 
 int cli_magic_scandesc(int desc, cli_ctx *ctx)
 {
-    cli_infomsg(NULL,"DEBUG: in cli_magic_scandesc\n");//CHR
+ //   cli_infomsg(NULL,"DEBUG: in cli_magic_scandesc\n");//CHR
     STATBUF sb;
     int ret;
 
@@ -2802,7 +2802,7 @@ int cl_scandesc(int desc, const char **virname, unsigned long int *scanned, cons
 /* length = 0, till the end */
 int cli_map_scandesc(cl_fmap_t *map, off_t offset, size_t length, cli_ctx *ctx)
 {
-    cli_infomsg(NULL,"DEBUG: in cli_map_scandesc\n"); //CHR
+ //   cli_infomsg(NULL,"DEBUG: in cli_map_scandesc\n"); //CHR
     off_t old_off = map->nested_offset;
     size_t old_len = map->len;
     size_t old_real_len = map->real_len;
@@ -2861,7 +2861,7 @@ int cli_mem_scandesc(const void *buffer, size_t length, cli_ctx *ctx)
 
 static int scan_common(int desc, cl_fmap_t *map, const char **virname, unsigned long int *scanned, const struct cl_engine *engine, unsigned int scanoptions, void *context)
 {
-    cli_infomsg(NULL,"DEBUG: in scan_common\n"); //CHR
+ //   cli_infomsg(NULL,"DEBUG: in scan_common\n"); //CHR
     cli_ctx ctx;
     int rc;
 

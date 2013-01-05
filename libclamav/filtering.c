@@ -139,7 +139,7 @@
 
 void filter_init(struct filter *m)
 {
-    cli_infomsg(NULL,"DEBUG: filter_init B=%d,end=%d\n",~0,~0); //CHR
+ //   cli_infomsg(NULL,"DEBUG: filter_init B=%d,end=%d\n",~0,~0); //CHR
 
 	memset(m->B, ~0, sizeof(m->B));
 	memset(m->end, ~0, sizeof(m->end));
@@ -155,14 +155,14 @@ static inline int filter_isset(const struct filter *m, unsigned pos, uint16_t va
 
 static inline void filter_set_atpos(struct filter *m, unsigned pos, uint16_t val)
 {
-    uint16_t tmp=m->B[val]; //CHR
-    if(29812==val) { tmp=m->B[val]; } //CHR
+ //   uint16_t tmp=m->B[val]; //CHR
+//    if(29812==val) { tmp=m->B[val]; } //CHR
     ///cli_infomsg(NULL,"DEBUG: in filter_set_atpos m->B[val]=%d",m->B[val]);//CHR
 	if (!filter_isset(m, pos, val)) {
 		cli_perf_log_count(FILTER_LOAD, pos);
 		m->B[val] &= ~(1<<pos);
 	}
-    if(29812==val && m->B[val]!= tmp) cli_infomsg(NULL,"DEBUG: in filter_set_atpos from qgram[tt]: m(%p)->B[val] change from %x to %x\n",m,tmp,m->B[val]);//CHR
+ //   if(29812==val && m->B[val]!= tmp) cli_infomsg(NULL,"DEBUG: in filter_set_atpos from qgram[tt]: m(%p)->B[val] change from %x to %x\n",m,tmp,m->B[val]);//CHR
 }
 
 
@@ -189,7 +189,7 @@ static inline void filter_set_end(struct filter *m, unsigned pos, uint16_t a)
  * add('abc'); add('bcd'); will match [ab][bc][cd] */
 int filter_add_static(struct filter *m, const unsigned char *pattern, unsigned long len, const char *name)
 {
-    if(name) if(name[0]=='t') cli_infomsg(NULL,"DEBUG: filter_add_static in as Shift-or FSM\n"); //CHR
+ //   if(name) if(name[0]=='t') cli_infomsg(NULL,"DEBUG: filter_add_static in as Shift-or FSM\n"); //CHR
     //CHR cli_infomsg(NULL,"DEBUG: in filter_add_static\n");
 	uint16_t q = 0;
 	uint8_t j, maxlen;
@@ -237,8 +237,8 @@ int filter_add_static(struct filter *m, const unsigned char *pattern, unsigned l
 			q = cli_readint16( &pattern[k] );
 			/* we want to favor subsigs that add as little as
 			 * possible to the filter */
-             if(name[0]=='t')
-             cli_infomsg(NULL,"DEBUG: in filter_add_static, read[%c,%c] q=%d\n",pattern[k],pattern[k+1],q);//CHR
+         //    if(name[0]=='t')
+           //  cli_infomsg(NULL,"DEBUG: in filter_add_static, read[%c,%c] q=%d\n",pattern[k],pattern[k+1],q);//CHR
 
             /*CHR
                 'k-j' is the shift offset inside a sub pattern
@@ -279,12 +279,12 @@ int filter_add_static(struct filter *m, const unsigned char *pattern, unsigned l
 			best = num;
 			best_pos = j;
 		}
-        if(name[0]=='t')cli_infomsg(NULL,"DEBUG: in filter_add_static, for %s, best=%d, best_pos=%d\n",name,best,best_pos);//CHR
+   //     if(name[0]=='t')cli_infomsg(NULL,"DEBUG: in filter_add_static, for %s, best=%d, best_pos=%d\n",name,best,best_pos);//CHR
 	}
 
      //if(name[0]=='t')cli_infomsg(NULL,"DEBUG: in filter_add_static, for %s, j=%d, num=%d\n",name,j,num);//CHR
 
-    if(name[0]=='t')cli_infomsg(NULL,"DEBUG: in filter_add_static, for %s at m(%p)\n",pattern,m);//CHR
+ //   if(name[0]=='t')cli_infomsg(NULL,"DEBUG: in filter_add_static, for %s at m(%p)\n",pattern,m);//CHR
 	assert(best_pos < len-1);
 	if (pattern[best_pos] == 0 && pattern[best_pos+1] == 0) {
 		detailed_dbg("filter (warning): subsignature begins with zero (static): %s\n", name);
@@ -296,25 +296,25 @@ int filter_add_static(struct filter *m, const unsigned char *pattern, unsigned l
 	if(len > MAXSOPATLEN) {
 		len = MAXSOPATLEN;
 	}
-    if(name[0]=='t')cli_infomsg(NULL,"DEBUG: in filter_add_static, for %s, pattern=%s, length=%d, best_pos=%d\n",name,pattern,len,best_pos);//CHR
+ //   if(name[0]=='t')cli_infomsg(NULL,"DEBUG: in filter_add_static, for %s, pattern=%s, length=%d, best_pos=%d\n",name,pattern,len,best_pos);//CHR
 
 	/* Shift-Or like preprocessing */
 	for(j=0;j < len-1;j++) {
 		/* use overlapping little-endian 2-grams. We need them overlapping because matching can start at any position */
         //CHR read and set qgram in overlapping mode
 		q = cli_readint16( &pattern[j] );
-        if(name[0]=='t')cli_infomsg(NULL,"DEBUG: in filter_add_static add to qgram-map: before set B[%c%c]=(%x)\n",q&0xff,(q>>8&0xff),m->B[q]);//CHR
+   //     if(name[0]=='t')cli_infomsg(NULL,"DEBUG: in filter_add_static add to qgram-map: before set B[%c%c]=(%x)\n",q&0xff,(q>>8&0xff),m->B[q]);//CHR
 		filter_set_atpos(m, j, q);
-        if(name[0]=='t')cli_infomsg(NULL,"DEBUG: in filter_add_static add to qgram-map: after set B[%c%c]=(%x)\n",q&0xff,(q>>8&0xff),m->B[q]);//CHR
+     //   if(name[0]=='t')cli_infomsg(NULL,"DEBUG: in filter_add_static add to qgram-map: after set B[%c%c]=(%x)\n",q&0xff,(q>>8&0xff),m->B[q]);//CHR
 	}
 	/* we use variable length patterns, use last character to mark pattern end,
 	 * can lead to false positives.*/
 	/* mark that at state j, the q-gram q can end the pattern */
 	if(j) {
 		j--;
-        if(name[0]=='t')cli_infomsg(NULL,"DEBUG: in filter_add_static add to end map:  before set End[%c%c]=(%x)\n",pattern[j],pattern[j+1],m->end[q]);
+       // if(name[0]=='t')cli_infomsg(NULL,"DEBUG: in filter_add_static add to end map:  before set End[%c%c]=(%x)\n",pattern[j],pattern[j+1],m->end[q]);
 		filter_set_end(m, j, q);
-        if(name[0]=='t')cli_infomsg(NULL,"DEBUG: in filter_add_static add to end map: after set End[%c%c]=(%x)\n",pattern[j],pattern[j+1],m->end[q]);
+       // if(name[0]=='t')cli_infomsg(NULL,"DEBUG: in filter_add_static add to end map: after set End[%c%c]=(%x)\n",pattern[j],pattern[j+1],m->end[q]);
 	}
 	return j+2;
 }
@@ -795,7 +795,7 @@ static const struct match_len_info {
 
 __hot__ int filter_search_ext(const struct filter *m, const unsigned char *data, unsigned long len, struct filter_match_info *inf)
 {
-    cli_infomsg(NULL,"DEBUG: in filter_search_ext with buffer=%s\n",data);//CHR
+ //   cli_infomsg(NULL,"DEBUG: in filter_search_ext with buffer=%s\n",data);//CHR
 	size_t j;
 	uint8_t state = ~0;
 	const uint8_t *B = m->B;
@@ -807,18 +807,18 @@ __hot__ int filter_search_ext(const struct filter *m, const unsigned char *data,
 	for (j=0; j < len-1;j++) {
 		uint8_t match_state_end;
 		const uint16_t q0 = cli_readint16( &data[j] );
-        cli_infomsg(NULL,"DEBUG: in filter_search_ext read from (%d,%d): [%c%c]\n",j,j+1,q0&0xff,(q0>>8&0xff));//CHR
+//        cli_infomsg(NULL,"DEBUG: in filter_search_ext read from (%d,%d): [%c%c]\n",j,j+1,q0&0xff,(q0>>8&0xff));//CHR
         //cli_infomsg(NULL,"DEBUG: in filter_search_ext state=(%d)\n",state); //CHR
-        cli_infomsg(NULL,"DEBUG: in filter_search_ext state=(%x)\n",state); //CHR
-        cli_infomsg(NULL,"DEBUG: in filter_search_ext B[%c%c]=(%x)\n",q0&0xff,(q0>>8&0xff),B[q0]); //CHR
-        cli_infomsg(NULL,"DEBUG: in filter_search_ext End[%c%c]=(%x)\n",q0&0xff,(q0>>8&0xff),End[q0]); //CHR
+  //      cli_infomsg(NULL,"DEBUG: in filter_search_ext state=(%x)\n",state); //CHR
+    //    cli_infomsg(NULL,"DEBUG: in filter_search_ext B[%c%c]=(%x)\n",q0&0xff,(q0>>8&0xff),B[q0]); //CHR
+      //  cli_infomsg(NULL,"DEBUG: in filter_search_ext End[%c%c]=(%x)\n",q0&0xff,(q0>>8&0xff),End[q0]); //CHR
 		state = (state << 1) | B[q0];
 		match_state_end = state | End[q0];
-        cli_infomsg(NULL,"DEBUG: in filter_search_ext state=(%x)\n",state); //CHR
-        cli_infomsg(NULL,"DEBUG: in filter_search_ext match_state_end=(%x)\n",match_state_end); //CHR
+        //cli_infomsg(NULL,"DEBUG: in filter_search_ext state=(%x)\n",state); //CHR
+        //cli_infomsg(NULL,"DEBUG: in filter_search_ext match_state_end=(%x)\n",match_state_end); //CHR
 		if (match_state_end != 0xff) {
 			inf->first_match = j;
-            cli_infomsg(NULL,"DEBUG: in filter_search_ext match at j=%d, data[j]=%s\n",j,data+j);//CHR
+            //cli_infomsg(NULL,"DEBUG: in filter_search_ext match at j=%d, data[j]=%s\n",j,data+j);//CHR
             return 0;
 		}
 	}

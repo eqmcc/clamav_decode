@@ -285,7 +285,7 @@ static void scanfile(const char *filename, struct cl_engine *engine, const struc
     }
 
     logg("*Scanning %s\n", filename);
-    logg("Scanning %s\n",filename);//CHR
+    //logg("Scanning %s\n",filename);//CHR
 
     if((fd = safe_open(filename, O_RDONLY|O_BINARY)) == -1) {
 	logg("^Can't open file %s: %s\n", filename, strerror(errno));
@@ -886,7 +886,7 @@ int scanmanager(const struct optstruct *opts)
 		    }
 		} else if(S_ISREG(sb.st_mode)) {
             //CHR
-            logg("DEBUG will run scanfile\n");
+            //logg("DEBUG will run scanfile\n");
 		    scanfile(file, engine, opts, options);
 		} else if(S_ISDIR(sb.st_mode)) {
 		    scandirs(file, engine, opts, options, 1, sb.st_dev);
