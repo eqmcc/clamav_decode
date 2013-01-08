@@ -95,7 +95,7 @@ static inline int matcher_run(const struct cli_matcher *root,
 			      uint32_t *viroffset,
 			      cli_ctx *ctx)
 {
- //   cli_infomsg(NULL,"DEBUG: in matcher_run\n");//CHR
+   cli_infomsg(NULL,"DEBUG: in matcher_run\n");//CHR
     int ret;
     int32_t pos = 0;
     struct filter_match_info info;
@@ -104,22 +104,22 @@ static inline int matcher_run(const struct cli_matcher *root,
     unsigned int viruses_found = 0;
 
     if (root->filter) {
- //   cli_infomsg(NULL,"DEBUG: has filter\n");//CHR
+    cli_infomsg(NULL,"DEBUG: has filter\n");//CHR
     // CHR function filter_search_ext will do pre-matchon prefix for a given pattern
 	if(filter_search_ext(root->filter, buffer, length, &info) == -1) {
-   //     cli_infomsg(NULL,"DEBUG: filter and in if\n");//CHR
+        cli_infomsg(NULL,"DEBUG: filter and in if\n");//CHR
 	    /*  for safety always scan last maxpatlen bytes */
 	    pos = length - root->maxpatlen - 1;
 	    if (pos < 0) pos = 0;
 	    PERF_LOG_FILTER(pos, length, root->type);
 	} else { // CHR FSM match
-     //   cli_infomsg(NULL,"DEBUG: filter and in else\n");//CHR
+        cli_infomsg(NULL,"DEBUG: filter and in else\n");//CHR
 	    /* must not cut buffer for 64[4-4]6161, because we must be able to check
 	     * 64! */
         //CHR if first_match is far more beyond max pattern length
         //CHR we need to move forward a little bit to speed up the following scan
 	    pos = info.first_match - root->maxpatlen - 1;
-       // cli_infomsg(NULL,"DEBUG: pos=%d\n",pos);//CHR
+        cli_infomsg(NULL,"DEBUG: pos=%d\n",pos);//CHR
 	    if (pos < 0) pos = 0;
 	    PERF_LOG_FILTER(pos, length, root->type);
 	}
@@ -135,7 +135,7 @@ static inline int matcher_run(const struct cli_matcher *root,
     buffer += pos;
     offset += pos;
     if (!root->ac_only) {
-//    cli_infomsg(NULL,"DEBUG: !ac_only, bm scan first\n");//CHR
+    cli_infomsg(NULL,"DEBUG: !ac_only, bm scan first\n");//CHR
 	PERF_LOG_TRIES(0, 1, length);
 	if (root->bm_offmode) {
 	    /* Don't use prefiltering for BM offset mode, since BM keeps tracks
@@ -160,9 +160,9 @@ static inline int matcher_run(const struct cli_matcher *root,
 	}
     }
     PERF_LOG_TRIES(acmode, 0, length);
-    cli_infomsg(NULL,"DEBUG: ac scan\n");//CHR
+    //cli_infomsg(NULL,"DEBUG: ac scan\n");//CHR
     ret = cli_ac_scanbuff(buffer, length, virname, NULL, acres, root, mdata, offset, ftype, ftoffset, acmode, NULL);
-
+    cli_infomsg(NULL,"DEBUG: ret=%d\n",ret);//CHR
     if (ctx && ret == CL_VIRUS)
 	cli_append_virus(ctx, *virname);
     if (ctx && SCAN_ALL && viruses_found)
@@ -402,7 +402,7 @@ int cli_caloff(const char *offstr, const struct cli_target_info *info, unsigned 
 
 static void targetinfo(struct cli_target_info *info, unsigned int target, fmap_t *map)
 {
-    //cli_infomsg(NULL,"DEBUG: in targetinfo with target=%d\n",target);//CHR
+    cli_infomsg(NULL,"DEBUG: in targetinfo with target=%d\n",target);//CHR
 	int (*einfo)(fmap_t *, struct cli_exe_info *) = NULL;
 
 
@@ -695,7 +695,7 @@ int cli_fmap_scandesc(cli_ctx *ctx, cli_file_t ftype, uint8_t ftonly, struct cli
 {
     //CHR ftype => type == CL_TYPE_TEXT_ASCII ? 0 : type
     //CHR ftonly => 0
- //   cli_infomsg(NULL,"DEBUG: in cli_fmap_scandesc\n");//CHR
+    cli_infomsg(NULL,"DEBUG: in cli_fmap_scandesc\n");//CHR
 	const unsigned char *buff;
 	int ret = CL_CLEAN, type = CL_CLEAN, bytes, compute_hash[CLI_HASH_AVAIL_TYPES];
 	unsigned int i = 0, bm_offmode = 0;
@@ -719,7 +719,7 @@ int cli_fmap_scandesc(cli_ctx *ctx, cli_file_t ftype, uint8_t ftonly, struct cli
 	return CL_ENULLARG;
     }
 
-   // cli_infomsg(NULL,"DEBUG: ftype=%d, ftonly=%d(using generic signatures for groot)\n",ftype,ftonly);//CHR
+    cli_infomsg(NULL,"DEBUG: ftype=%d, ftonly=%d(using generic signatures for groot)\n",ftype,ftonly);//CHR
 
     if(!ftonly)
 	groot = ctx->engine->root[0]; /* generic signatures */
@@ -752,6 +752,7 @@ int cli_fmap_scandesc(cli_ctx *ctx, cli_file_t ftype, uint8_t ftonly, struct cli
 
     if(!ftonly)
     // CHR init AC scan structure?
+    cli_infomsg(NULL,"DEBUG: call cli_ac_initdata and cli_ac_caloff\n");//CHR
 	if((ret = cli_ac_initdata(&gdata, groot->ac_partsigs, groot->ac_lsigs, groot->ac_reloff_num, CLI_DEFAULT_AC_TRACKLEN)) || (ret = cli_ac_caloff(groot, &gdata, &info))) {
 	    if(info.exeinfo.section)
 		free(info.exeinfo.section);
@@ -760,6 +761,7 @@ int cli_fmap_scandesc(cli_ctx *ctx, cli_file_t ftype, uint8_t ftonly, struct cli
 	}
 
     // not run in this case test.txt
+    // no TROOT for ASCII type CHR
     if(troot) { 
 	if((ret = cli_ac_initdata(&tdata, troot->ac_partsigs, troot->ac_lsigs, troot->ac_reloff_num, CLI_DEFAULT_AC_TRACKLEN)) || (ret = cli_ac_caloff(troot, &tdata, &info))) {
 	    if(!ftonly)
@@ -769,6 +771,7 @@ int cli_fmap_scandesc(cli_ctx *ctx, cli_file_t ftype, uint8_t ftonly, struct cli
 	    cli_hashset_destroy(&info.exeinfo.vinfo);
 	    return ret;
 	}
+        // not in offmode for this case
 	if(troot->bm_offmode) {// CHR offset mode
 	    if(map->len >= CLI_DEFAULT_BM_OFFMODE_FSIZE) {
 		if((ret = cli_bm_initoff(troot, &toff, &info))) {
@@ -846,7 +849,7 @@ int cli_fmap_scandesc(cli_ctx *ctx, cli_file_t ftype, uint8_t ftonly, struct cli
 	}
 
 	if(!ftonly) {
-        //cli_infomsg(NULL,"DEBUG: !ftonly=true, will run matcher_run with groot with generic sigs\n");//CHR
+        cli_infomsg(NULL,"DEBUG: !ftonly=true, will run matcher_run with groot with generic sigs\n");//CHR
 	    virname = NULL;
 	    viroffset = 0;
 	    ret = matcher_run(groot, buff, bytes, &virname, &gdata, offset, &info, ftype, ftoffset, acmode, acres, map, NULL, &viroffset, ctx);

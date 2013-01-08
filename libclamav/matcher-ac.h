@@ -77,7 +77,7 @@ struct cli_ac_node {
 };
 
 #define IS_LEAF(node) (!node->trans)
-#define IS_FINAL(node) (!!node->list)
+#define IS_FINAL(node) (!!node->list) //CHR if there is node->list, means this is a final(output) node
 
 struct cli_ac_result {
     const char *virname;

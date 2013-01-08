@@ -726,6 +726,7 @@ void *mpool_realloc(struct MP *mp, void *ptr, size_t size) {
   }
   if (!(new_ptr = mpool_malloc(mp, size)))
     return NULL;
+ // cli_infomsg(NULL,"DEBUG: memory copy\n");//CHR
   memcpy(new_ptr, ptr, csize <= size ? csize : size);
   mpool_free(mp, ptr);
   return new_ptr;

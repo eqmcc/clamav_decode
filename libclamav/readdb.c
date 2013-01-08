@@ -1612,7 +1612,9 @@ static int cli_loadftm(FILE *fs, struct cl_engine *engine, unsigned int options,
 	    cli_chomp(buffer);
 	}
 	line++;
+    //cli_infomsg(NULL,"DEBUG: in cli_loadftm loading: %s\n",buffer);//CHR
 	tokens_count = cli_strtokenize(buffer, ':', FTM_TOKENS + 1, tokens);
+    //cli_infomsg(NULL,"DEBUG: in cli_loadftm loading: %s,%s,%s\n",tokens[3],tokens[4],tokens[5]);//CHR
 
 	if(tokens_count < 6 || tokens_count > 8) {
 	    ret = CL_EMALFDB;

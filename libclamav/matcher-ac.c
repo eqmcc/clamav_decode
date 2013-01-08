@@ -88,9 +88,10 @@ int cli_ac_addpatt(struct cli_matcher *root, struct cli_ac_patt *pattern)
         uint8_t i, match;
         uint16_t len = MIN(root->ac_maxdepth, pattern->length);
 
-     //  char * vname= pattern->virname; if(vname[0]=="t") cli_infomsg(NULL,"DEBUG: in cli_ac_addpatt\n");//CHR
+      // char * vname= pattern->virname; if(vname[0]=="t") cli_infomsg(NULL,"DEBUG: in cli_ac_addpatt\n");//CHR
       //  cli_infomsg(NULL,"DEBUG: in cli_ac_addpatt %st\n", vname);
-
+        if(pattern->pattern[0]=='o' && pattern->pattern[1]=='o'&& pattern->pattern[2]=='o') cli_infomsg(NULL,"DEBUG: in cli_ac_addpatt with ooo virname=%s and length=%d\n",pattern->virname,len);//CHR
+        if(pattern->pattern[0]=='k' && pattern->pattern[1]=='k'&& pattern->pattern[2]=='k') cli_infomsg(NULL,"DEBUG: in cli_ac_addpatt with kkk virname=%s and length=%d\n",pattern->virname,len);//CHR
         for(i = 0; i < len; i++) {
                 if(pattern->pattern[i] & CLI_MATCH_WILDCARD) {
                         len = i;
@@ -114,9 +115,16 @@ int cli_ac_addpatt(struct cli_matcher *root, struct cli_ac_patt *pattern)
                         }
                 }
 
+                
                 next = pt->trans[(unsigned char) (pattern->pattern[i] & 0xff)]; 
+               // if(pattern->pattern[0]=='o' && pattern->pattern[1]=='o'&& pattern->pattern[2]=='o') //CHR
+               // cli_infomsg(NULL,"DEBUG: in cli_ac_addpatt: %c, !next=%d\n",(pattern->pattern[i] & 0xff),(!next));//CHR
 
+                
                 if(!next) {
+                        
+                        if(pattern->pattern[0]=='o' && pattern->pattern[1]=='o'&& pattern->pattern[2]=='o') //CHR
+                         cli_infomsg(NULL,"DEBUG: in cli_ac_addpatt, adding %c for offset %d\n",(pattern->pattern[i] & 0xff),i);//CHR
                         next = (struct cli_ac_node *) mpool_calloc(root->mempool, 1, sizeof(struct cli_ac_node));
                         if(!next) {
                                 cli_errmsg("cli_ac_addpatt: Can't allocate memory for AC node\n");
@@ -133,6 +141,7 @@ int cli_ac_addpatt(struct cli_matcher *root, struct cli_ac_patt *pattern)
                         }
 
                         root->ac_nodes++;
+         //               cli_infomsg(NULL,"DEBUG: in cli_ac_addpatt, ac_nodes=%d\n",root->ac_nodes);//CHR
                         newtable = mpool_realloc(root->mempool, root->ac_nodetable, root->ac_nodes * sizeof(struct cli_ac_node *));
                         if(!newtable) {
                                 root->ac_nodes--;
@@ -148,10 +157,14 @@ int cli_ac_addpatt(struct cli_matcher *root, struct cli_ac_patt *pattern)
                         pt->trans[(unsigned char) (pattern->pattern[i] & 0xff)] = next;
                 }
 
+                else if(pattern->pattern[0]=='o' && pattern->pattern[1]=='o'&& pattern->pattern[2]=='o') //CHR
+                cli_infomsg(NULL,"DEBUG: in cli_ac_addpatt, already exist %c for offset %d\n",(pattern->pattern[i] & 0xff),i);//CHR
                 pt = next;
+
         }
 
         root->ac_patterns++;
+        //create new table and copy over CHR
         newtable = mpool_realloc(root->mempool, root->ac_pattable, root->ac_patterns * sizeof(struct cli_ac_patt *));
         if(!newtable) {
                 root->ac_patterns--;
@@ -163,13 +176,29 @@ int cli_ac_addpatt(struct cli_matcher *root, struct cli_ac_patt *pattern)
 
         pattern->depth = i;
 
+        /* CHR
+        pt is ac node and ph is ac pattern
+        ac node would have a list of ac patterns that share the same prefix
+        if there is pattern list, need to insert current one into it, sort according to the first 2 latters of the pattern
+        also looks like the ac tree only accept a max length of 3
+        */
         ph = pt->list;
         ph_add_after = ph_prev = NULL;
+        if(pattern->pattern[0]=='o' && pattern->pattern[1]=='o'&& pattern->pattern[2]=='o') //CHR
+        cli_infomsg(NULL,"DEBUG: in cli_ac_addpatt, !ph=%d, no list\n",(!ph));//CHR
+      // if(pattern->pattern[0]=='o' && pattern->pattern[1]=='o'&& pattern->pattern[2]=='o') //CHR
+        //cli_infomsg(NULL,"DEBUG: in cli_ac_addpatt,pattern[4]=%c \n",pattern->pattern[3]);//CHR
         while(ph) {
+                //CHR sort by partno???
                 if(!ph_add_after && ph->partno <= pattern->partno && (!ph->next || ph->next->partno > pattern->partno))
                         ph_add_after = ph;
+
+                //CHR same pattern length, same prefix length and same first two letters
+                //CHR ending in same leaf
                 if((ph->length == pattern->length) && (ph->prefix_length == pattern->prefix_length) && (ph->ch[0] == pattern->ch[0]) && (ph->ch[1] == pattern->ch[1])) {
+                        //CHR each char are same for prefix and pattern
                         if(!memcmp(ph->pattern, pattern->pattern, ph->length * sizeof(uint16_t)) && !memcmp(ph->prefix, pattern->prefix, ph->prefix_length * sizeof(uint16_t))) {
+                                //CHR???
                                 if(!ph->special && !pattern->special) {
                                         match = 1;
                                 } else if(ph->special == pattern->special) {
@@ -238,9 +267,13 @@ int cli_ac_addpatt(struct cli_matcher *root, struct cli_ac_patt *pattern)
                 pattern->next = ph_add_after->next;
                 ph_add_after->next = pattern;
         } else {
+        if(pattern->pattern[0]=='o' && pattern->pattern[1]=='o'&& pattern->pattern[2]=='o') //CHR
+        cli_infomsg(NULL,"DEBUG: no ph_add_after, in else\n");//CHR
                 pattern->next = pt->list;
                 pt->list = pattern;
         }
+       /// if(pattern->pattern[0]=='o' && pattern->pattern[1]=='o'&& pattern->pattern[2]=='o') //CHR
+       // cli_infomsg(NULL,"DEBUG: in cli_ac_addpatt, !ph=%d\n",(!ph));//CHR
 
         return CL_SUCCESS;
 }
@@ -298,20 +331,36 @@ static int ac_maketrans(struct cli_matcher *root)
         struct cli_ac_patt *patt;
         int i, ret;
 
+        cli_infomsg(NULL,"DEBUG: in ac_maketrans\n");//CHR
 
+        /* CHR
+            three tables are needed
+            goto/fail/jump
+            go table is automaticly built via trans[] table
+        */
+
+
+        //CHR ======================
+        //CHR bellow calculate the fail table
+
+        // CHR enqueue the first second level nodes
         for(i = 0; i < 256; i++) {
                 node = ac_root->trans[i];
                 if(!node) {
-                        ac_root->trans[i] = ac_root;
+                        ac_root->trans[i] = ac_root; // CHR init any none existing root's tran as ac_root
                 } else {
-                        node->fail = ac_root;
+                        node->fail = ac_root; // CHR init the fail node of the second level nodes as root
                         if((ret = bfs_enqueue(&bfs, &bfs_last, node)))
                                 return ret;
                 }
         }
 
+        // CHR deal with each node in the same layer
         while((node = bfs_dequeue(&bfs, &bfs_last))) {
-                if(IS_LEAF(node)) {
+                if(IS_LEAF(node)) { // if is leaf node or not, if is leaf, will have no trans table
+                                    // and the way calculating fail node would be a little bit different
+                        //CHR if it is a leaf node, need to find a fail node in the fail node chain 
+                        //CHR that is leaf node
                         struct cli_ac_node *failtarget = node->fail;
                         while(IS_LEAF(failtarget))
                                 failtarget = failtarget->fail;
@@ -319,11 +368,13 @@ static int ac_maketrans(struct cli_matcher *root)
                         continue;
                 }
 
+                //CHR if normal node
                 for(i = 0; i < 256; i++) {
                         child = node->trans[i];
                         if(child) {
                                 fail = node->fail;
-                                while(IS_LEAF(fail) || !fail->trans[i])
+                                while(IS_LEAF(fail) || !fail->trans[i]) //CHR leaf and no such trans in fail node
+                                                                        //CHR forward the fail node chain
                                         fail = fail->fail;
 
                                 child->fail = fail->trans[i];
@@ -334,6 +385,10 @@ static int ac_maketrans(struct cli_matcher *root)
                 }
         }
 
+
+        //CHR ======================
+        //CHR bellow calculate the jump table
+
         bfs = bfs_last = NULL;
         for(i = 0; i < 256; i++) {
                 node = ac_root->trans[i];
@@ -343,24 +398,28 @@ static int ac_maketrans(struct cli_matcher *root)
                 }
         }
         while((node = bfs_dequeue(&bfs, &bfs_last))) {
-                if(IS_LEAF(node))
+                if(IS_LEAF(node)) // jump table is not needed for leaf node
                         continue;
                 for(i = 0; i < 256; i++) {
                         child = node->trans[i];
-                        if (!child || (!IS_FINAL(child) && IS_LEAF(child))) {
+                        if (!child || (!IS_FINAL(child) && IS_LEAF(child))) { //CHR if trans[i] is not yet exist, jump to fail node
+
                                 struct cli_ac_node *failtarget = node->fail;
-                                while(IS_LEAF(failtarget) || !failtarget->trans[i])
+                                while(IS_LEAF(failtarget) || !failtarget->trans[i]) //CHR follow the fail table chain
                                         failtarget = failtarget->fail;
                                 failtarget = failtarget->trans[i];
-                                node->trans[i] = failtarget;
-                        } else if (IS_FINAL(child) && IS_LEAF(child)) {
+                                node->trans[i] = failtarget; //CHR trans[i] is not yet exist, jump to fail node
+                        } else if (IS_FINAL(child) && IS_LEAF(child)) { // CHR  node is leaf and final(output) node, should be a match to output
                                 struct cli_ac_patt *origlist, *list;
                                 origlist = list = child->list;
                                 if (list) {
                                         while (list->next) list = list->next;
-                                        list->next = child->fail->list;
+                                        list->next = child->fail->list; // CHR chain up with fail node's list
+                                                                        // CHR means to match next letter(stat change)???
+                                        //cli_infomsg(NULL,"DEBUG: child->fail->list->virname=%s\n",list->ch[0]);//CHR
                                 } else
-                                        child->list = child->fail->list;
+                                        {child->list = child->fail->list;
+                                        }
                                 child->trans = child->fail->trans;
                         } else {
                                 if((ret = bfs_enqueue(&bfs, &bfs_last, child)) != 0)
@@ -374,6 +433,7 @@ static int ac_maketrans(struct cli_matcher *root)
 
 int cli_ac_buildtrie(struct cli_matcher *root)
 {
+    cli_infomsg(NULL,"DEBUG: in cli_ac_buildtrie\n");//CHR
         if(!root)
                 return CL_EMALFDB;
 
@@ -818,7 +878,10 @@ inline static int ac_findmatch(const unsigned char *buffer, uint32_t offset, uin
 
         match = 1;
         for(i = pattern->depth; i < pattern->length && bp < length; i++) {
-                AC_MATCH_CHAR(pattern->pattern[i],buffer[bp]);
+                cli_infomsg(NULL,"DEBUG: in ac_findmatch, pattern[%d]=%d,pattern[%d]&CLI_MATCH_WILDCARD=%d(CLI_MATCH_IGNORE=256 and CLI_MATCH_CHAR=0), buffer[%d]=%c\n",i,(unsigned char)pattern->pattern[i],i,pattern->pattern[i]&CLI_MATCH_WILDCARD,bp,buffer[bp]);//CHR
+                //CHR doing wc match test
+                //CHR pattern is now stored with uint 16(low byte for char and high byte for Wildcard info)
+                AC_MATCH_CHAR(pattern->pattern[i],buffer[bp]); 
                 if(!match)
                         return 0;
                 bp++;
@@ -857,6 +920,7 @@ inline static int ac_findmatch(const unsigned char *buffer, uint32_t offset, uin
                         return 0;
         }
 
+        cli_infomsg(NULL,"DEBUG: in ac_findmatch, pattern->ch[1]=%d, pattern->ch[1]&CLI_MATCH_IGNORE=%d\n",pattern->ch[1],pattern->ch[1]&CLI_MATCH_IGNORE);//CHR
         if(!(pattern->ch[1] & CLI_MATCH_IGNORE)) {
                 bp += pattern->ch_mindist[1];
                 for(i = pattern->ch_mindist[1]; i <= pattern->ch_maxdist[1]; i++) {
@@ -884,6 +948,7 @@ inline static int ac_findmatch(const unsigned char *buffer, uint32_t offset, uin
                 }
         }
 
+        cli_infomsg(NULL,"DEBUG: in ac_findmatch, pattern->ch[0]=%d, pattern->ch[0]&CLI_MATCH_IGNORE=%d\n",pattern->ch[0],pattern->ch[0]&CLI_MATCH_IGNORE);//CHR
         if(!(pattern->ch[0] & CLI_MATCH_IGNORE)) {
                 bp = offset - pattern->prefix_length;
                 if(pattern->ch_mindist[0] + (uint32_t) 1 > bp)
@@ -1025,8 +1090,10 @@ int cli_ac_caloff(const struct cli_matcher *root, struct cli_ac_data *data, cons
         if(info)
                 data->vinfo = &info->exeinfo.vinfo;
 
+        cli_infomsg(NULL,"DEBUG: in cli_ac_caloff,ac_reloff_num=%d\n",root->ac_reloff_num);//CHR
         for(i = 0; i < root->ac_reloff_num; i++) {
                 patt = root->ac_reloff[i];
+                 cli_infomsg(NULL,"DEBUG: in cli_ac_caloff,ac_reloff_num=%s\n",root->ac_reloff[i]->virname);//CHR
                 if(!info) {
                         data->offset[patt->offset_min] = CLI_OFF_NONE;
                 } else if((ret = cli_caloff(NULL, info, root->type, patt->offdata, &data->offset[patt->offset_min], &data->offset[patt->offset_max]))) {
@@ -1166,6 +1233,7 @@ void cli_ac_chkmacro(struct cli_matcher *root, struct cli_ac_data *data, unsigne
 
 int cli_ac_scanbuff(const unsigned char *buffer, uint32_t length, const char **virname, void **customdata, struct cli_ac_result **res, const struct cli_matcher *root, struct cli_ac_data *mdata, uint32_t offset, cli_file_t ftype, struct cli_matched_type **ftoffset, unsigned int mode, cli_ctx *ctx)
 {
+        cli_infomsg(NULL,"DEBUG: in cli_ac_scanbuff with buffer=%s\n",buffer);//CHR
         struct cli_ac_node *current;
         struct cli_ac_patt *patt, *pt;
         uint32_t i, bp, realoff, matchend;
@@ -1186,25 +1254,35 @@ int cli_ac_scanbuff(const unsigned char *buffer, uint32_t length, const char **v
         current = root->ac_root;
 
         for(i = 0; i < length; i++)  {
+                cli_infomsg(NULL,"DEBUG: in cli_ac_scanbuff, matching %c\n",buffer[i]);//CHR
                 current = current->trans[buffer[i]];
 
-                if(UNLIKELY(IS_FINAL(current))) {
+                //CHR UNLIKELY - return 0 if true(if condition is 0)
+                //CHR -return 1 if false
+                if(UNLIKELY(IS_FINAL(current))) { //CHR if it is a final(have list) node yet
+                        cli_infomsg(NULL,"%c is final list=%d\n",buffer[i],(!!IS_FINAL(current)));//CHR
                         struct cli_ac_patt *faillist = current->fail->list;
                         patt = current->list;
+                        //CHR loop over the list
                         while(patt) {
+                                 cli_infomsg(NULL,"DEBUG: in cli_ac_scanbuff, patt->partno=%d, mdata->min_partno=%d\n",patt->partno,mdata->min_partno);//CHR
                                 if(patt->partno > mdata->min_partno) {
                                         patt = faillist;
                                         faillist = NULL;
                                         continue;
                                 }
-                                bp = i + 1 - patt->depth;
+                                bp = i + 1 - patt->depth; //"STARTooo" i=7, depth=3 CHR
                                 if(patt->offdata[0] != CLI_OFF_VERSION && patt->offdata[0] != CLI_OFF_MACRO && !patt->next_same && (patt->offset_min != CLI_OFF_ANY) && (!patt->sigid || patt->partno == 1)) {
+                                        cli_infomsg(NULL,"DEBUG: in cli_ac_scanbuff, in if with patt->offdata[0]=%d, patt->offset_min=%d, patt->prefix_length=%d,offset=%d, bp=%d\n", patt->offdata[0],patt->offset_min,patt->prefix_length,offset,bp);//CHR
                                         if(patt->offset_min == CLI_OFF_NONE) {
                                                 patt = patt->next;
                                                 continue;
                                         }
-                                        realoff = offset + bp - patt->prefix_length;
+                                        realoff = offset + bp - patt->prefix_length; //CHR realoff=5
                                         if(patt->offdata[0] == CLI_OFF_ABSOLUTE) {
+                                                //CHR max=8 and min=3
+                                                cli_infomsg(NULL,"DEBUG: in cli_ac_scanbuff,offset_max=%d,offset_min=%d\n",patt->offset_max,patt->offset_min);//CHR
+                                                //CHR if off range, try next pattern
                                                 if(patt->offset_max < realoff || patt->offset_min > realoff) {
                                                         patt = patt->next;
                                                         continue;
@@ -1216,33 +1294,39 @@ int cli_ac_scanbuff(const unsigned char *buffer, uint32_t length, const char **v
                                                 }
                                         }
                                 }
+                                /* CHR
+                                    
+                                */
                                 pt = patt;
                                 if(ac_findmatch(buffer, bp, offset + bp - patt->prefix_length, length, patt, &matchend)) {
+                                         cli_infomsg(NULL,"DEBUG: in cli_ac_scanbuff, ac_findmatch return 1\n");//CHR
                                         while(pt) {
-                                                if(pt->partno > mdata->min_partno)
+                                                if(pt->partno > mdata->min_partno) //CHR no
                                                         break;
+                                                //CHR no
                                                 if((pt->type && !(mode & AC_SCAN_FT)) || (!pt->type && !(mode & AC_SCAN_VIR))) {
                                                         pt = pt->next_same;
                                                         continue;
                                                 }
                                                 realoff = offset + bp - pt->prefix_length;
+                                                //CHR no
                                                 if(pt->offdata[0] == CLI_OFF_VERSION) {
                                                         if(!cli_hashset_contains_maybe_noalloc(mdata->vinfo, realoff)) {
                                                                 pt = pt->next_same;
                                                                 continue;
                                                         }
                                                         cli_dbgmsg("cli_ac_scanbuff: VI match for offset %x\n", realoff);
-                                                } else if(pt->offdata[0] == CLI_OFF_MACRO) {
+                                                } else if(pt->offdata[0] == CLI_OFF_MACRO) { //CHR no
                                                         mdata->macro_lastmatch[patt->offdata[1]] = realoff;
                                                         pt = pt->next_same;
                                                         continue;
-                                                } else if(pt->offset_min != CLI_OFF_ANY && (!pt->sigid || pt->partno == 1)) {
+                                                } else if(pt->offset_min != CLI_OFF_ANY && (!pt->sigid || pt->partno == 1)) { //CHR yes
                                                         if(pt->offset_min == CLI_OFF_NONE) {
                                                                 pt = pt->next_same;
                                                                 continue;
                                                         }
-                                                        if(pt->offdata[0] == CLI_OFF_ABSOLUTE) {
-                                                                if(pt->offset_max < realoff || pt->offset_min > realoff) {
+                                                        if(pt->offdata[0] == CLI_OFF_ABSOLUTE) { //CHR yes
+                                                                if(pt->offset_max < realoff || pt->offset_min > realoff) { //CHR no
                                                                         pt = pt->next_same;
                                                                         continue;
                                                                 }
@@ -1253,7 +1337,7 @@ int cli_ac_scanbuff(const unsigned char *buffer, uint32_t length, const char **v
                                                                 }
                                                         }
                                                 }
-                                                if(pt->sigid) { /* it's a partial signature */
+                                                if(pt->sigid) { /* it's a partial signature */ //CHR no
 
                                                         if(pt->partno != 1 && (!mdata->offmatrix[pt->sigid - 1] || !mdata->offmatrix[pt->sigid - 1][pt->partno - 2][0])) {
                                                                 pt = pt->next_same;
@@ -1367,10 +1451,12 @@ int cli_ac_scanbuff(const unsigned char *buffer, uint32_t length, const char **v
                                                                                 continue;
                                                                         } else {
                                                                                 if(virname) {
-                                                                                        if (ctx && SCAN_ALL && virname == ctx->virname)
+                                                                                        if (ctx && SCAN_ALL && virname == ctx->virname){
                                                                                                 cli_append_virus(ctx, (const char *)pt->virname);
-                                                                                        else
+                                                                                                }
+                                                                                        else{
                                                                                                 *virname = pt->virname;
+                                                                                                }
                                                                                 }
                                                                                 if(customdata)
                                                                                         *customdata = pt->customdata;
@@ -1383,6 +1469,7 @@ int cli_ac_scanbuff(const unsigned char *buffer, uint32_t length, const char **v
                                                         }
 
                                                 } else { /* old type signature */
+                                                        cli_infomsg(NULL,"DEBUG: in cli_ac_scanbuff, in else pt->type=%d\n",pt->type);//CHR
                                                         if(pt->type) {
                                                                 if(pt->type == CL_TYPE_IGNORED && (!pt->rtype || ftype == pt->rtype))
                                                                         return CL_TYPE_IGNORED;
@@ -1398,6 +1485,7 @@ int cli_ac_scanbuff(const unsigned char *buffer, uint32_t length, const char **v
                                                                         }
                                                                 }
                                                         } else {
+                                                                cli_infomsg(NULL,"DEBUG: in cli_ac_scanbuff, in else !pt->lsigid[0]=%d\n",(!pt->lsigid[0]));//CHR
                                                                 if(pt->lsigid[0]) {
                                                                         lsig_sub_matched(root, mdata, pt->lsigid[1], pt->lsigid[2], realoff, 0);
                                                                         pt = pt->next_same;
@@ -1420,13 +1508,17 @@ int cli_ac_scanbuff(const unsigned char *buffer, uint32_t length, const char **v
                                                                         if(virname) {
                                                                                 if (ctx && SCAN_ALL && virname == ctx->virname)
                                                                                         cli_append_virus(ctx, pt->virname);
-                                                                                else
+                                                                                else{
                                                                                         *virname = pt->virname;
+                                                                                        cli_infomsg(NULL,"DEBUG: in cli_ac_scanbuff, virname=%s\n",*virname);//CHR
+                                                                                     }
                                                                         }
                                                                         if(customdata)
                                                                                 *customdata = pt->customdata;
-                                                                        if (!ctx || !SCAN_ALL)
-                                                                                return CL_VIRUS;
+                                                                        if (!ctx || !SCAN_ALL) {
+                                                                                    cli_infomsg(NULL,"DEBUG: in cli_ac_scanbuff, found and return!\n");//CHR
+                                                                                    return CL_VIRUS;
+                                                                                }
                                                                         pt = pt->next_same;
                                                                         continue;
                                                                 }
@@ -1438,6 +1530,7 @@ int cli_ac_scanbuff(const unsigned char *buffer, uint32_t length, const char **v
                                 patt = patt->next;
                         }
                 }
+                cli_infomsg(NULL,"%c is not final\n",buffer[i]);//CHR
         }
 
         return (mode & AC_SCAN_FT) ? type : CL_CLEAN;
@@ -1451,7 +1544,7 @@ static int qcompare(const void *a, const void *b)
 /* FIXME: clean up the code */
 int cli_ac_addsig(struct cli_matcher *root, const char *virname, const char *hexsig, uint32_t sigid, uint16_t parts, uint16_t partno, uint16_t rtype, uint16_t type, uint32_t mindist, uint32_t maxdist, const char *offset, const uint32_t *lsigid, unsigned int options)
 {
-        if(virname[0]=='t') cli_infomsg(NULL,"DEBUG: in cli_ac_addsig\n");//CHR
+        if(virname[0]=='t') cli_infomsg(NULL,"DEBUG: in cli_ac_addsig hexsig=%s,sigid=%d,parts=%d,partno=%d,rtype=%d,type=%d,mindist=%d,maxdist=%d,offset=%s\n",hexsig,sigid,parts,partno,rtype,type,mindist,maxdist,offset);//CHR
         struct cli_ac_patt *new;
         char *pt, *pt2, *hex = NULL, *hexcpy = NULL;
         uint16_t i, j, ppos = 0, pend, *dec, nzpos = 0;
@@ -1763,6 +1856,9 @@ int cli_ac_addsig(struct cli_matcher *root, const char *virname, const char *hex
         }
 
         new->length = strlen(hex ? hex : hexsig) / 2;
+        if(virname[0]=='t') cli_infomsg(NULL,"DEBUG: in cli_ac_addsig new->length=%d\n",new->length);//CHR
+
+
         free(hex);
 
         if (root->filter) {
@@ -1777,13 +1873,17 @@ int cli_ac_addsig(struct cli_matcher *root, const char *virname, const char *hex
                 /* TODO: should this affect maxpatlen? */
         }
 
+        if(virname[0]=='t') cli_infomsg(NULL,"DEBUG: in cli_ac_addsig root->ac_maxdepth=%d, set via CLI_DEFAULT_AC_MAXDEPTH\n",root->ac_maxdepth);//CHR
+
         for(i = 0; i < root->ac_maxdepth && i < new->length; i++) {
+                //CHR first 3 letters "ooo" with no regex
                 if(new->pattern[i] & CLI_MATCH_WILDCARD) {
                         wprefix = 1;
                         break;
                 }
                 if(zprefix && new->pattern[i])
                         zprefix = 0;
+                if(virname[0]=='t') cli_infomsg(NULL,"DEBUG: in cli_ac_addsig new->pattern[%d]=%d,wprefix=%d,zprefix=%d\n",i,new->pattern[i],wprefix,zprefix);//CHR
         }
 
         if(wprefix || zprefix) {
@@ -1857,7 +1957,7 @@ if(virname[0]=='t') cli_infomsg(NULL,"DEBUG: call cli_caloff\n");//CHR
                 return ret;
         }
 
-        if(virname[0]=='t') cli_infomsg(NULL,"DEBUG: call cli_ac_addpatt\n");//CHR
+        if(virname[0]=='t') cli_infomsg(NULL,"DEBUG: call cli_ac_addpatt with new->pattern=%d\n",new->length);//CHR
         if((ret = cli_ac_addpatt(root, new))) {
                 mpool_free(root->mempool, new->prefix ? new->prefix : new->pattern);
                 mpool_free(root->mempool, new->virname);

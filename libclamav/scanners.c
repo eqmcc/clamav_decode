@@ -1982,7 +1982,7 @@ static inline void perf_done(cli_ctx* ctx){}
 
 static int cli_scanraw(cli_ctx *ctx, cli_file_t type, uint8_t typercg, cli_file_t *dettype, unsigned char *refhash)
 {
- //   cli_infomsg(NULL,"DEBUG: in cli_scanraw\n");//CHR
+    cli_infomsg(NULL,"DEBUG: in cli_scanraw\n");//CHR
 	int ret = CL_CLEAN, nret = CL_CLEAN;
 	struct cli_matched_type *ftoffset = NULL, *fpt;
 	uint32_t lastrar;
