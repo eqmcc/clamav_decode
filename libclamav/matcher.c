@@ -161,6 +161,7 @@ static inline int matcher_run(const struct cli_matcher *root,
     }
     PERF_LOG_TRIES(acmode, 0, length);
     cli_infomsg(NULL,"DEBUG: ac scan\n");//CHR
+    cli_infomsg(NULL,"DEBUG: called from macther_run\n");//CHR
     ret = cli_ac_scanbuff(buffer, length, virname, NULL, acres, root, mdata, offset, ftype, ftoffset, acmode, NULL);
 
     if (ctx && ret == CL_VIRUS)
