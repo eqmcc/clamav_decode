@@ -101,12 +101,15 @@ int cli_ac_addpatt(struct cli_matcher *root, struct cli_ac_patt *pattern)
                 return CL_EMALFDB;
         }
 
+    if((pattern->pattern[0]=='o' && pattern->pattern[1]=='o'&& pattern->pattern[2]=='o') || (pattern->pattern[0]=='o' && pattern->pattern[1]=='o'&& pattern->pattern[2]=='n'))
+        cli_infomsg(NULL,"DEBUG: in cli_ac_addpatt, adding [%s]...\n",pattern->virname);//CHR
+
         pt = root->ac_root;
 
         for(i = 0; i < len; i++) {
                 //if((pattern->virname[0])=='t')
-                if((pattern->pattern[0]=='o' && pattern->pattern[1]=='o'&& pattern->pattern[2]=='o') || (pattern->pattern[0]=='k' && pattern->pattern[1]=='k'&& pattern->pattern[2]=='k'))
-                cli_infomsg(NULL,"DEBUG: in cli_ac_addpatt, adding [%c] of %s, with sigid=%d\n",pattern->pattern[i],pattern->virname,pattern->sigid);//CHR
+               // if((pattern->pattern[0]=='o' && pattern->pattern[1]=='o'&& pattern->pattern[2]=='o') || (pattern->pattern[0]=='k' && pattern->pattern[1]=='k'&& pattern->pattern[2]=='k'))
+                //cli_infomsg(NULL,"DEBUG: in cli_ac_addpatt, adding [%c] of %s, with sigid=%d\n",pattern->pattern[i],pattern->virname,pattern->sigid);//CHR
                 if(!pt->trans) {
                         pt->trans = (struct cli_ac_node **) mpool_calloc(root->mempool, 256, sizeof(struct cli_ac_node *));
                         if(!pt->trans) {
@@ -163,16 +166,37 @@ int cli_ac_addpatt(struct cli_matcher *root, struct cli_ac_patt *pattern)
         root->ac_pattable[root->ac_patterns - 1] = pattern;
 
         pattern->depth = i;
-
+        struct cli_ac_patt *_ph1=pt->list, *oldpt=pattern;
         ph = pt->list;
         ph_add_after = ph_prev = NULL;
         while(ph) { //no
-        if((pattern->pattern[0]=='o' && pattern->pattern[1]=='o'&& pattern->pattern[2]=='o') || (pattern->pattern[0]=='k' && pattern->pattern[1]=='k'&& pattern->pattern[2]=='k'))
-                 cli_infomsg(NULL,"DEBUG: in adding same pattern for %s\n",ph->virname);//CHR
-                if((pattern->pattern[0]=='o' && pattern->pattern[1]=='o'&& pattern->pattern[2]=='o') || (pattern->pattern[0]=='k' && pattern->pattern[1]=='k'&& pattern->pattern[2]=='k'))                cli_infomsg(NULL,"DEBUG: in adding same pattern\n");//CHR
+        //CHR
+        if((pattern->pattern[0]=='o' && pattern->pattern[1]=='o'&& ((pattern->pattern[2]=='o')||(pattern->pattern[2]=='n')))){
+                 cli_infomsg(NULL,"DEBUG: for pattern [%s], node has list as: \n",pattern->virname);//CHR
+                 struct cli_ac_patt *_ph;
+                 _ph=ph;
+                 while(_ph){
+                        cli_infomsg(NULL,"DEBUG: [%s]->",_ph->virname);
+                        //printf("[%s]->",_ph->virname);
+                        _ph=_ph->next_same;
+                 }
+                 cli_infomsg(NULL,"\n");
+        }
+              //  if((pattern->pattern[0]=='o' && pattern->pattern[1]=='o'&& pattern->pattern[2]=='o') || (pattern->pattern[0]=='k' && pattern->pattern[1]=='k'&& pattern->pattern[2]=='k'))                cli_infomsg(NULL,"DEBUG: in adding same pattern\n");//CHR
+                //CHR sort by part no
+                //!ph_add_after: true
+                //ph->partno <= pattern->partno : true
+                //!ph->next: first time true, second time false
+                //ph->next->partno > pattern->partno: false
                 if(!ph_add_after && ph->partno <= pattern->partno && (!ph->next || ph->next->partno > pattern->partno))
-                        ph_add_after = ph;
+                   {     ph_add_after = ph;
+                    if((pattern->pattern[0]=='o' && pattern->pattern[1]=='o'&& ((pattern->pattern[2]=='o')||(pattern->pattern[2]=='n'))))
+                            cli_infomsg(NULL,"DEBUG: in if 1... \n");//CHR
+                   }
                 if((ph->length == pattern->length) && (ph->prefix_length == pattern->prefix_length) && (ph->ch[0] == pattern->ch[0]) && (ph->ch[1] == pattern->ch[1])) {
+                if((pattern->pattern[0]=='o' && pattern->pattern[1]=='o'&& ((pattern->pattern[2]=='o')||(pattern->pattern[2]=='n'))))
+                                            cli_infomsg(NULL,"DEBUG: in if 2... \n");//CHR
+
                         if(!memcmp(ph->pattern, pattern->pattern, ph->length * sizeof(uint16_t)) && !memcmp(ph->prefix, pattern->prefix, ph->prefix_length * sizeof(uint16_t))) {
                                 if(!ph->special && !pattern->special) {
                                         match = 1;
@@ -215,7 +239,9 @@ int cli_ac_addpatt(struct cli_matcher *root, struct cli_ac_patt *pattern)
                                         match = 0;
                                 }
 
-                                if(match) {
+                                if((pattern->pattern[0]=='o' && pattern->pattern[1]=='o'&& pattern->pattern[2]=='o')) cli_infomsg(NULL,"DEBUG: match=%d \n",match);//CHR
+
+                                if(match) 
                                         if(pattern->partno < ph->partno) {
                                                 pattern->next_same = ph;
                                                 if(ph_prev)
@@ -229,10 +255,39 @@ int cli_ac_addpatt(struct cli_matcher *root, struct cli_ac_patt *pattern)
                                                         ph = ph->next_same;
                                                 pattern->next_same = ph->next_same;
                                                 ph->next_same = pattern;
+        //CHR
+        if((oldpt->pattern[0]=='o' && oldpt->pattern[1]=='o'&& oldpt->pattern[2]=='o')){
+                 cli_infomsg(NULL,"DEBUG: after checking, for pattern [%s], node has list as: \n",pattern->virname);//CHR
+                 struct cli_ac_patt *_ph;
+                 _ph=ph;
+                 while(_ph){
+                        cli_infomsg(NULL,"DEBUG: [%s]->",_ph->virname);
+                        //printf("[%s]->",_ph->virname);
+                  _ph=_ph->next_same;
+                 }
+                 cli_infomsg(NULL,"\n");
+        }
+
+
+
                                                 return CL_SUCCESS;
                                         }
                                 }
-                        }
+        //CHR
+    /*
+        if((oldpt->pattern[0]=='o' && oldpt->pattern[1]=='o'&& oldpt->pattern[2]=='o')){
+                 cli_infomsg(NULL,"DEBUG: after checking, for pattern [%s], node has list as: \n",pattern->virname);//CHR
+                 struct cli_ac_patt *_ph;
+                 _ph=_ph1;
+                 while(_ph){
+                        cli_infomsg(NULL,"DEBUG: [%s]->",_ph->virname);
+                        //printf("[%s]->",_ph->virname);
+                  _ph=_ph->next_same;
+              dsa   }
+                 cli_infomsg(NULL,"\n");
+        }
+    */
+
                 }
                 ph_prev = ph;
                 ph = ph->next;
@@ -241,8 +296,20 @@ int cli_ac_addpatt(struct cli_matcher *root, struct cli_ac_patt *pattern)
         if(ph_add_after) {
                 pattern->next = ph_add_after->next;
                 ph_add_after->next = pattern;
+                if((pattern->pattern[0]=='o' && pattern->pattern[1]=='o'&& ((pattern->pattern[2]=='o')||(pattern->pattern[2]=='n'))))
+                 cli_infomsg(NULL,"DEBUG: in adding next pattern with ph_add_after: [%s] in tire oo[%c]\n",pattern->virname,pattern->pattern[2]);//CHR
+
         } else {
                 pattern->next = pt->list;
+                //if(pt->list)  {
+                //cli_infomsg(NULL,"DEBUG: adding [%c,%c,%c] for [%s]\n",pattern->pattern[0],pattern->pattern[1],pattern->pattern[2],pattern->virname);//CHR
+               // cli_infomsg(NULL,"DEBUG: adding [%c,%c,%c] for [%s]\n",pattern->next->pattern[0],pattern->next->pattern[1],pattern->next->pattern[2],pattern->next->virname);//CHR
+                //}
+                if((pattern->pattern[0]=='o' && pattern->pattern[1]=='o'&& ((pattern->pattern[2]=='o')||(pattern->pattern[2]=='n'))))
+
+                 cli_infomsg(NULL,"DEBUG: in adding next pattern: [%s] in tire oo[%c]\n",pattern->virname,pattern->pattern[2]);//CHR
+
+
                 pt->list = pattern;
         }
 

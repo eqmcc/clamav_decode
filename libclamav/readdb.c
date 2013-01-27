@@ -186,7 +186,7 @@ int cli_parse_add(struct cli_matcher *root, const char *virname, const char *hex
 	}
 
 	root->ac_partsigs++;
-    if(virname[0]=='t')    cli_infomsg(NULL,"DEBUG: add part sigs for virname=%s\n",virname);//CHR
+    //if(virname[0]=='t')    cli_infomsg(NULL,"DEBUG: add part sigs for virname=%s\n",virname);//CHR
 
 	if(!(hexcpy = cli_strdup(hexsig)))
 	    return CL_EMEM;
@@ -198,7 +198,7 @@ int cli_parse_add(struct cli_matcher *root, const char *virname, const char *hex
 	if(parts)
 	    parts++;
 
-     if(virname[0]=='t') cli_infomsg(NULL,"DEBUG: sig parts=%d\n",parts);//CHR
+     //if(virname[0]=='t') cli_infomsg(NULL,"DEBUG: sig parts=%d\n",parts);//CHR
 
 	start = pt = hexcpy;
 	for(i = 1; i <= parts; i++) {
@@ -219,7 +219,7 @@ int cli_parse_add(struct cli_matcher *root, const char *virname, const char *hex
 		*pt++ = 0;
 	    }
 
-        if(virname[0]=='t') cli_infomsg(NULL,"DEBUG: add part %d of the sig: [%s] with mindist=%d, maxdist=%d\n",i,start,mindist,maxdist);//CHR
+       // if(virname[0]=='t') cli_infomsg(NULL,"DEBUG: add part %d of the sig: [%s] with mindist=%d, maxdist=%d\n",i,start,mindist,maxdist);//CHR
 	    if((ret = cli_ac_addsig(root, virname, start, root->ac_partsigs, parts, i, rtype, type, mindist, maxdist, offset, lsigid, options))) {
 		cli_errmsg("cli_parse_add(): Problem adding signature (1).\n");
 		error = 1;

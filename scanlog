@@ -1,147 +1,134 @@
 LibClamAV debug: searching for unrar, user-searchpath: /usr/local/lib
 LibClamAV debug: unrar support loaded from /usr/local/lib/libclamunrar_iface.so.6.1.11 libclamunrar_iface_so_6_1
-LibClamAV debug: Initialized devel-20121126 engine
+LibClamAV debug: Initialized devel-c550541 engine
 LibClamAV debug: Initializing phishcheck module
 LibClamAV debug: Phishcheck: Compiling regex: ^ *(http|https|ftp:(//)?)?[0-9]{1,3}(\.[0-9]{1,3}){3}[/?:]? *$
 LibClamAV debug: Phishcheck module initialized
 LibClamAV debug: Bytecode initialized in JIT mode
 LibClamAV debug: Loading databases from /var/lib/clamav
 LibClamAV debug: in cli_cvdload()
+LibClamAV debug: MD5(.tar.gz) = dfdc992abb460a6a9bc709ecbde0cfaa
+LibClamAV debug: cli_versig: Decoded signature: dfdc992abb460a6a9bc709ecbde0cfaa
+LibClamAV debug: cli_versig: Digital signature is correct.
+LibClamAV Warning: **************************************************
+LibClamAV Warning: ***  The virus database is older than 7 days!  ***
+LibClamAV Warning: ***   Please update it as soon as possible.    ***
+LibClamAV Warning: **************************************************
 LibClamAV debug: in cli_tgzload()
 LibClamAV debug: daily.info loaded
 LibClamAV debug: in cli_tgzload_cleanup()
 LibClamAV debug: in cli_tgzload()
 LibClamAV debug: daily.cfg loaded
-LibClamAV debug: daily.ndu skipped
+LibClamAV debug: daily.ign loaded
+LibClamAV debug: daily.ign2 loaded
 LibClamAV debug: Initializing engine->root[0]
-LibClamAV debug: Initialising AC pattern matcher of root[0]
-LibClamAV info: DEBUG: init filter in cli_ac_init for type GENERIC
-LibClamAV info: DEBUG: filter_init B=-1,end=-1
 LibClamAV debug: cli_initroots: Initializing BM tables of root[0]
 LibClamAV debug: Initializing engine->root[1]
-LibClamAV debug: Initialising AC pattern matcher of root[1]
-LibClamAV info: DEBUG: init filter in cli_ac_init for type PE
-LibClamAV info: DEBUG: filter_init B=-1,end=-1
 LibClamAV debug: cli_initroots: Initializing BM tables of root[1]
 LibClamAV debug: Initializing engine->root[2]
-LibClamAV debug: Initialising AC pattern matcher of root[2]
 LibClamAV debug: Initializing engine->root[3]
-LibClamAV debug: Initialising AC pattern matcher of root[3]
 LibClamAV debug: Initializing engine->root[4]
-LibClamAV debug: Initialising AC pattern matcher of root[4]
-LibClamAV info: DEBUG: init filter in cli_ac_init for type MAIL
-LibClamAV info: DEBUG: filter_init B=-1,end=-1
 LibClamAV debug: Initializing engine->root[5]
-LibClamAV debug: Initialising AC pattern matcher of root[5]
 LibClamAV debug: Initializing engine->root[6]
-LibClamAV debug: Initialising AC pattern matcher of root[6]
 LibClamAV debug: Initializing engine->root[7]
-LibClamAV debug: Initialising AC pattern matcher of root[7]
-LibClamAV info: DEBUG: init filter in cli_ac_init for type ASCII
-LibClamAV info: DEBUG: filter_init B=-1,end=-1
 LibClamAV debug: Initializing engine->root[8]
-LibClamAV debug: Initialising AC pattern matcher of root[8]
 LibClamAV debug: Initializing engine->root[9]
-LibClamAV debug: Initialising AC pattern matcher of root[9]
 LibClamAV debug: Initializing engine->root[10]
-LibClamAV debug: Initialising AC pattern matcher of root[10]
 LibClamAV debug: Loaded 127 filetype definitions
 LibClamAV debug: daily.ftm loaded
-LibClamAV debug: daily.mdu skipped
-LibClamAV debug: hashtab.c:Growing hashtable 0xb74963dc, because it has exceeded maxfill, old size:64
+LibClamAV debug: daily.db loaded
+LibClamAV debug: hashtab.c:Growing hashtable 0xb7455ca4, because it has exceeded maxfill, old size:64
 LibClamAV debug: hashtab.c: new capacity: 128
-LibClamAV debug: Table 0xb74963dc size after grow:128
-LibClamAV debug: hashtab.c:Growing hashtable 0xb74963dc, because it has exceeded maxfill, old size:128
+LibClamAV debug: Table 0xb7455ca4 size after grow:128
+LibClamAV debug: hashtab.c:Growing hashtable 0xb7455ca4, because it has exceeded maxfill, old size:128
 LibClamAV debug: hashtab.c: new capacity: 256
-LibClamAV debug: Table 0xb74963dc size after grow:256
-LibClamAV debug: hashtab.c:Growing hashtable 0xb74963dc, because it has exceeded maxfill, old size:256
+LibClamAV debug: Table 0xb7455ca4 size after grow:256
+LibClamAV debug: hashtab.c:Growing hashtable 0xb7455ca4, because it has exceeded maxfill, old size:256
 LibClamAV debug: hashtab.c: new capacity: 512
-LibClamAV debug: Table 0xb74963dc size after grow:512
-LibClamAV debug: hashtab.c:Growing hashtable 0xb74963dc, because it has exceeded maxfill, old size:512
+LibClamAV debug: Table 0xb7455ca4 size after grow:512
+LibClamAV debug: hashtab.c:Growing hashtable 0xb7455ca4, because it has exceeded maxfill, old size:512
 LibClamAV debug: hashtab.c: new capacity: 1024
-LibClamAV debug: Table 0xb74963dc size after grow:1024
-LibClamAV debug: hashtab.c:Growing hashtable 0xb74963dc, because it has exceeded maxfill, old size:1024
+LibClamAV debug: Table 0xb7455ca4 size after grow:1024
+LibClamAV debug: hashtab.c:Growing hashtable 0xb7455ca4, because it has exceeded maxfill, old size:1024
 LibClamAV debug: hashtab.c: new capacity: 2048
-LibClamAV debug: Table 0xb74963dc size after grow:2048
-LibClamAV debug: hashtab.c:Growing hashtable 0xb74963dc, because it has exceeded maxfill, old size:2048
+LibClamAV debug: Table 0xb7455ca4 size after grow:2048
+LibClamAV debug: hashtab.c:Growing hashtable 0xb7455ca4, because it has exceeded maxfill, old size:2048
 LibClamAV debug: hashtab.c: new capacity: 4096
-LibClamAV debug: Table 0xb74963dc size after grow:4096
-LibClamAV debug: hashtab.c:Growing hashtable 0xb74963dc, because it has exceeded maxfill, old size:4096
-LibClamAV debug: hashtab.c: new capacity: 8192
-LibClamAV debug: Table 0xb74963dc size after grow:8192
-LibClamAV debug: hashtab.c:Growing hashtable 0xb74963dc, because it has exceeded maxfill, old size:8192
-LibClamAV debug: hashtab.c: new capacity: 16384
-LibClamAV debug: Table 0xb74963dc size after grow:16384
-LibClamAV debug: daily.mdb loaded
-LibClamAV debug: daily.ldu skipped
-LibClamAV info: DEBUG: init filter in cli_ac_init for type GENERIC
-LibClamAV info: DEBUG: filter_init B=-1,end=-1
-LibClamAV info: DEBUG: filter_init B=-1,end=-1
-LibClamAV debug: Loading regex_list
-LibClamAV debug: daily.wdb loaded
-LibClamAV debug: daily.idb loaded
-LibClamAV info: DEBUG: init filter in cli_ac_init for type GENERIC
-LibClamAV info: DEBUG: filter_init B=-1,end=-1
-LibClamAV info: DEBUG: filter_init B=-1,end=-1
-LibClamAV debug: Loading regex_list
-LibClamAV debug: daily.pdb loaded
-LibClamAV debug: hashtab.c:Growing hashtable 0xb5f9539c, because it has exceeded maxfill, old size:64
-LibClamAV debug: hashtab.c: new capacity: 128
-LibClamAV debug: Table 0xb5f9539c size after grow:128
-LibClamAV debug: hashtab.c:Growing hashtable 0xb5f9539c, because it has exceeded maxfill, old size:128
-LibClamAV debug: hashtab.c: new capacity: 256
-LibClamAV debug: Table 0xb5f9539c size after grow:256
-LibClamAV debug: hashtab.c:Growing hashtable 0xb5f9539c, because it has exceeded maxfill, old size:256
-LibClamAV debug: hashtab.c: new capacity: 512
-LibClamAV debug: Table 0xb5f9539c size after grow:512
-LibClamAV debug: hashtab.c:Growing hashtable 0xb5f9539c, because it has exceeded maxfill, old size:512
-LibClamAV debug: hashtab.c: new capacity: 1024
-LibClamAV debug: Table 0xb5f9539c size after grow:1024
-LibClamAV debug: hashtab.c:Growing hashtable 0xb5f9539c, because it has exceeded maxfill, old size:1024
-LibClamAV debug: hashtab.c: new capacity: 2048
-LibClamAV debug: Table 0xb5f9539c size after grow:2048
-LibClamAV debug: hashtab.c:Growing hashtable 0xb5f9539c, because it has exceeded maxfill, old size:2048
-LibClamAV debug: hashtab.c: new capacity: 4096
-LibClamAV debug: Table 0xb5f9539c size after grow:4096
+LibClamAV debug: Table 0xb7455ca4 size after grow:4096
 LibClamAV debug: daily.hdb loaded
-LibClamAV debug: hashtab.c:Growing hashtable 0xb5f4addc, because it has exceeded maxfill, old size:64
+LibClamAV debug: daily.hdu skipped
+LibClamAV debug: hashtab.c:Growing hashtable 0xb7325a9c, because it has exceeded maxfill, old size:64
 LibClamAV debug: hashtab.c: new capacity: 128
-LibClamAV debug: Table 0xb5f4addc size after grow:128
-LibClamAV debug: hashtab.c:Growing hashtable 0xb5f4addc, because it has exceeded maxfill, old size:128
+LibClamAV debug: Table 0xb7325a9c size after grow:128
+LibClamAV debug: hashtab.c:Growing hashtable 0xb7325a9c, because it has exceeded maxfill, old size:128
 LibClamAV debug: hashtab.c: new capacity: 256
-LibClamAV debug: Table 0xb5f4addc size after grow:256
-LibClamAV debug: hashtab.c:Growing hashtable 0xb5f4addc, because it has exceeded maxfill, old size:256
+LibClamAV debug: Table 0xb7325a9c size after grow:256
+LibClamAV debug: hashtab.c:Growing hashtable 0xb7325a9c, because it has exceeded maxfill, old size:256
 LibClamAV debug: hashtab.c: new capacity: 512
-LibClamAV debug: Table 0xb5f4addc size after grow:512
-LibClamAV debug: hashtab.c:Growing hashtable 0xb5f4addc, because it has exceeded maxfill, old size:512
+LibClamAV debug: Table 0xb7325a9c size after grow:512
+LibClamAV debug: hashtab.c:Growing hashtable 0xb7325a9c, because it has exceeded maxfill, old size:512
 LibClamAV debug: hashtab.c: new capacity: 1024
-LibClamAV debug: Table 0xb5f4addc size after grow:1024
-LibClamAV debug: daily.fp loaded
-LibClamAV debug: daily.ign2 loaded
+LibClamAV debug: Table 0xb7325a9c size after grow:1024
+LibClamAV debug: hashtab.c:Growing hashtable 0xb7325a9c, because it has exceeded maxfill, old size:1024
+LibClamAV debug: hashtab.c: new capacity: 2048
+LibClamAV debug: Table 0xb7325a9c size after grow:2048
+LibClamAV debug: hashtab.c:Growing hashtable 0xb7325a9c, because it has exceeded maxfill, old size:2048
+LibClamAV debug: hashtab.c: new capacity: 4096
+LibClamAV debug: Table 0xb7325a9c size after grow:4096
+LibClamAV debug: hashtab.c:Growing hashtable 0xb7325a9c, because it has exceeded maxfill, old size:4096
+LibClamAV debug: hashtab.c: new capacity: 8192
+LibClamAV debug: Table 0xb7325a9c size after grow:8192
+LibClamAV debug: hashtab.c:Growing hashtable 0xb7325a9c, because it has exceeded maxfill, old size:8192
+LibClamAV debug: hashtab.c: new capacity: 16384
+LibClamAV debug: Table 0xb7325a9c size after grow:16384
+LibClamAV debug: daily.mdb loaded
+LibClamAV debug: daily.mdu skipped
 LibClamAV debug: Ignoring signature W32.Virut.Gen.D-159
 LibClamAV debug: Ignoring signature W32.Virut.Gen.D-163
 LibClamAV debug: Ignoring signature Adware.Downloader-207
 LibClamAV debug: Ignoring signature Worm.FlyStudio-25
 LibClamAV debug: daily.ndb loaded
-LibClamAV debug: daily.hdu skipped
-LibClamAV debug: daily.ign loaded
-LibClamAV debug: daily.zmd loaded
+LibClamAV debug: daily.ndu skipped
 LibClamAV debug: Ignoring signature Trojan.GenericFF-1
 LibClamAV debug: daily.ldb loaded
-LibClamAV debug: daily.db loaded
+LibClamAV debug: daily.ldu skipped
+LibClamAV debug: daily.zmd loaded
+LibClamAV debug: daily.idb loaded
+LibClamAV debug: hashtab.c:Growing hashtable 0xb5fef5fc, because it has exceeded maxfill, old size:64
+LibClamAV debug: hashtab.c: new capacity: 128
+LibClamAV debug: Table 0xb5fef5fc size after grow:128
+LibClamAV debug: hashtab.c:Growing hashtable 0xb5fef5fc, because it has exceeded maxfill, old size:128
+LibClamAV debug: hashtab.c: new capacity: 256
+LibClamAV debug: Table 0xb5fef5fc size after grow:256
+LibClamAV debug: hashtab.c:Growing hashtable 0xb5fef5fc, because it has exceeded maxfill, old size:256
+LibClamAV debug: hashtab.c: new capacity: 512
+LibClamAV debug: Table 0xb5fef5fc size after grow:512
+LibClamAV debug: hashtab.c:Growing hashtable 0xb5fef5fc, because it has exceeded maxfill, old size:512
+LibClamAV debug: hashtab.c: new capacity: 1024
+LibClamAV debug: Table 0xb5fef5fc size after grow:1024
+LibClamAV debug: daily.fp loaded
+LibClamAV debug: Loading regex_list
+LibClamAV debug: daily.pdb loaded
+LibClamAV debug: Loading regex_list
+LibClamAV debug: daily.wdb loaded
 LibClamAV debug: in cli_tgzload_cleanup()
-LibClamAV debug: /var/lib/clamav/daily.cld loaded
-LibClamAV info: DEBUG: loading virname=test_hdb.UNOFFICIAL
-LibClamAV info: DEBUG: pattern=testtesttesttestMYOtestTEST
-LibClamAV info: DEBUG: pattern length=28
-LibClamAV info: DEBUG: bm_offmode=0
-LibClamAV info: DEBUG: filter=1
-LibClamAV info: DEBUG: offset=1
-LibClamAV info: DEBUG: offdata[0]=1(1=CLI_OFF_ABSOLUTE)
-LibClamAV info: DEBUG: run filter_add_static
-LibClamAV info: DEBUG: hash idx=28328
-LibClamAV info: DEBUG: no such idx at i=0, will break out
-LibClamAV info: DEBUG: calc shift with WM algo root->bm_shift[28328]=0
+LibClamAV debug: /var/lib/clamav/daily.cvd loaded
+LibClamAV debug: /var/lib/clamav/test2.ndb loaded
+LibClamAV info: DEBUG: add part sigs for virname=test_ndb_partsig
+LibClamAV info: DEBUG: sig parts=2
+LibClamAV info: DEBUG: add part 1 of the sig: [6f6f6f] with mindist=0, maxdist=0
+LibClamAV info: DEBUG: sig(test_ndb_partsig) id=178 has 2 parts, this is part 1: [6f6f6f]
+LibClamAV info: DEBUG: in cli_ac_addpatt, adding [test_ndb_partsig.UNOFFICIAL]...
+LibClamAV info: DEBUG: in cli_ac_addpatt, adding [o] of test_ndb_partsig.UNOFFICIAL, with sigid=178
+LibClamAV info: DEBUG: in cli_ac_addpatt, adding [o] of test_ndb_partsig.UNOFFICIAL, with sigid=178
+LibClamAV info: DEBUG: in cli_ac_addpatt, adding [o] of test_ndb_partsig.UNOFFICIAL, with sigid=178
+LibClamAV info: DEBUG: in adding next pattern [test_ndb_partsig.UNOFFICIAL] in tire ooo
+LibClamAV info: DEBUG: add part 2 of the sig: [6b6b6b] with mindist=4, maxdist=6
+LibClamAV info: DEBUG: sig(test_ndb_partsig) id=178 has 2 parts, this is part 2: [6b6b6b]
+LibClamAV info: DEBUG: in cli_ac_addpatt, adding [test_ndb_partsig.UNOFFICIAL]...
+LibClamAV info: DEBUG: in cli_ac_addpatt, adding [k] of test_ndb_partsig.UNOFFICIAL, with sigid=178
+LibClamAV info: DEBUG: in cli_ac_addpatt, adding [k] of test_ndb_partsig.UNOFFICIAL, with sigid=178
+LibClamAV info: DEBUG: in cli_ac_addpatt, adding [k] of test_ndb_partsig.UNOFFICIAL, with sigid=178
 LibClamAV debug: /var/lib/clamav/test.ndb loaded
 LibClamAV debug: in cli_cvdload()
 LibClamAV debug: MD5(.tar.gz) = ef015484e18b983ddf08425e2dad6a3f
@@ -172,30 +159,29 @@ LibClamAV debug: Ignoring signature Worm.Bagle.AG-empty (Clam)
 LibClamAV debug: Ignoring signature Trojan.Agent-18 (Clam)
 LibClamAV debug: Ignoring signature PHP.Defash.B (Clam)
 LibClamAV debug: main.db loaded
-LibClamAV debug: hashtab.c:Growing hashtable 0xb5f9539c, because it has exceeded maxfill, old size:4096
+LibClamAV debug: hashtab.c:Growing hashtable 0xb7455ca4, because it has exceeded maxfill, old size:4096
 LibClamAV debug: hashtab.c: new capacity: 8192
-LibClamAV debug: Table 0xb5f9539c size after grow:8192
-LibClamAV debug: hashtab.c:Growing hashtable 0xb5f9539c, because it has exceeded maxfill, old size:8192
+LibClamAV debug: Table 0xb7455ca4 size after grow:8192
+LibClamAV debug: hashtab.c:Growing hashtable 0xb7455ca4, because it has exceeded maxfill, old size:8192
 LibClamAV debug: hashtab.c: new capacity: 16384
-LibClamAV debug: Table 0xb5f9539c size after grow:16384
-LibClamAV debug: hashtab.c:Growing hashtable 0xb5f9539c, because it has exceeded maxfill, old size:16384
+LibClamAV debug: Table 0xb7455ca4 size after grow:16384
+LibClamAV debug: hashtab.c:Growing hashtable 0xb7455ca4, because it has exceeded maxfill, old size:16384
 LibClamAV debug: hashtab.c: new capacity: 32768
-LibClamAV debug: Table 0xb5f9539c size after grow:32768
+LibClamAV debug: Table 0xb7455ca4 size after grow:32768
 LibClamAV debug: Ignoring signature Exploit.PDF-18379
 LibClamAV debug: Ignoring signature Exploit.PDF-20301
 LibClamAV debug: main.hdb loaded
 LibClamAV debug: Ignoring signature Worm.Sohanad-8
 LibClamAV debug: Ignoring signature Trojan.Agent-3389
 LibClamAV debug: Ignoring signature Adware.WhenU-6
-LibClamAV debug: hashtab.c:Growing hashtable 0xb74963dc, because it has exceeded maxfill, old size:16384
+LibClamAV debug: hashtab.c:Growing hashtable 0xb7325a9c, because it has exceeded maxfill, old size:16384
 LibClamAV debug: hashtab.c: new capacity: 32768
-LibClamAV debug: Table 0xb74963dc size after grow:32768
+LibClamAV debug: Table 0xb7325a9c size after grow:32768
 LibClamAV debug: Ignoring signature Trojan.Fakedoc-2
 LibClamAV debug: Ignoring signature Trojan.Dropper-5055
-LibClamAV debug: Ignoring signature Trojan.Spy-29209
-LibClamAV debug: hashtab.c:Growing hashtable 0xb74963dc, because it has exceeded maxfill, old size:32768
+LibClamAV debug: hashtab.c:Growing hashtable 0xb7325a9c, because it has exceeded maxfill, old size:32768
 LibClamAV debug: hashtab.c: new capacity: 65536
-LibClamAV debug: Table 0xb74963dc size after grow:65536
+LibClamAV debug: Table 0xb7325a9c size after grow:65536
 LibClamAV debug: Ignoring signature Trojan.Dropper-6931
 LibClamAV debug: Ignoring signature Trojan.Agent-28377
 LibClamAV debug: Ignoring signature Trojan.Dopper
@@ -255,6 +241,10 @@ LibClamAV debug: Ignoring signature HTML.Phishing.Auction-270
 LibClamAV debug: Ignoring signature Trojan.Dropper.Agent-156
 LibClamAV debug: Ignoring signature Worm.Stration.pac
 LibClamAV debug: Ignoring signature Trojan.Killav-109
+LibClamAV info: DEBUG: in cli_ac_addpatt, adding [Trojan.Packed-30]...
+LibClamAV info: DEBUG: in cli_ac_addpatt, adding [k] of Trojan.Packed-30, with sigid=866
+LibClamAV info: DEBUG: in cli_ac_addpatt, adding [k] of Trojan.Packed-30, with sigid=866
+LibClamAV info: DEBUG: in cli_ac_addpatt, adding [k] of Trojan.Packed-30, with sigid=866
 LibClamAV debug: Ignoring signature Trojan.Karsh-1
 LibClamAV debug: Ignoring signature Email.Phishing.DblDom-14
 LibClamAV debug: Ignoring signature HTML.Phishing.Bank-1249
@@ -457,34 +447,29 @@ LibClamAV debug: Parsed 1 functions
 LibClamAV debug: Bytecode 0000872843.cbc(26) has logical signature: BC.Exploit.CVE_2010_3944.{Exploit-CVE_2010_3944};Engine:56-255,Target:1;(0&1);S0+1696:fc0000000f;S0+2864:1f837dfc00
 LibClamAV debug: 0000872843.cbc loaded
 LibClamAV debug: Loading trusted bytecode
-LibClamAV debug: bytecode: Parsed 4 APIcalls, maxapi 16
-LibClamAV debug: Parsed 16 BBs, 51 instructions
-LibClamAV debug: Parsed 1 functions
-LibClamAV debug: Bytecode 0001353775.cbc(27) has logical signature: BC.Exploit.CVE_2012_1885-1.{};Engine:56-255,Target:2;0;*:57006f0072006b0062006f006f006b00*5b10
-LibClamAV debug: 0001353775.cbc loaded
-LibClamAV debug: Loading trusted bytecode
 LibClamAV debug: bytecode: Parsed 2 APIcalls, maxapi 66
 LibClamAV debug: Parsed 3 BBs, 27 instructions
 LibClamAV debug: Parsed 1 functions
-LibClamAV debug: Bytecode 0000872785.cbc(28) has logical signature: BC.Exploit.CVE_2010_3943.{Exploit-CVE_2010_3943};Engine:56-255,Target:1;(0&2&1);S0+14736:ffff595f5e;S0+15632:8b00385dfc;S0+19520:83661c0059
+LibClamAV debug: Bytecode 0000872785.cbc(27) has logical signature: BC.Exploit.CVE_2010_3943.{Exploit-CVE_2010_3943};Engine:56-255,Target:1;(0&2&1);S0+14736:ffff595f5e;S0+15632:8b00385dfc;S0+19520:83661c0059
 LibClamAV debug: 0000872785.cbc loaded
 LibClamAV debug: Loading trusted bytecode
 LibClamAV debug: bytecode: Parsed 2 APIcalls, maxapi 66
 LibClamAV debug: Parsed 3 BBs, 11 instructions
 LibClamAV debug: Parsed 1 functions
-LibClamAV debug: Bytecode 0000872844.cbc(29) has logical signature: BC.Exploit.CVE_2010_3961.{Exploit-CVE_2010_3961};Engine:56-255,Target:1;0;S1+704:7665640044
+LibClamAV debug: Bytecode 0000872844.cbc(28) has logical signature: BC.Exploit.CVE_2010_3961.{Exploit-CVE_2010_3961};Engine:56-255,Target:1;0;S1+704:7665640044
 LibClamAV debug: 0000872844.cbc loaded
+LibClamAV debug: Loading trusted bytecode
+LibClamAV debug: bytecode: Parsed 4 APIcalls, maxapi 16
+LibClamAV debug: Parsed 44 BBs, 169 instructions
+LibClamAV debug: Parsed 1 functions
+LibClamAV debug: Bytecode 0001444645.cbc(29) has logical signature: BC.Exploit.CVE_2012_0165.{CVE_2012_0165};Engine:56-255,Target:0;0;0:01000000{36}20454d46
+LibClamAV debug: 0001444645.cbc loaded
 LibClamAV debug: Loading trusted bytecode
 LibClamAV debug: bytecode: Parsed 3 APIcalls, maxapi 66
 LibClamAV debug: Parsed 15 BBs, 85 instructions
 LibClamAV debug: Parsed 1 functions
 LibClamAV debug: Bytecode 0000954331.cbc(30) has logical signature: BC.Exploit.MS_04_11.{CVE_2011_0662,CVE_2011_1229_or_CVE_2011_1231,CVE_2011_1231,CVE_2011_1237,CVE_2011_1238,CVE_2011_1239,CVE_2011_1241,CVE_2011_1242};Engine:56-255,Target:1;(1|0|6|2|4|3|5);S2+16272:52534453bb1a649c7ea0154cb19ce3e3;S2+16240:000000000000000052534453646e64ce;S0+432:ff15d8ca40006a006830f10000681201;S2+16128:52534453645a82377e51384580df1e6c;S2+16272:00000000000000000000000052534453;S2+17568:0000000000000000525344537b499ed5;S2+16608:0000000000000000525344538c350b8e
 LibClamAV debug: 0000954331.cbc loaded
-LibClamAV debug: Loading trusted bytecode
-LibClamAV debug: Skipping bytecode with (engine) functionality level 51-51 (current 73)
-LibClamAV debug: line: 4096
-LibClamAV debug: Parsed 0 functions
-LibClamAV debug: 0000767943.cbc loaded
 LibClamAV debug: Loading trusted bytecode
 LibClamAV debug: bytecode: Parsed 3 APIcalls, maxapi 66
 LibClamAV debug: Parsed 3 BBs, 23 instructions
@@ -521,6 +506,12 @@ LibClamAV debug: Parsed 1 functions
 LibClamAV debug: Bytecode 0000872788.cbc(36) has logical signature: BC.Exploit.CVE_2010_3940.{Exploit-CVE_2010_3940};Engine:56-255,Target:1;0;S1+608:256400000a
 LibClamAV debug: 0000872788.cbc loaded
 LibClamAV debug: Loading trusted bytecode
+LibClamAV debug: bytecode: Parsed 5 APIcalls, maxapi 17
+LibClamAV debug: Parsed 20 BBs, 76 instructions
+LibClamAV debug: Parsed 1 functions
+LibClamAV debug: Bytecode 0001403989.cbc(37) has logical signature: BC.Exploit.CVE_2012_1885-2.{CVE_2012_1885};Engine:56-255,Target:2;0;*:57006f0072006b0062006f006f006b00*5b10
+LibClamAV debug: 0001403989.cbc loaded
+LibClamAV debug: Loading trusted bytecode
 LibClamAV debug: bytecode: Parsed 11 APIcalls, maxapi 87
 LibClamAV debug: Parsed 26 BBs, 150 instructions
 LibClamAV debug: Parsed 40 BBs, 131 instructions
@@ -531,18 +522,19 @@ LibClamAV debug: bytecode: Parsed 7 APIcalls, maxapi 66
 LibClamAV debug: unknown inst type: 67
 LibClamAV debug: Parsed 19 BBs, 97 instructions
 LibClamAV debug: Parsed 1 functions
-LibClamAV debug: Bytecode 0000767944.cbc(38) has logical signature: BC.Win32.Patched.User32;Engine:52-255,Target:1;(0&((((5=0)|(4<2)|(4>2))&3&(2=0))|((4=0)&2))&1);VI:49006e007400650072006e0061006c004e0061006d006500000075007300650072003300;VI:43006f006d00700061006e0079004e0061006d006500000000004d006900630072006f0073006f0066007400200043006f00720070006f007200610074006900;VI:460069006c006500560065007200730069006f006e000000000035002e00;VI:460069006c006500560065007200730069006f006e000000000036002e003000;*:41007000700049006e00690074005f0044004c004c0073;*:4c006f006100640041007000700049006e00690074005f0044004c004c00730000
+LibClamAV debug: Bytecode 0000767944.cbc(39) has logical signature: BC.Win32.Patched.User32;Engine:52-255,Target:1;(0&((((5=0)|(4<2)|(4>2))&3&(2=0))|((4=0)&2))&1);VI:49006e007400650072006e0061006c004e0061006d006500000075007300650072003300;VI:43006f006d00700061006e0079004e0061006d006500000000004d006900630072006f0073006f0066007400200043006f00720070006f007200610074006900;VI:460069006c006500560065007200730069006f006e000000000035002e00;VI:460069006c006500560065007200730069006f006e000000000036002e003000;*:41007000700049006e00690074005f0044004c004c0073;*:4c006f006100640041007000700049006e00690074005f0044004c004c00730000
 LibClamAV debug: 0000767944.cbc loaded
 LibClamAV debug: in cli_tgzload_cleanup()
 LibClamAV debug: /var/lib/clamav/bytecode.cld loaded
+LibClamAV debug: /var/lib/clamav/test1.ndb loaded
 LibClamAV debug: Using filter for trie 0
-LibClamAV debug: Matcher[0]: GENERIC: AC sigs: 7053 (reloff: 4, absoff: 0) BM sigs: 30363 (reloff: 15, absoff: 118) maxpatlen 673 
+LibClamAV debug: Matcher[0]: GENERIC: AC sigs: 7056 (reloff: 4, absoff: 0) BM sigs: 30362 (reloff: 15, absoff: 119) maxpatlen 673 
 LibClamAV debug: Using filter for trie 1
-LibClamAV debug: Matcher[1]: PE: AC sigs: 16289 (reloff: 4942, absoff: 0) BM sigs: 48571 (reloff: 44434, absoff: 4137) maxpatlen 804 
+LibClamAV debug: Matcher[1]: PE: AC sigs: 16274 (reloff: 4939, absoff: 0) BM sigs: 48560 (reloff: 44423, absoff: 4137) maxpatlen 804 
 LibClamAV debug: Matcher[2]: OLE2: AC sigs: 1764 (reloff: 0, absoff: 0) BM sigs: 0 (reloff: 0, absoff: 0) maxpatlen 176 (ac_only mode)
-LibClamAV debug: Matcher[3]: HTML: AC sigs: 6763 (reloff: 0, absoff: 0) BM sigs: 0 (reloff: 0, absoff: 0) maxpatlen 799 (ac_only mode)
+LibClamAV debug: Matcher[3]: HTML: AC sigs: 6762 (reloff: 0, absoff: 0) BM sigs: 0 (reloff: 0, absoff: 0) maxpatlen 799 (ac_only mode)
 LibClamAV debug: Using filter for trie 4
-LibClamAV debug: Matcher[4]: MAIL: AC sigs: 1589 (reloff: 0, absoff: 0) BM sigs: 0 (reloff: 0, absoff: 0) maxpatlen 270 (ac_only mode)
+LibClamAV debug: Matcher[4]: MAIL: AC sigs: 1585 (reloff: 0, absoff: 0) BM sigs: 0 (reloff: 0, absoff: 0) maxpatlen 270 (ac_only mode)
 LibClamAV debug: Matcher[5]: GRAPHICS: AC sigs: 24 (reloff: 0, absoff: 0) BM sigs: 0 (reloff: 0, absoff: 0) maxpatlen 227 (ac_only mode)
 LibClamAV debug: Matcher[6]: ELF: AC sigs: 66 (reloff: 29, absoff: 0) BM sigs: 0 (reloff: 0, absoff: 0) maxpatlen 400 (ac_only mode)
 LibClamAV debug: Using filter for trie 7
@@ -625,12 +617,12 @@ LibClamAV debug:    * Submodule INTERPRETER:	On
 LibClamAV debug:    * Submodule    JIT X86:	On
 LibClamAV debug:    * Submodule    JIT PPC:	On
 LibClamAV debug:    * Submodule    JIT ARM:	** Off **
-LibClamAV debug: pool memory used: 112.156 MB
+LibClamAV debug: pool memory used: 112.417 MB
 LibClamAV debug: environment detected:
 LibClamAV debug: check_platform(0x0a114949, 0x04040502, 0x01040502)
 LibClamAV debug: check_platform(0x0a  1  1  49  49,0x0  4       04 05 02,0x01    04 05 02)
 LibClamAV debug: check_platform( OS CPU COM FL DCONF,BE PTR CXX VV.VV.VV, FLG CC VV.VV.VV)
-LibClamAV debug: Engine version: devel-20121126
+LibClamAV debug: Engine version: devel-c550541
 LibClamAV debug: Host triple: i386-pc-linux-gnu
 LibClamAV debug: Host CPU: amdfam10
 LibClamAV debug: OS: Linux
@@ -644,124 +636,283 @@ LibClamAV debug: Bytecode: mode is 0
 LibClamAV debug: Bytecode: BC_STARTUP running (loaded)
 LibClamAV debug: Bytecode 1: executing in interpeter mode
 LibClamAV debug: bytecode: registered ctx variable at (nil) (+0) id 6
-LibClamAV debug: bytecode: registered ctx variable at 0x111c8e0 (+2) id 2
-LibClamAV debug: bytecode: registered ctx variable at 0xf4fc80 (+256) id 1
-LibClamAV debug: bytecode: registered ctx variable at 0x111c8e4 (+4) id 5
-LibClamAV debug: bytecode: registered ctx variable at 0x111c900 (+648) id 4
-LibClamAV debug: bytecode: registered ctx variable at 0x9f49b18 (+752) id 7
+LibClamAV debug: bytecode: registered ctx variable at 0x15d28e0 (+2) id 2
+LibClamAV debug: bytecode: registered ctx variable at 0x1406380 (+256) id 1
+LibClamAV debug: bytecode: registered ctx variable at 0x15d28e4 (+4) id 5
+LibClamAV debug: bytecode: registered ctx variable at 0x15d2900 (+648) id 4
+LibClamAV debug: bytecode: registered ctx variable at 0x88d6650 (+752) id 7
 LibClamAV debug: bytecode debug: startup: bytecode execution in auto mode
-LibClamAV debug: intepreter bytecode run finished in 101us, after executing 182 opcodes
+LibClamAV debug: intepreter bytecode run finished in 31us, after executing 182 opcodes
 LibClamAV debug: Bytecode: disable status is 0
-LibClamAV debug: [Bytecode JIT]: emitted function bc4294967295f0 of 32 bytes at 0x425010
-LibClamAV debug: [Bytecode JIT]: emitted function bc4294967295f0_wrap of 16 bytes at 0x425040
+LibClamAV debug: [Bytecode JIT]: emitted function bc4294967295f0 of 32 bytes at 0x1f5010
+LibClamAV debug: [Bytecode JIT]: emitted function bc4294967295f0_wrap of 16 bytes at 0x1f5040
 LibClamAV debug: bytecode self test running
 LibClamAV debug: Bytecode 4294967295: executing in JIT mode
 LibClamAV debug: bytecode finished in 2 us
 LibClamAV debug: bytecode self test succeeded
-LibClamAV debug: [Bytecode JIT]: emitted function bc2f0 of 143 bytes at 0x3dc010
-LibClamAV debug: [Bytecode JIT]: emitted function bc2f0_wrap of 16 bytes at 0x3dc0b0
-LibClamAV debug: [Bytecode JIT]: emitted function bc3f0 of 192 bytes at 0x3dc0d0
-LibClamAV debug: [Bytecode JIT]: emitted function bc3f0_wrap of 16 bytes at 0x3dc1a0
-LibClamAV debug: [Bytecode JIT]: emitted function bc4f0 of 719 bytes at 0x3dc1c0
-LibClamAV debug: [Bytecode JIT]: emitted function bc4f0_wrap of 16 bytes at 0x3dc4a0
-LibClamAV debug: [Bytecode JIT]: emitted function bc5f0 of 145 bytes at 0x3dc4c0
-LibClamAV debug: [Bytecode JIT]: emitted function bc5f0_wrap of 16 bytes at 0x3dc560
-LibClamAV debug: [Bytecode JIT]: emitted function bc6f0 of 96 bytes at 0x3dc580
-LibClamAV debug: [Bytecode JIT]: emitted function bc6f0_wrap of 16 bytes at 0x3dc5f0
-LibClamAV debug: [Bytecode JIT]: emitted function bc7f0 of 145 bytes at 0x3dc610
-LibClamAV debug: [Bytecode JIT]: emitted function bc7f0_wrap of 16 bytes at 0x3dc6b0
-LibClamAV debug: [Bytecode JIT]: emitted function bc8f0 of 94 bytes at 0x3dc6d0
-LibClamAV debug: [Bytecode JIT]: emitted function bc8f0_wrap of 16 bytes at 0x3dc740
-LibClamAV debug: [Bytecode JIT]: emitted function bc9f0 of 145 bytes at 0x3dc760
-LibClamAV debug: [Bytecode JIT]: emitted function bc9f0_wrap of 16 bytes at 0x3dc800
-LibClamAV debug: [Bytecode JIT]: emitted function bc10f0 of 301 bytes at 0x3dc820
-LibClamAV debug: [Bytecode JIT]: emitted function bc10f0_wrap of 16 bytes at 0x3dc960
-LibClamAV debug: [Bytecode JIT]: emitted function bc11f0 of 640 bytes at 0x3dc980
-LibClamAV debug: [Bytecode JIT]: emitted function bc11f1 of 256 bytes at 0x3dcc10
-LibClamAV debug: [Bytecode JIT]: emitted function bc11f0_wrap of 16 bytes at 0x3dcd20
-LibClamAV debug: [Bytecode JIT]: emitted function bc12f0 of 96 bytes at 0x3dcd40
-LibClamAV debug: [Bytecode JIT]: emitted function bc12f0_wrap of 16 bytes at 0x3dcdb0
-LibClamAV debug: [Bytecode JIT]: emitted function bc13f0 of 96 bytes at 0x3dcdd0
-LibClamAV debug: [Bytecode JIT]: emitted function bc13f0_wrap of 16 bytes at 0x3dce40
-LibClamAV debug: [Bytecode JIT]: emitted function bc14f0 of 143 bytes at 0x3dce60
-LibClamAV debug: [Bytecode JIT]: emitted function bc14f0_wrap of 16 bytes at 0x3dcf00
-LibClamAV debug: [Bytecode JIT]: emitted function bc15f0 of 96 bytes at 0x3dcf20
-LibClamAV debug: [Bytecode JIT]: emitted function bc15f0_wrap of 16 bytes at 0x3dcf90
-LibClamAV debug: [Bytecode JIT]: emitted function bc16f0 of 1745 bytes at 0x3dcfb0
-LibClamAV debug: [Bytecode JIT]: emitted function bc16f0_wrap of 16 bytes at 0x3dd690
-LibClamAV debug: [Bytecode JIT]: emitted function bc17f0 of 143 bytes at 0x3dd6b0
-LibClamAV debug: [Bytecode JIT]: emitted function bc17f0_wrap of 16 bytes at 0x3dd750
-LibClamAV debug: [Bytecode JIT]: emitted function bc18f0 of 397 bytes at 0x3dd770
-LibClamAV debug: [Bytecode JIT]: emitted function bc18f0_wrap of 16 bytes at 0x3dd910
-LibClamAV debug: [Bytecode JIT]: emitted function bc19f0 of 327 bytes at 0x3dd930
-LibClamAV debug: [Bytecode JIT]: emitted function bc19f2 of 270 bytes at 0x3dda80
-LibClamAV debug: [Bytecode JIT]: emitted function bc19f1 of 371 bytes at 0x3ddba0
-LibClamAV debug: [Bytecode JIT]: emitted function bc19f0_wrap of 16 bytes at 0x3ddd20
-LibClamAV debug: [Bytecode JIT]: emitted function bc20f0 of 5500 bytes at 0x3ddd40
-LibClamAV debug: [Bytecode JIT]: emitted function bc20f0_wrap of 16 bytes at 0x3df2c0
-LibClamAV debug: [Bytecode JIT]: emitted function bc21f0 of 94 bytes at 0x3df2e0
-LibClamAV debug: [Bytecode JIT]: emitted function bc21f0_wrap of 16 bytes at 0x3df350
-LibClamAV debug: [Bytecode JIT]: emitted function bc22f0 of 1016 bytes at 0x3df370
-LibClamAV debug: [Bytecode JIT]: emitted function bc22f0_wrap of 16 bytes at 0x3df770
-LibClamAV debug: [Bytecode JIT]: emitted function bc23f0 of 449 bytes at 0x3df790
-LibClamAV debug: [Bytecode JIT]: emitted function bc23f0_wrap of 16 bytes at 0x3df960
-LibClamAV debug: [Bytecode JIT]: emitted function bc24f0 of 1413 bytes at 0x3df980
-LibClamAV debug: [Bytecode JIT]: emitted function bc24f0_wrap of 16 bytes at 0x3dff10
-LibClamAV debug: [Bytecode JIT]: emitted function bc25f0 of 568 bytes at 0x3dff30
-LibClamAV debug: [Bytecode JIT]: emitted function bc25f0_wrap of 16 bytes at 0x3e0170
-LibClamAV debug: [Bytecode JIT]: emitted function bc26f0 of 69 bytes at 0x3e0190
-LibClamAV debug: [Bytecode JIT]: emitted function bc26f0_wrap of 16 bytes at 0x3e01e0
-LibClamAV debug: [Bytecode JIT]: emitted function bc27f0 of 465 bytes at 0x3e0200
-LibClamAV debug: [Bytecode JIT]: emitted function bc27f0_wrap of 16 bytes at 0x3e03e0
-LibClamAV debug: [Bytecode JIT]: emitted function bc28f0 of 84 bytes at 0x3e0400
-LibClamAV debug: [Bytecode JIT]: emitted function bc28f0_wrap of 16 bytes at 0x3e0460
-LibClamAV debug: [Bytecode JIT]: emitted function bc29f0 of 67 bytes at 0x3e0480
-LibClamAV debug: [Bytecode JIT]: emitted function bc29f0_wrap of 16 bytes at 0x3e04d0
-LibClamAV debug: [Bytecode JIT]: emitted function bc30f0 of 498 bytes at 0x3e04f0
-LibClamAV debug: [Bytecode JIT]: emitted function bc30f0_wrap of 16 bytes at 0x3e06f0
-LibClamAV debug: [Bytecode JIT]: emitted function bc31f0 of 143 bytes at 0x3e0710
-LibClamAV debug: [Bytecode JIT]: emitted function bc31f0_wrap of 16 bytes at 0x3e07b0
-LibClamAV debug: [Bytecode JIT]: emitted function bc32f0 of 455 bytes at 0x3e07d0
-LibClamAV debug: [Bytecode JIT]: emitted function bc32f0_wrap of 16 bytes at 0x3e09a0
-LibClamAV debug: [Bytecode JIT]: emitted function bc33f0 of 614 bytes at 0x3e09c0
-LibClamAV debug: [Bytecode JIT]: emitted function bc33f0_wrap of 16 bytes at 0x3e0c30
-LibClamAV debug: [Bytecode JIT]: emitted function bc34f0 of 143 bytes at 0x3e0c50
-LibClamAV debug: [Bytecode JIT]: emitted function bc34f0_wrap of 16 bytes at 0x3e0cf0
-LibClamAV debug: [Bytecode JIT]: emitted function bc35f0 of 254 bytes at 0x3e0d10
-LibClamAV debug: [Bytecode JIT]: emitted function bc35f0_wrap of 16 bytes at 0x3e0e20
-LibClamAV debug: [Bytecode JIT]: emitted function bc36f0 of 96 bytes at 0x3e0e40
-LibClamAV debug: [Bytecode JIT]: emitted function bc36f0_wrap of 16 bytes at 0x3e0eb0
-LibClamAV debug: [Bytecode JIT]: emitted function bc37f0 of 1031 bytes at 0x3e0ed0
-LibClamAV debug: [Bytecode JIT]: emitted function bc37f1 of 695 bytes at 0x3e12e0
-LibClamAV debug: [Bytecode JIT]: emitted function bc37f0_wrap of 16 bytes at 0x3e15a0
-LibClamAV debug: [Bytecode JIT]: emitted function bc38f0 of 583 bytes at 0x3e15c0
-LibClamAV debug: [Bytecode JIT]: emitted function bc38f0_wrap of 16 bytes at 0x3e1810
-LibClamAV debug: Bytecode: 38 bytecode prepared with JIT
+LibClamAV debug: [Bytecode JIT]: emitted function bc2f0 of 143 bytes at 0x84a010
+LibClamAV debug: [Bytecode JIT]: emitted function bc2f0_wrap of 16 bytes at 0x84a0b0
+LibClamAV debug: [Bytecode JIT]: emitted function bc3f0 of 192 bytes at 0x84a0d0
+LibClamAV debug: [Bytecode JIT]: emitted function bc3f0_wrap of 16 bytes at 0x84a1a0
+LibClamAV debug: [Bytecode JIT]: emitted function bc4f0 of 719 bytes at 0x84a1c0
+LibClamAV debug: [Bytecode JIT]: emitted function bc4f0_wrap of 16 bytes at 0x84a4a0
+LibClamAV debug: [Bytecode JIT]: emitted function bc5f0 of 145 bytes at 0x84a4c0
+LibClamAV debug: [Bytecode JIT]: emitted function bc5f0_wrap of 16 bytes at 0x84a560
+LibClamAV debug: [Bytecode JIT]: emitted function bc6f0 of 96 bytes at 0x84a580
+LibClamAV debug: [Bytecode JIT]: emitted function bc6f0_wrap of 16 bytes at 0x84a5f0
+LibClamAV debug: [Bytecode JIT]: emitted function bc7f0 of 145 bytes at 0x84a610
+LibClamAV debug: [Bytecode JIT]: emitted function bc7f0_wrap of 16 bytes at 0x84a6b0
+LibClamAV debug: [Bytecode JIT]: emitted function bc8f0 of 94 bytes at 0x84a6d0
+LibClamAV debug: [Bytecode JIT]: emitted function bc8f0_wrap of 16 bytes at 0x84a740
+LibClamAV debug: [Bytecode JIT]: emitted function bc9f0 of 145 bytes at 0x84a760
+LibClamAV debug: [Bytecode JIT]: emitted function bc9f0_wrap of 16 bytes at 0x84a800
+LibClamAV debug: [Bytecode JIT]: emitted function bc10f0 of 301 bytes at 0x84a820
+LibClamAV debug: [Bytecode JIT]: emitted function bc10f0_wrap of 16 bytes at 0x84a960
+LibClamAV debug: [Bytecode JIT]: emitted function bc11f0 of 640 bytes at 0x84a980
+LibClamAV debug: [Bytecode JIT]: emitted function bc11f1 of 256 bytes at 0x84ac10
+LibClamAV debug: [Bytecode JIT]: emitted function bc11f0_wrap of 16 bytes at 0x84ad20
+LibClamAV debug: [Bytecode JIT]: emitted function bc12f0 of 96 bytes at 0x84ad40
+LibClamAV debug: [Bytecode JIT]: emitted function bc12f0_wrap of 16 bytes at 0x84adb0
+LibClamAV debug: [Bytecode JIT]: emitted function bc13f0 of 96 bytes at 0x84add0
+LibClamAV debug: [Bytecode JIT]: emitted function bc13f0_wrap of 16 bytes at 0x84ae40
+LibClamAV debug: [Bytecode JIT]: emitted function bc14f0 of 143 bytes at 0x84ae60
+LibClamAV debug: [Bytecode JIT]: emitted function bc14f0_wrap of 16 bytes at 0x84af00
+LibClamAV debug: [Bytecode JIT]: emitted function bc15f0 of 96 bytes at 0x84af20
+LibClamAV debug: [Bytecode JIT]: emitted function bc15f0_wrap of 16 bytes at 0x84af90
+LibClamAV debug: [Bytecode JIT]: emitted function bc16f0 of 1745 bytes at 0x84afb0
+LibClamAV debug: [Bytecode JIT]: emitted function bc16f0_wrap of 16 bytes at 0x84b690
+LibClamAV debug: [Bytecode JIT]: emitted function bc17f0 of 143 bytes at 0x84b6b0
+LibClamAV debug: [Bytecode JIT]: emitted function bc17f0_wrap of 16 bytes at 0x84b750
+LibClamAV debug: [Bytecode JIT]: emitted function bc18f0 of 397 bytes at 0x84b770
+LibClamAV debug: [Bytecode JIT]: emitted function bc18f0_wrap of 16 bytes at 0x84b910
+LibClamAV debug: [Bytecode JIT]: emitted function bc19f0 of 327 bytes at 0x84b930
+LibClamAV debug: [Bytecode JIT]: emitted function bc19f2 of 270 bytes at 0x84ba80
+LibClamAV debug: [Bytecode JIT]: emitted function bc19f1 of 371 bytes at 0x84bba0
+LibClamAV debug: [Bytecode JIT]: emitted function bc19f0_wrap of 16 bytes at 0x84bd20
+LibClamAV debug: [Bytecode JIT]: emitted function bc20f0 of 5500 bytes at 0x84bd40
+LibClamAV debug: [Bytecode JIT]: emitted function bc20f0_wrap of 16 bytes at 0x84d2c0
+LibClamAV debug: [Bytecode JIT]: emitted function bc21f0 of 94 bytes at 0x84d2e0
+LibClamAV debug: [Bytecode JIT]: emitted function bc21f0_wrap of 16 bytes at 0x84d350
+LibClamAV debug: [Bytecode JIT]: emitted function bc22f0 of 1016 bytes at 0x84d370
+LibClamAV debug: [Bytecode JIT]: emitted function bc22f0_wrap of 16 bytes at 0x84d770
+LibClamAV debug: [Bytecode JIT]: emitted function bc23f0 of 449 bytes at 0x84d790
+LibClamAV debug: [Bytecode JIT]: emitted function bc23f0_wrap of 16 bytes at 0x84d960
+LibClamAV debug: [Bytecode JIT]: emitted function bc24f0 of 1413 bytes at 0x84d980
+LibClamAV debug: [Bytecode JIT]: emitted function bc24f0_wrap of 16 bytes at 0x84df10
+LibClamAV debug: [Bytecode JIT]: emitted function bc25f0 of 568 bytes at 0x84df30
+LibClamAV debug: [Bytecode JIT]: emitted function bc25f0_wrap of 16 bytes at 0x84e170
+LibClamAV debug: [Bytecode JIT]: emitted function bc26f0 of 69 bytes at 0x84e190
+LibClamAV debug: [Bytecode JIT]: emitted function bc26f0_wrap of 16 bytes at 0x84e1e0
+LibClamAV debug: [Bytecode JIT]: emitted function bc27f0 of 84 bytes at 0x84e200
+LibClamAV debug: [Bytecode JIT]: emitted function bc27f0_wrap of 16 bytes at 0x84e260
+LibClamAV debug: [Bytecode JIT]: emitted function bc28f0 of 67 bytes at 0x84e280
+LibClamAV debug: [Bytecode JIT]: emitted function bc28f0_wrap of 16 bytes at 0x84e2d0
+LibClamAV debug: [Bytecode JIT]: emitted function bc29f0 of 826 bytes at 0x84e2f0
+LibClamAV debug: [Bytecode JIT]: emitted function bc29f0_wrap of 16 bytes at 0x84e630
+LibClamAV debug: [Bytecode JIT]: emitted function bc30f0 of 498 bytes at 0x84e650
+LibClamAV debug: [Bytecode JIT]: emitted function bc30f0_wrap of 16 bytes at 0x84e850
+LibClamAV debug: [Bytecode JIT]: emitted function bc31f0 of 143 bytes at 0x84e870
+LibClamAV debug: [Bytecode JIT]: emitted function bc31f0_wrap of 16 bytes at 0x84e910
+LibClamAV debug: [Bytecode JIT]: emitted function bc32f0 of 455 bytes at 0x84e930
+LibClamAV debug: [Bytecode JIT]: emitted function bc32f0_wrap of 16 bytes at 0x84eb00
+LibClamAV debug: [Bytecode JIT]: emitted function bc33f0 of 614 bytes at 0x84eb20
+LibClamAV debug: [Bytecode JIT]: emitted function bc33f0_wrap of 16 bytes at 0x84ed90
+LibClamAV debug: [Bytecode JIT]: emitted function bc34f0 of 143 bytes at 0x84edb0
+LibClamAV debug: [Bytecode JIT]: emitted function bc34f0_wrap of 16 bytes at 0x84ee50
+LibClamAV debug: [Bytecode JIT]: emitted function bc35f0 of 254 bytes at 0x84ee70
+LibClamAV debug: [Bytecode JIT]: emitted function bc35f0_wrap of 16 bytes at 0x84ef80
+LibClamAV debug: [Bytecode JIT]: emitted function bc36f0 of 96 bytes at 0x84efa0
+LibClamAV debug: [Bytecode JIT]: emitted function bc36f0_wrap of 16 bytes at 0x84f010
+LibClamAV debug: [Bytecode JIT]: emitted function bc37f0 of 482 bytes at 0x84f030
+LibClamAV debug: [Bytecode JIT]: emitted function bc37f0_wrap of 16 bytes at 0x84f220
+LibClamAV debug: [Bytecode JIT]: emitted function bc38f0 of 1031 bytes at 0x84f240
+LibClamAV debug: [Bytecode JIT]: emitted function bc38f1 of 695 bytes at 0x84f650
+LibClamAV debug: [Bytecode JIT]: emitted function bc38f0_wrap of 16 bytes at 0x84f910
+LibClamAV debug: [Bytecode JIT]: emitted function bc39f0 of 583 bytes at 0x84f930
+LibClamAV debug: [Bytecode JIT]: emitted function bc39f0_wrap of 16 bytes at 0x84fb80
+LibClamAV debug: Bytecode: 39 bytecode prepared with JIT
 Scanning test.txt
 LibClamAV debug: in cli_magic_scandesc (reclevel: 0/16)
 LibClamAV debug: in magic_scandesc
 LibClamAV debug: Recognized ASCII text
-LibClamAV debug: cache_check: 3a7c1fb5710e3a028608e99ae88dbc5b is negative
+LibClamAV info: DEBUG: in cli_ac_initdata, init offmatrix for part sigs
+LibClamAV info: DEBUG: called from cli_filetype2 loc1
+LibClamAV info: DEBUG: have part sigs(2071) and have mdata with min_partno=1 and scan for [NWSTARToooTESTkkkMYOtestTEST
+]
+LibClamAV info: DEBUG: in cli_ac_scanbuff, checking [N]
+LibClamAV info: DEBUG: not leaf
+LibClamAV info: DEBUG: in cli_ac_scanbuff, checking [W]
+LibClamAV info: DEBUG: not leaf
+LibClamAV info: DEBUG: in cli_ac_scanbuff, checking [S]
+LibClamAV info: DEBUG: not leaf
+LibClamAV info: DEBUG: in cli_ac_scanbuff, checking [T]
+LibClamAV info: DEBUG: not leaf
+LibClamAV info: DEBUG: in cli_ac_scanbuff, checking [A]
+LibClamAV info: DEBUG: not leaf
+LibClamAV info: DEBUG: in cli_ac_scanbuff, checking [R]
+LibClamAV info: DEBUG: not leaf
+LibClamAV info: DEBUG: in cli_ac_scanbuff, checking [T]
+LibClamAV info: DEBUG: not leaf
+LibClamAV info: DEBUG: in cli_ac_scanbuff, checking [o]
+LibClamAV info: DEBUG: not leaf
+LibClamAV info: DEBUG: in cli_ac_scanbuff, checking [o]
+LibClamAV info: DEBUG: not leaf
+LibClamAV info: DEBUG: in cli_ac_scanbuff, checking [o]
+LibClamAV info: DEBUG: leaf...
+LibClamAV info: DEBUG: try virname=test_ndb_partsig.UNOFFICIAL, pattern=o, partno(1)/parts(2)
+LibClamAV info: DEBUG: find possible match from [7] to [9] against [test_ndb_partsig.UNOFFICIAL]
+LibClamAV info: DEBUG: none pt
+LibClamAV info: DEBUG: try next pattern...
+LibClamAV info: DEBUG: none patt
+LibClamAV info: DEBUG: in cli_ac_scanbuff, checking [T]
+LibClamAV info: DEBUG: not leaf
+LibClamAV info: DEBUG: in cli_ac_scanbuff, checking [E]
+LibClamAV info: DEBUG: not leaf
+LibClamAV info: DEBUG: in cli_ac_scanbuff, checking [S]
+LibClamAV info: DEBUG: not leaf
+LibClamAV info: DEBUG: in cli_ac_scanbuff, checking [T]
+LibClamAV info: DEBUG: not leaf
+LibClamAV info: DEBUG: in cli_ac_scanbuff, checking [k]
+LibClamAV info: DEBUG: not leaf
+LibClamAV info: DEBUG: in cli_ac_scanbuff, checking [k]
+LibClamAV info: DEBUG: not leaf
+LibClamAV info: DEBUG: in cli_ac_scanbuff, checking [k]
+LibClamAV info: DEBUG: leaf...
+LibClamAV info: DEBUG: try virname=test_ndb_partsig.UNOFFICIAL, pattern=k, partno(2)/parts(2)
+LibClamAV info: DEBUG: none patt
+LibClamAV info: DEBUG: in cli_ac_scanbuff, checking [M]
+LibClamAV info: DEBUG: not leaf
+LibClamAV info: DEBUG: in cli_ac_scanbuff, checking [Y]
+LibClamAV info: DEBUG: not leaf
+LibClamAV info: DEBUG: in cli_ac_scanbuff, checking [O]
+LibClamAV info: DEBUG: not leaf
+LibClamAV info: DEBUG: in cli_ac_scanbuff, checking [t]
+LibClamAV info: DEBUG: not leaf
+LibClamAV info: DEBUG: in cli_ac_scanbuff, checking [e]
+LibClamAV info: DEBUG: not leaf
+LibClamAV info: DEBUG: in cli_ac_scanbuff, checking [s]
+LibClamAV info: DEBUG: not leaf
+LibClamAV info: DEBUG: in cli_ac_scanbuff, checking [t]
+LibClamAV info: DEBUG: leaf...
+LibClamAV info: DEBUG: try virname=Flooder.Nestea-2, pattern=e, partno(2)/parts(2)
+LibClamAV info: DEBUG: none patt
+LibClamAV info: DEBUG: in cli_ac_scanbuff, checking [T]
+LibClamAV info: DEBUG: not leaf
+LibClamAV info: DEBUG: in cli_ac_scanbuff, checking [E]
+LibClamAV info: DEBUG: not leaf
+LibClamAV info: DEBUG: in cli_ac_scanbuff, checking [S]
+LibClamAV info: DEBUG: not leaf
+LibClamAV info: DEBUG: in cli_ac_scanbuff, checking [T]
+LibClamAV info: DEBUG: not leaf
+LibClamAV info: DEBUG: in cli_ac_scanbuff, checking [
+]
+LibClamAV info: DEBUG: not leaf
+LibClamAV info: DEBUG: in cli_ac_initdata, init offmatrix for part sigs
+LibClamAV info: DEBUG: called from cli_filetype2 loc2
+LibClamAV info: DEBUG: have part sigs(2071) and have mdata with min_partno=1 and scan for [¾“aD_¤“;IÄ³¤“]
+LibClamAV info: DEBUG: in cli_ac_scanbuff, checking [¾]
+LibClamAV info: DEBUG: not leaf
+LibClamAV info: DEBUG: in cli_ac_scanbuff, checking [“]
+LibClamAV info: DEBUG: not leaf
+LibClamAV info: DEBUG: in cli_ac_scanbuff, checking [a]
+LibClamAV info: DEBUG: not leaf
+LibClamAV info: DEBUG: in cli_ac_scanbuff, checking [D]
+LibClamAV info: DEBUG: not leaf
+LibClamAV info: DEBUG: in cli_ac_scanbuff, checking [_]
+LibClamAV info: DEBUG: not leaf
+LibClamAV info: DEBUG: in cli_ac_scanbuff, checking [¤]
+LibClamAV info: DEBUG: not leaf
+LibClamAV info: DEBUG: in cli_ac_scanbuff, checking [“]
+LibClamAV info: DEBUG: not leaf
+LibClamAV info: DEBUG: in cli_ac_scanbuff, checking []
+LibClamAV info: DEBUG: not leaf
+LibClamAV info: DEBUG: in cli_ac_scanbuff, checking [;]
+LibClamAV info: DEBUG: not leaf
+LibClamAV info: DEBUG: in cli_ac_scanbuff, checking [I]
+LibClamAV info: DEBUG: not leaf
+LibClamAV info: DEBUG: in cli_ac_scanbuff, checking [Ä]
+LibClamAV info: DEBUG: not leaf
+LibClamAV info: DEBUG: in cli_ac_scanbuff, checking [³]
+LibClamAV info: DEBUG: not leaf
+LibClamAV info: DEBUG: in cli_ac_scanbuff, checking [¤]
+LibClamAV info: DEBUG: not leaf
+LibClamAV info: DEBUG: in cli_ac_scanbuff, checking [“]
+LibClamAV info: DEBUG: not leaf
+LibClamAV debug: cache_check: 3b7e63a3e55565230b73dbbb60b570c8 is negative
+LibClamAV info: DEBUG: in cli_ac_initdata, init offmatrix for part sigs
 LibClamAV info: DEBUG: scan in bm_offmode=0 mode
-LibClamAV info: DEBUG: in cli_bm_scanbuff viroffset=0
-LibClamAV info: DEBUG: buffer=testtesttesttestMYOtestTEST
-LibClamAV info: DEBUG: pattern=testtesttesttestMYOtestTEST
-LibClamAV info: DEBUG: virus=test_hdb.UNOFFICIAL
+LibClamAV info: DEBUG: ac scan
+LibClamAV info: DEBUG: called from macther_run
+LibClamAV info: DEBUG: have part sigs(2071) and have mdata with min_partno=1 and scan for [NWSTARToooTESTkkkMYOtestTEST
+]
+LibClamAV info: DEBUG: in cli_ac_scanbuff, checking [N]
+LibClamAV info: DEBUG: not leaf
+LibClamAV info: DEBUG: in cli_ac_scanbuff, checking [W]
+LibClamAV info: DEBUG: not leaf
+LibClamAV info: DEBUG: in cli_ac_scanbuff, checking [S]
+LibClamAV info: DEBUG: not leaf
+LibClamAV info: DEBUG: in cli_ac_scanbuff, checking [T]
+LibClamAV info: DEBUG: not leaf
+LibClamAV info: DEBUG: in cli_ac_scanbuff, checking [A]
+LibClamAV info: DEBUG: not leaf
+LibClamAV info: DEBUG: in cli_ac_scanbuff, checking [R]
+LibClamAV info: DEBUG: not leaf
+LibClamAV info: DEBUG: in cli_ac_scanbuff, checking [T]
+LibClamAV info: DEBUG: not leaf
+LibClamAV info: DEBUG: in cli_ac_scanbuff, checking [o]
+LibClamAV info: DEBUG: not leaf
+LibClamAV info: DEBUG: in cli_ac_scanbuff, checking [o]
+LibClamAV info: DEBUG: not leaf
+LibClamAV info: DEBUG: in cli_ac_scanbuff, checking [o]
+LibClamAV info: DEBUG: leaf...
+LibClamAV info: DEBUG: try virname=test_ndb_partsig.UNOFFICIAL, pattern=o, partno(1)/parts(2)
+LibClamAV info: DEBUG: find possible match from [7] to [9] against [test_ndb_partsig.UNOFFICIAL]
+LibClamAV info: DEBUG: in cli_scanbuff and doing partial sig scan with acmode=3
+LibClamAV info: DEBUG: sig=178, partno=1, min_partno=1
+LibClamAV info: DEBUG: mdata->offmatrix[pt->sigid - 1]=0
+LibClamAV info: DEBUG: offmatrix[pt->partno - 1][0]=0
+LibClamAV info: DEBUG: offmatrix[pt->partno - 1][offmatrix[pt->partno - 1][0]]=10
+LibClamAV info: DEBUG: offmatrix[pt->partno - 1][offmatrix[pt->partno - 1][0]]=10
+LibClamAV info: DEBUG: try next same...
+LibClamAV info: DEBUG: none pt
+LibClamAV info: DEBUG: try next pattern...
+LibClamAV info: DEBUG: none patt
+LibClamAV info: DEBUG: in cli_ac_scanbuff, checking [T]
+LibClamAV info: DEBUG: not leaf
+LibClamAV info: DEBUG: in cli_ac_scanbuff, checking [E]
+LibClamAV info: DEBUG: not leaf
+LibClamAV info: DEBUG: in cli_ac_scanbuff, checking [S]
+LibClamAV info: DEBUG: not leaf
+LibClamAV info: DEBUG: in cli_ac_scanbuff, checking [T]
+LibClamAV info: DEBUG: not leaf
+LibClamAV info: DEBUG: in cli_ac_scanbuff, checking [k]
+LibClamAV info: DEBUG: not leaf
+LibClamAV info: DEBUG: in cli_ac_scanbuff, checking [k]
+LibClamAV info: DEBUG: not leaf
+LibClamAV info: DEBUG: in cli_ac_scanbuff, checking [k]
+LibClamAV info: DEBUG: leaf...
+LibClamAV info: DEBUG: try virname=test_ndb_partsig.UNOFFICIAL, pattern=k, partno(2)/parts(2)
+LibClamAV info: DEBUG: find possible match from [14] to [16] against [test_ndb_partsig.UNOFFICIAL]
+LibClamAV info: DEBUG: in cli_scanbuff and doing partial sig scan with acmode=3
+LibClamAV info: DEBUG: sig=178, partno=2, min_partno=2
+LibClamAV info: DEBUG: mdata->offmatrix[pt->sigid - 1]=144158824
+LibClamAV info: DEBUG: maxdist=6, mindist=4,realoff - offmatrix[pt->partno - 2][j]=4
+LibClamAV info: DEBUG: pt->type=0
 LibClamAV debug: hashtab: Freeing hashset, elements: 0, capacity: 0
-LibClamAV debug: test_hdb.UNOFFICIAL found
-LibClamAV debug: FP SIGNATURE: 3a7c1fb5710e3a028608e99ae88dbc5b:28:test_hdb.UNOFFICIAL
-LibClamAV debug: cli_magic_scandesc: returning 1  at line 2671
-test.txt: test_hdb.UNOFFICIAL FOUND
+LibClamAV debug: test_ndb_partsig.UNOFFICIAL found
+LibClamAV debug: FP SIGNATURE: 3b7e63a3e55565230b73dbbb60b570c8:29:test_ndb_partsig.UNOFFICIAL
+LibClamAV debug: cli_magic_scandesc: returning 1  at line 2678
+test.txt: test_ndb_partsig.UNOFFICIAL FOUND
 LibClamAV debug: Cleaning up phishcheck
 LibClamAV debug: Freeing phishcheck struct
 LibClamAV debug: Phishcheck cleaned up
 
 ----------- SCAN SUMMARY -----------
-Known viruses: 1329689
-Engine version: devel-20121126
+Known viruses: 1329152
+Engine version: devel-c550541
 Scanned directories: 0
 Scanned files: 1
 Infected files: 1
 Data scanned: 0.00 MB
 Data read: 0.00 MB (ratio 0.00:1)
-Time: 4.863 sec (0 m 4 s)
+Time: 5.463 sec (0 m 5 s)
