@@ -1120,6 +1120,8 @@ static int cli_scanhtml(cli_ctx *ctx)
 
 static int cli_scanscript(cli_ctx *ctx)
 {
+
+    cli_infomsg(NULL,"DEBUG: in cli_scanscript\n");//CHR
 	const unsigned char *buff;
 	unsigned char* normalized;
 	struct text_norm_state state;
@@ -1189,7 +1191,9 @@ static int cli_scanscript(cli_ctx *ctx)
 		    /* we can continue to scan in memory */
 		}
 		/* when we flush the buffer also scan */
+        cli_infomsg(NULL,"DEBUG: in cli_scanscript, scanning [%s]\n",state.out);//CHR
 		if(cli_scanbuff(state.out, state.out_pos, offset, ctx, CL_TYPE_TEXT_ASCII, mdata) == CL_VIRUS) {
+            cli_infomsg(NULL,"DEBUG: will break...\n");//CHR
 		    if (SCAN_ALL)
 			viruses_found++;
 		    else {
@@ -1217,17 +1221,26 @@ static int cli_scanscript(cli_ctx *ctx)
 	}
 	free(normalized);
 	if(ret != CL_VIRUS || SCAN_ALL)  {
-	    if ((ret = cli_lsig_eval(ctx, troot, &tmdata, NULL, NULL)) == CL_VIRUS)
+        cli_infomsg(NULL,"DEBUG: in cli_scanscript, doing cli_lsig_eval\n");//CHR
+	    if ((ret = cli_lsig_eval(ctx, troot, &tmdata, NULL, NULL)) == CL_VIRUS){
+        cli_infomsg(NULL,"DEBUG: here for troot\n");//CHR
 		viruses_found++;
+        }
 	    if(ret != CL_VIRUS || SCAN_ALL)
-		if ((ret = cli_lsig_eval(ctx, groot, &gmdata, NULL, NULL)) == CL_VIRUS)
+		if ((ret = cli_lsig_eval(ctx, groot, &gmdata, NULL, NULL)) == CL_VIRUS){
+            cli_infomsg(NULL,"DEBUG: here for groot\n");//CHR
 		    viruses_found++;
+            }
 	}
 	cli_ac_freedata(&tmdata);
 	cli_ac_freedata(&gmdata);
 
-	if (SCAN_ALL && viruses_found)
+	if (SCAN_ALL && viruses_found){
+        //cli_infomsg(NULL,"DEBUG: ret [%d] from cli_scanscript\n",CL_VIRUS);//CHR
 	    return CL_VIRUS;
+        }
+        cli_infomsg(NULL,"DEBUG: ret [%d] from cli_scanscript\n",CL_VIRUS);//CHR
+
 	return ret;
 }
 
@@ -2351,6 +2364,7 @@ static int magic_scandesc(cli_ctx *ctx, cli_file_t type)
 
     if(type != CL_TYPE_IGNORED && ctx->engine->sdb) {
 	if((ret = cli_scanraw(ctx, type, 0, &dettype, hash)) == CL_VIRUS) {
+        cli_infomsg(NULL,"DEBUG: at ......1\n");//CHR
 	    ret = cli_checkfp(hash, hashed_size, ctx);
 	    cli_bitset_free(ctx->hook_lsig_matches);
 	    ctx->hook_lsig_matches = old_hook_lsig_matches;
@@ -2617,11 +2631,15 @@ static int magic_scandesc(cli_ctx *ctx, cli_file_t type)
 	    break;
 
 	case CL_TYPE_TEXT_ASCII:
+           cli_infomsg(NULL,"DEBUG: at ......2\n");//CHR
+
  //       cli_infomsg(NULL,"DEBUG: in CL_TYPE_TEXT_ASCII \n"); //CHR
 	    if(SCAN_STRUCTURED && (DCONF_OTHER & OTHER_CONF_DLP)){
 		/* TODO: consider calling this from cli_scanscript() for
 		 * a normalised text
 		 */
+         cli_infomsg(NULL,"DEBUG: at ......3\n");//CHR
+
 		ret = cli_scan_structured(ctx);}
    //     else{cli_infomsg(NULL,"DEBUG: not doing cli_scan_structured\n");//CHR
         //}
@@ -2652,6 +2670,7 @@ static int magic_scandesc(cli_ctx *ctx, cli_file_t type)
     /* CL_TYPE_HTML: raw HTML files are not scanned, unless safety measure activated via DCONF */
     if(type != CL_TYPE_IGNORED && (type != CL_TYPE_HTML || !(DCONF_DOC & DOC_CONF_HTML_SKIPRAW)) && !ctx->engine->sdb) {
 	res = cli_scanraw(ctx, type, typercg, &dettype, hash);
+    cli_infomsg(NULL,"DEBUG: at ......4 res=%d\n",res);//CHR
 	if(res != CL_CLEAN) {
 	    switch(res) {
 		/* List of scan halts, runtime errors only! */
@@ -2697,6 +2716,7 @@ static int magic_scandesc(cli_ctx *ctx, cli_file_t type)
     }
 
     ctx->recursion++;
+    cli_infomsg(NULL,"DEBUG: type=%d\n",type);//CHR
     switch(type) {
 	/* bytecode hooks triggered by a lsig must be a hook
 	 * called from one of the functions here */
@@ -2706,8 +2726,13 @@ static int magic_scandesc(cli_ctx *ctx, cli_file_t type)
 	case CL_TYPE_TEXT_UTF8:
 	    perf_nested_start(ctx, PERFT_SCRIPT, PERFT_SCAN);
 	    if((DCONF_DOC & DOC_CONF_SCRIPT) && dettype != CL_TYPE_HTML && ret != CL_VIRUS)
+        {cli_infomsg(NULL,"DEBUG: at ......5\n");//CHR    
 	        ret = cli_scanscript(ctx);
+            cli_infomsg(NULL,"DEBUG: ret=%d\n",ret);//CHR
+            }
 	    if(SCAN_MAIL && (DCONF_MAIL & MAIL_CONF_MBOX) && ret != CL_VIRUS && (ctx->container_type == CL_TYPE_MAIL || dettype == CL_TYPE_MAIL)) {
+            cli_infomsg(NULL,"DEBUG: at ......6\n");//CHR
+
 		ret = cli_fmap_scandesc(ctx, CL_TYPE_MAIL, 0, NULL, AC_SCAN_VIR, NULL, NULL);
 	    }
 	    perf_nested_stop(ctx, PERFT_SCRIPT, PERFT_SCAN);

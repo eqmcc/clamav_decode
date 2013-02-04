@@ -272,6 +272,8 @@ static unsigned typealign(const struct cli_bc *bc, uint16_t type)
 
 int cli_bytecode_context_setfuncid(struct cli_bc_ctx *ctx, const struct cli_bc *bc, unsigned funcid)
 {
+
+    cli_infomsg(NULL,"DEBUG: in cli_bytecode_context_setfuncid bc->num_func=%d\n",bc->num_func);//CHR
     unsigned i, s=0;
     const struct cli_bc_func *func;
     if (funcid >= bc->num_func) {
@@ -644,7 +646,7 @@ static int parseLSig(struct cli_bc *bc, char *buffer)
 	/* Not a logical signature, but we still have a virusname */
 	bc->lsig = NULL;
     }
-
+    //cli_infomsg(NULL,"DEBUG: in parseLSig virname=[%s]\n",bc->lsig);//CHR
     return CL_SUCCESS;
 }
 
@@ -1458,6 +1460,7 @@ int cli_bytecode_load(struct cli_bc *bc, FILE *f, struct cli_dbio *dbio, int tru
 	row++;
 	switch (state) {
 	    case PARSE_BC_LSIG:
+        //cli_infomsg(NULL,"DEBUG: in cli_bytecode_load, with PARSE_BC_LSIG [%s]\n",buffer);//CHR
 		rc = parseLSig(bc, buffer);
 		if (rc == CL_BREAK) /* skip */ {
 		    bc->state = bc_skip;
@@ -1472,6 +1475,8 @@ int cli_bytecode_load(struct cli_bc *bc, FILE *f, struct cli_dbio *dbio, int tru
 		state = PARSE_BC_TYPES;
 		break;
 	    case PARSE_BC_TYPES:
+        //if(bc->lsig=='t')
+        //cli_infomsg(NULL,"DEBUG: in cli_bytecode_load, with PARSE_BC_TYPES [%s]\n",buffer);//CHR
 		rc = parseTypes(bc, (unsigned char*)buffer);
 		if (rc != CL_SUCCESS) {
 		    cli_errmsg("Error at bytecode line %u\n", row);
@@ -1481,6 +1486,9 @@ int cli_bytecode_load(struct cli_bc *bc, FILE *f, struct cli_dbio *dbio, int tru
 		state = PARSE_BC_APIS;
 		break;
 	    case PARSE_BC_APIS:
+        //if(*bc->lsig=='t')
+        //cli_infomsg(NULL,"DEBUG: %d\n",((bc->lsig)=='t'));
+        //cli_infomsg(NULL,"DEBUG: in cli_bytecode_load, with PARSE_BC_APIS [%s]\n",buffer);//CHR
 		rc = parseApis(bc, (unsigned char*)buffer);
 		if (rc == CL_BREAK) /* skip */ {
 		    bc->state = bc_skip;
@@ -1495,6 +1503,8 @@ int cli_bytecode_load(struct cli_bc *bc, FILE *f, struct cli_dbio *dbio, int tru
 		state = PARSE_BC_GLOBALS;
 		break;
 	    case PARSE_BC_GLOBALS:
+        //if(bc->lsig=='t')
+        //cli_infomsg(NULL,"DEBUG: in cli_bytecode_load, with PARSE_BC_GLOBALS [%s]\n",buffer);//CHR
 		rc = parseGlobals(bc, (unsigned char*)buffer);
 		if (rc == CL_BREAK) /* skip */ {
 		    bc->state = bc_skip;
@@ -1509,6 +1519,8 @@ int cli_bytecode_load(struct cli_bc *bc, FILE *f, struct cli_dbio *dbio, int tru
 		state = PARSE_MD_OPT_HEADER;
 		break;
 	    case PARSE_MD_OPT_HEADER:
+        //if(bc->lsig=='t')
+        //cli_infomsg(NULL,"DEBUG: in cli_bytecode_load, with PARSE_MD_OPT_HEADER [%s]\n",buffer);//CHR
 		if (buffer[0] == 'D') {
 		    rc = parseMD(bc, (unsigned char*)buffer);
 		    if (rc != CL_SUCCESS) {
@@ -1534,6 +1546,8 @@ int cli_bytecode_load(struct cli_bc *bc, FILE *f, struct cli_dbio *dbio, int tru
 		state = PARSE_BB;
 		break;
 	    case PARSE_BB:
+        //if(bc->lsig=='t')
+        //cli_infomsg(NULL,"DEBUG: in cli_bytecode_load, with PARSE_BB [%s]\n",buffer);//CHR
 		rc = parseBB(bc, current_func, bb++, (unsigned char*)buffer);
 		if (rc != CL_SUCCESS) {
 		    cli_errmsg("Error at bytecode line %u\n", row);
@@ -1903,6 +1917,8 @@ static int calc_gepz(struct cli_bc *bc, struct cli_bc_func *func, uint16_t tid, 
 
 static int cli_bytecode_prepare_interpreter(struct cli_bc *bc)
 {
+
+    cli_infomsg(NULL,"DEBUG: in cli_bytecode_prepare_interpreter for kind=[%d]\n", bc->kind);//CHR
     unsigned i, j, k;
     uint64_t *gmap;
     unsigned bcglobalid = cli_apicall_maxglobal - _FIRST_GLOBAL+2;
@@ -2379,6 +2395,7 @@ static int run_builtin_or_loaded(struct cli_all_bc *bcs, uint8_t kind, const cha
     if (i == bcs->count)
 	bc = NULL;
     if (!bc) {
+    cli_infomsg(NULL,"DEBUG: will load buitin test sig\n");//CHR
 	/* no loaded bytecode found, load the builtin one! */
 	struct cli_dbio dbio;
 	bc = cli_calloc(1, sizeof(*bc));
@@ -2406,6 +2423,7 @@ static int run_builtin_or_loaded(struct cli_all_bc *bcs, uint8_t kind, const cha
 	}
     }
     rc = cli_bytecode_prepare_interpreter(bc);
+    cli_infomsg(NULL,"DEBUG: after cli_bytecode_prepare_interpreter, bc->state=%d\n",bc->state);//CHR
     if (rc) {
 	cli_errmsg("Failed to prepare %s %s bytecode for interpreter: %s\n",
 		   builtin ? "builtin" : "loaded", desc, cl_strerror(rc));
@@ -2419,6 +2437,8 @@ static int run_builtin_or_loaded(struct cli_all_bc *bcs, uint8_t kind, const cha
 	cli_bytecode_context_setfuncid(ctx, bc, 0);
 	cli_dbgmsg("Bytecode: %s running (%s)\n", desc,
 		   builtin ? "builtin" : "loaded");
+    cli_infomsg(NULL,"Bytecode: %s running (%s)\n", desc,builtin ? "builtin" : "loaded");
+
 	rc = cli_bytecode_run(bcs, bc, ctx);
     }
     if (rc) {
@@ -2445,6 +2465,7 @@ int cli_bytecode_prepare2(struct cl_engine *engine, struct cli_all_bc *bcs, unsi
 
     engine->bytecode_mode = CL_BYTECODE_MODE_AUTO;
     cli_detect_environment(&bcs->env);
+    cli_infomsg(NULL,"DEBUG: in cli_bytecode_prepare2, bcs->env.arch=%d \n",bcs->env.arch);//CHR
     switch (bcs->env.arch) {
 	case arch_i386:
 	case arch_x86_64:
@@ -2476,6 +2497,7 @@ int cli_bytecode_prepare2(struct cl_engine *engine, struct cli_all_bc *bcs, unsi
 	    break;
     }
     cli_dbgmsg("Bytecode: mode is %d\n", engine->bytecode_mode);
+    cli_infomsg(NULL,"DEBUG: Bytecode: mode is %d\n",engine->bytecode_mode);//CHR
 
     ctx = cli_bytecode_context_alloc();
     if (!ctx) {
@@ -2483,12 +2505,15 @@ int cli_bytecode_prepare2(struct cl_engine *engine, struct cli_all_bc *bcs, unsi
 	return CL_EMEM;
     }
     rc = run_builtin_or_loaded(bcs, BC_STARTUP, builtin_bc_startup, ctx, "BC_STARTUP");
+    cli_infomsg(NULL,"DEBUG: after run_builtin_or_loaded, rc=%d\n",rc);//CHR
     if (rc != CL_SUCCESS) {
 	cli_warnmsg("Bytecode: BC_STARTUP failed to run, disabling ALL bytecodes! Please report to http://bugs.clamav.net\n");
 	ctx->bytecode_disable_status = 2;
     } else {
+    cli_infomsg(NULL,"Bytecode: disable status is %d\n", ctx->bytecode_disable_status);
 	cli_dbgmsg("Bytecode: disable status is %d\n", ctx->bytecode_disable_status);
 	rc = cli_bytecode_context_getresult_int(ctx);
+    cli_infomsg(NULL,"DEBUG: cli_bytecode_context_getresult_int=%x\n",rc);//CHR
 	/* check magic number, don't use 0 here because it is too easy for a
 	 * buggy bytecode to return 0 */
 	if (rc != 0xda7aba5e) {
