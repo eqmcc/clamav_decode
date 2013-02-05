@@ -1120,6 +1120,7 @@ static int cli_scanhtml(cli_ctx *ctx)
 
 static int cli_scanscript(cli_ctx *ctx)
 {
+    cli_infomsg(NULL,"DEBUG: in cli_scanscript\n");//CHR
 	const unsigned char *buff;
 	unsigned char* normalized;
 	struct text_norm_state state;
@@ -2171,7 +2172,9 @@ static int cli_scanraw(cli_ctx *ctx, cli_file_t type, uint8_t typercg, cli_file_
     }
 
     if(ret == CL_VIRUS)
-	cli_dbgmsg("%s found\n", cli_get_last_virus(ctx));
+	{cli_dbgmsg("%s found\n", cli_get_last_virus(ctx));
+        cli_infomsg(NULL,"DEBUG: %s found\n",cli_get_last_virus(ctx));//CHR
+    }
 
     return ret;
 }
@@ -2257,7 +2260,7 @@ static void emax_reached(cli_ctx *ctx) {
 
 static int magic_scandesc(cli_ctx *ctx, cli_file_t type)
 {
- //   cli_infomsg(NULL,"DEBUG: in magic_scandesc with type=%d (CL_TYPE_ANY=0)\n",type);//CHR
+    cli_infomsg(NULL,"DEBUG: in magic_scandesc with type=%d (CL_TYPE_ANY=0)\n",type);//CHR
 	int ret = CL_CLEAN;
 	cli_file_t dettype = 0;
 	uint8_t typercg = 1;
@@ -2617,14 +2620,14 @@ static int magic_scandesc(cli_ctx *ctx, cli_file_t type)
 	    break;
 
 	case CL_TYPE_TEXT_ASCII:
- //       cli_infomsg(NULL,"DEBUG: in CL_TYPE_TEXT_ASCII \n"); //CHR
+        cli_infomsg(NULL,"DEBUG: in CL_TYPE_TEXT_ASCII \n"); //CHR
 	    if(SCAN_STRUCTURED && (DCONF_OTHER & OTHER_CONF_DLP)){
 		/* TODO: consider calling this from cli_scanscript() for
 		 * a normalised text
 		 */
 		ret = cli_scan_structured(ctx);}
-   //     else{cli_infomsg(NULL,"DEBUG: not doing cli_scan_structured\n");//CHR
-        //}
+        else{cli_infomsg(NULL,"DEBUG: not doing cli_scan_structured\n");//CHR
+        }
 	    break;
 
 	default:
@@ -2651,7 +2654,9 @@ static int magic_scandesc(cli_ctx *ctx, cli_file_t type)
 
     /* CL_TYPE_HTML: raw HTML files are not scanned, unless safety measure activated via DCONF */
     if(type != CL_TYPE_IGNORED && (type != CL_TYPE_HTML || !(DCONF_DOC & DOC_CONF_HTML_SKIPRAW)) && !ctx->engine->sdb) {
+    cli_infomsg(NULL,"DEBUG: do cli_scanraw\n");//CHR
 	res = cli_scanraw(ctx, type, typercg, &dettype, hash);
+    cli_infomsg(NULL,"DEBUG: after cli_scanraw res=%d\n",res);//CHR
 	if(res != CL_CLEAN) {
 	    switch(res) {
 		/* List of scan halts, runtime errors only! */
@@ -2755,7 +2760,7 @@ static int magic_scandesc(cli_ctx *ctx, cli_file_t type)
 
 int cli_magic_scandesc(int desc, cli_ctx *ctx)
 {
- //   cli_infomsg(NULL,"DEBUG: in cli_magic_scandesc\n");//CHR
+   cli_infomsg(NULL,"DEBUG: in cli_magic_scandesc\n");//CHR
     STATBUF sb;
     int ret;
 
@@ -2802,7 +2807,7 @@ int cl_scandesc(int desc, const char **virname, unsigned long int *scanned, cons
 /* length = 0, till the end */
 int cli_map_scandesc(cl_fmap_t *map, off_t offset, size_t length, cli_ctx *ctx)
 {
- //   cli_infomsg(NULL,"DEBUG: in cli_map_scandesc\n"); //CHR
+    cli_infomsg(NULL,"DEBUG: in cli_map_scandesc\n"); //CHR
     off_t old_off = map->nested_offset;
     size_t old_len = map->len;
     size_t old_real_len = map->real_len;
@@ -2861,7 +2866,7 @@ int cli_mem_scandesc(const void *buffer, size_t length, cli_ctx *ctx)
 
 static int scan_common(int desc, cl_fmap_t *map, const char **virname, unsigned long int *scanned, const struct cl_engine *engine, unsigned int scanoptions, void *context)
 {
- //   cli_infomsg(NULL,"DEBUG: in scan_common\n"); //CHR
+    cli_infomsg(NULL,"DEBUG: in scan_common\n"); //CHR
     cli_ctx ctx;
     int rc;
 
@@ -2923,6 +2928,7 @@ static int scan_common(int desc, cl_fmap_t *map, const char **virname, unsigned 
 
 int cl_scandesc_callback(int desc, const char **virname, unsigned long int *scanned, const struct cl_engine *engine, unsigned int scanoptions, void *context)
 {
+    cli_infomsg(NULL,"DEBUG: in cl_scandesc_callback\n");//CHR
     return scan_common(desc, NULL, virname, scanned, engine, scanoptions, context);
 }
 

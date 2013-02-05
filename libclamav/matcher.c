@@ -867,6 +867,7 @@ int cli_fmap_scandesc(cli_ctx *ctx, cli_file_t ftype, uint8_t ftonly, struct cli
 		if(info.exeinfo.section)
 		    free(info.exeinfo.section);
 		cli_hashset_destroy(&info.exeinfo.vinfo);
+        cli_infomsg(NULL,"DEBUG: return at here ret=%d\n",ret);//CHR
 		return ret;
 	    } else if((acmode & AC_SCAN_FT) && ret >= CL_TYPENO) {
 		if(ret > type)
@@ -931,8 +932,9 @@ int cli_fmap_scandesc(cli_ctx *ctx, cli_file_t ftype, uint8_t ftonly, struct cli
     }
 
     if(troot) {
-	if(ret != CL_VIRUS || SCAN_ALL)
-	    ret = cli_lsig_eval(ctx, troot, &tdata, &info, refhash);
+	if(ret != CL_VIRUS || SCAN_ALL){
+        cli_infomsg(NULL,"DEBUG: doing cli_lsig_eval for troot\n");//CHR
+	    ret = cli_lsig_eval(ctx, troot, &tdata, &info, refhash);}
 	if (ret == CL_VIRUS)
 	    viruses_found++;
 	cli_ac_freedata(&tdata);
@@ -941,14 +943,18 @@ int cli_fmap_scandesc(cli_ctx *ctx, cli_file_t ftype, uint8_t ftonly, struct cli
     }
 
     if(groot) {
-	if(ret != CL_VIRUS || SCAN_ALL)
+	if(ret != CL_VIRUS || SCAN_ALL){
+        cli_infomsg(NULL,"DEBUG: doing cli_lsig_eval for groot\n");//CHR
 	    ret = cli_lsig_eval(ctx, groot, &gdata, &info, refhash);
+        }
 	cli_ac_freedata(&gdata);
     }
 
     if(info.exeinfo.section)
 	free(info.exeinfo.section);
     cli_hashset_destroy(&info.exeinfo.vinfo);
+
+    cli_infomsg(NULL,"DEBUG: here ret=%d\n",ret);//CHR
 
     if (SCAN_ALL && viruses_found)
 	return CL_VIRUS;
