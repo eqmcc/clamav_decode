@@ -617,6 +617,7 @@ int cli_lsig_eval(cli_ctx *ctx, struct cli_matcher *root, struct cli_ac_data *ac
 	evalids = 0;
 	cli_ac_chkmacro(root, acdata, i);
 	if(cli_ac_chklsig(root->ac_lsigtable[i]->logic, root->ac_lsigtable[i]->logic + strlen(root->ac_lsigtable[i]->logic), acdata->lsigcnt[i], &evalcnt, &evalids, 0) == 1) {
+        cli_infomsg(NULL,"DEBUG: cli_ac_chklsig=1\n");//CHR
 	    if(root->ac_lsigtable[i]->tdb.container && root->ac_lsigtable[i]->tdb.container[0] != ctx->container_type)
 		continue;
 	    if(root->ac_lsigtable[i]->tdb.filesize && (root->ac_lsigtable[i]->tdb.filesize[0] > map->len || root->ac_lsigtable[i]->tdb.filesize[1] < map->len))
@@ -632,6 +633,7 @@ int cli_lsig_eval(cli_ctx *ctx, struct cli_matcher *root, struct cli_ac_data *ac
 	    }
 
 	    if(hash && root->ac_lsigtable[i]->tdb.handlertype) {
+        cli_infomsg(NULL,"DEBUG: will do tdb.handlertype\n");//CHR
 		if(memcmp(ctx->handlertype_hash, hash, 16)) {
 		    ctx->recursion++;
 		    memcpy(ctx->handlertype_hash, hash, 16);
@@ -649,6 +651,7 @@ int cli_lsig_eval(cli_ctx *ctx, struct cli_matcher *root, struct cli_ac_data *ac
 	    }
 
 	    if(root->ac_lsigtable[i]->tdb.icongrp1 || root->ac_lsigtable[i]->tdb.icongrp2) {
+            cli_infomsg(NULL,"DEBUG: do icongrp\n");//CHR
 		if(!target_info || target_info->status != 1)
 		    continue;
 		if(matchicon(ctx, &target_info->exeinfo, root->ac_lsigtable[i]->tdb.icongrp1, root->ac_lsigtable[i]->tdb.icongrp2) == CL_VIRUS) {
@@ -677,11 +680,13 @@ int cli_lsig_eval(cli_ctx *ctx, struct cli_matcher *root, struct cli_ac_data *ac
 		}
  		return CL_VIRUS;
 	    }
+        cli_infomsg(NULL,"DEBUG: have bc_idx=%d with id=%d and virname=%s\n",root->ac_lsigtable[i]->bc_idx,i,root->ac_lsigtable[i]->virname);//CHR
 	    if(cli_bytecode_runlsig(ctx, target_info, &ctx->engine->bcs, root->ac_lsigtable[i]->bc_idx, acdata->lsigcnt[i], acdata->lsigsuboff_first[i], map) == CL_VIRUS) {
 		if (SCAN_ALL) {
 		    viruses_found++;
 		    continue;
 		}
+        cli_infomsg(NULL,"DEBUG: ret=%d from cli_lsig_eval\n",CL_VIRUS);//CHR
  		return CL_VIRUS;
 	    }
 	}

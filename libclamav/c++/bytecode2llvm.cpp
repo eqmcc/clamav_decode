@@ -2123,6 +2123,7 @@ static int bytecode_execute(intptr_t code, struct cli_bc_ctx *ctx)
 int cli_vm_execute_jit(const struct cli_all_bc *bcs, struct cli_bc_ctx *ctx,
 		       const struct cli_bc_func *func)
 {
+    cli_dbgmsg_internal("DEBUG: in cli_vm_execute_jit\n");
     int ret;
     struct timeval tv0, tv1;
     struct watchdog_item witem;
@@ -2189,6 +2190,7 @@ static void addFPasses(FunctionPassManager &FPM, bool trusted, const TargetData 
 
 int cli_bytecode_prepare_jit(struct cli_all_bc *bcs)
 {
+    cli_dbgmsg_internal("DEBUG: in cli_bytecode_prepare_jit\n");
   if (!bcs->engine)
       return CL_EBYTECODE;
   ScopedExceptionHandler handler;
@@ -2442,6 +2444,8 @@ int cli_bytecode_init_jit(struct cli_all_bc *bcs, unsigned dconfmask)
 
 int cli_bytecode_done_jit(struct cli_all_bc *bcs, int partial)
 {
+    cli_dbgmsg_internal("DEBUG: in cli_bytecode_done_jit\n");
+
     LLVMApiScopedLock scopedLock;
     if (bcs->engine) {
 	if (bcs->engine->EE) {

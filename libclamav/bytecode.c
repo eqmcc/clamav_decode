@@ -284,6 +284,7 @@ int cli_bytecode_context_setfuncid(struct cli_bc_ctx *ctx, const struct cli_bc *
     ctx->bc = bc;
     ctx->numParams = func->numArgs;
     ctx->funcid = funcid;
+    cli_infomsg(NULL,"DEBUG: in cli_bytecode_context_setfuncidfunc->numArgs=%d\n",func->numArgs);//CHR
     if (func->numArgs) {
 	ctx->operands = cli_malloc(sizeof(*ctx->operands)*func->numArgs);
 	if (!ctx->operands) {
@@ -304,6 +305,8 @@ int cli_bytecode_context_setfuncid(struct cli_bc_ctx *ctx, const struct cli_bc *
     }
     s += 8;/* return value */
     ctx->bytes = s;
+    cli_infomsg(NULL,"DEBUG: ctx->bytes=%d\n",ctx->bytes);//CHR
+
     ctx->values = cli_malloc(s);
     if (!ctx->values) {
 	cli_errmsg("bytecode: error allocating memory for parameters\n");
@@ -1651,6 +1654,7 @@ int cli_bytecode_run(const struct cli_all_bc *bcs, const struct cli_bc *bc, stru
         cli_event_time_start(cctx->perf, PERFT_BYTECODE);
     ctx->env = &bcs->env;
     context_safe(ctx);
+    cli_infomsg(NULL,"DEBUG: in cli_bytecode_run, test_mode=%d, bc->state=%d\n",test_mode,bc->state);//CHR
     if (test_mode) {
 	jit_ev = cli_events_new(BCEV_LASTEVENT);
 	interp_ev = cli_events_new(BCEV_LASTEVENT);
@@ -1705,7 +1709,7 @@ int cli_bytecode_run(const struct cli_all_bc *bcs, const struct cli_bc *bc, stru
 	}
 	ctx->bc_events = jit_ev;
 	cli_dbgmsg("Bytecode %u: executing in JIT mode\n", bc->id);
-
+    cli_infomsg(NULL,"DEBUG: Bytecode %u: executing in JIT mode with jit_ev=%d\n",bc->id,(!!jit_ev));//CHR
 	ctx->on_jit = 1;
 	cli_event_time_start(jit_ev, BCEV_EXEC_TIME);
 	ret = cli_vm_execute_jit(bcs, ctx, &bc->funcs[ctx->funcid]);
@@ -1714,6 +1718,7 @@ int cli_bytecode_run(const struct cli_all_bc *bcs, const struct cli_bc *bc, stru
 	cli_event_int(jit_ev, BCEV_EXEC_RETURNVALUE, ret);
 	cli_event_string(jit_ev, BCEV_VIRUSNAME, ctx->virname);
 
+    cli_infomsg(NULL,"DEBUG: after execute virname=%s\n",ctx->virname);//CHR
 	/* need to be called here to catch any extracted but not yet scanned files
 	*/
 	if (ctx->outfd)
@@ -2330,11 +2335,15 @@ static int selfcheck(int jit, struct cli_bcengine *engine)
     rc = add_selfcheck(&bcs);
     if (rc == CL_SUCCESS) {
 	if (jit) {
+        cli_infomsg(NULL,"DEBUG: doing JIT\n");//CHR
 	    if (!bcs.engine) {
+        cli_infomsg(NULL,"DEBUG: JIT disabled\n");//CHR
 		cli_dbgmsg("bytecode: JIT disabled\n");
 		rc = CL_BREAK;/* no JIT - not fatal */
 	    } else {
+        cli_infomsg(NULL,"DEBUG: prepare jit\n");
 		rc = cli_bytecode_prepare_jit(&bcs);
+        cli_infomsg(NULL,"DEBUG: after prepare jit\n");
 	    }
 	} else {
 	    rc = cli_bytecode_prepare_interpreter(bcs.all_bcs);
@@ -2635,9 +2644,22 @@ int cli_bytecode_runlsig(cli_ctx *cctx, struct cli_target_info *tinfo,
     cli_bytecode_context_setfuncid(&ctx, bc, 0);
     ctx.hooks.match_counts = lsigcnt;
     ctx.hooks.match_offsets = lsigsuboff;
+ //CHR
+ int i=0;
+    while(lsigcnt[i]){
+    cli_infomsg(NULL,"DEBUG: in cli_bytecode_runlsig lsigcnt[%d]=%d\n",i,lsigcnt[i]);//CHR
+    ++i;}
+
+    i=0;
+    while(lsigsuboff[i]){//cli_infomsg(NULL,"DEBUG: in cli_bytecode_runlsig lsigsuboff[%d]=%d\n",i,lsigsuboff[i]);//CHR
+        ++i;}
+//CHR
+
+
     cli_bytecode_context_setctx(&ctx, cctx);
     cli_bytecode_context_setfile(&ctx, map);
     if (tinfo && tinfo->status == 1) {
+    cli_infomsg(NULL,"DEBUG: in tinfo\n");//CHR
 	ctx.sections = tinfo->exeinfo.section;
 	memset(&pehookdata, 0, sizeof(pehookdata));
 	pehookdata.offset = tinfo->exeinfo.offset;
@@ -2648,6 +2670,7 @@ int cli_bytecode_runlsig(cli_ctx *cctx, struct cli_target_info *tinfo,
 	ctx.resaddr = tinfo->exeinfo.res_addr;
     }
     if (bc->hook_lsig_id) {
+    cli_infomsg(NULL,"DEBUG: in cli_bytecode_runlsig hook lsig id %d matched (bc %d)\n", bc->hook_lsig_id, bc->id);//CHR
 	cli_dbgmsg("hook lsig id %d matched (bc %d)\n", bc->hook_lsig_id, bc->id);
 	/* this is a bytecode for a hook, defer running it until hook is
 	 * executed, so that it has all the info for the hook */
@@ -2669,6 +2692,7 @@ int cli_bytecode_runlsig(cli_ctx *cctx, struct cli_target_info *tinfo,
     }
     if (ctx.virname) {
 	int rc;
+    cli_infomsg(NULL,"DEBUG: in cli_bytecode_runlsig Bytecode found virus: %s\n", ctx.virname);//CHR
 	cli_dbgmsg("Bytecode found virus: %s\n", ctx.virname);
 	cli_append_virus(cctx, ctx.virname);
 	if (!strncmp(ctx.virname, "BC.Heuristics", 13))
@@ -2678,6 +2702,7 @@ int cli_bytecode_runlsig(cli_ctx *cctx, struct cli_target_info *tinfo,
 	cli_bytecode_context_clear(&ctx);
 	return rc;
     }
+    cli_infomsg(NULL,"DEBUG: you can not see me\n");//CHR
     ret = cli_bytecode_context_getresult_int(&ctx);
     cli_dbgmsg("Bytecode %u returned code: %u\n", bc->id, ret);
     cli_bytecode_context_clear(&ctx);

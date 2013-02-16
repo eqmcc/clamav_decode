@@ -168,6 +168,7 @@ void cli_event_int(cli_events_t *ctx, unsigned id, uint64_t arg)
 
 void cli_event_time_start(cli_events_t *ctx, unsigned id)
 {
+    cli_infomsg(NULL,"DEBUG: start timer....\n");//CHR
     struct timeval tv;
     struct cli_event *ev = get_event(ctx, id);
     if (!ev)
@@ -200,6 +201,8 @@ void cli_event_time_nested_start(cli_events_t *ctx, unsigned id, unsigned nested
 
 void cli_event_time_stop(cli_events_t *ctx, unsigned id)
 {
+    cli_infomsg(NULL,"DEBUG: stop timer....\n");//CHR
+
     struct timeval tv;
     struct cli_event *ev = get_event(ctx, id);
     if (!ev)

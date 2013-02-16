@@ -30,6 +30,7 @@
 
 int cli_bytecode_prepare_jit(struct cli_all_bc *bcs)
 {
+    cli_infomsg(NULL,"DEBUG: in cli_bytecode_prepare_jit\n");//CHR
     unsigned i;
     for (i=0;i<bcs->count;i++) {
 	if (bcs->all_bcs[i].state == bc_skip)
@@ -46,6 +47,8 @@ int cli_bytecode_prepare_jit(struct cli_all_bc *bcs)
 
 int cli_vm_execute_jit(const struct cli_all_bc *bcs, struct cli_bc_ctx *ctx, const struct cli_bc_func *func)
 {
+    cli_infomsg(NULL,"DEBUG: executing....\n");//CHR
+
     return CL_EBYTECODE;
 }
 
