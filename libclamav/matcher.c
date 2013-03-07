@@ -141,15 +141,15 @@ static inline int matcher_run(const struct cli_matcher *root,
 	    /* Don't use prefiltering for BM offset mode, since BM keeps tracks
 	     * of offsets itself, and doesn't work if we skip chunks of input
 	     * data */
-         cli_infomsg(NULL,"DEBUG: scan in bm_offmode=1 mode\n"); //CHR
+         //cli_infomsg(NULL,"DEBUG: scan in bm_offmode=1 mode\n"); //CHR
 	    ret = cli_bm_scanbuff(orig_buffer, orig_length, virname, NULL, root, orig_offset, tinfo, offdata, viroffset);
 	} else {
-        cli_infomsg(NULL,"DEBUG: scan in bm_offmode=0 mode\n"); //CHR
+       // cli_infomsg(NULL,"DEBUG: scan in bm_offmode=0 mode\n"); //CHR
        // cli_infomsg(NULL,"DEBUG: pass into cli_bm_scanbuff with length=%d,offset=%d\n",length,offset);//CHR
 	    ret = cli_bm_scanbuff(buffer, length, virname, NULL, root, offset, tinfo, offdata, viroffset);
 	}
 	if (ret == CL_VIRUS) {
-        cli_infomsg(NULL,"DEBUG: bm scan find virus, won't do ac scan\n");//CHR
+        //cli_infomsg(NULL,"DEBUG: bm scan find virus, won't do ac scan\n");//CHR
 	    if (ctx) {
 		cli_append_virus(ctx, *virname);
 		if (SCAN_ALL)
@@ -160,7 +160,7 @@ static inline int matcher_run(const struct cli_matcher *root,
 	}
     }
     PERF_LOG_TRIES(acmode, 0, length);
-    cli_infomsg(NULL,"DEBUG: ac scan\n");//CHR
+   // cli_infomsg(NULL,"DEBUG: ac scan\n");//CHR
     ret = cli_ac_scanbuff(buffer, length, virname, NULL, acres, root, mdata, offset, ftype, ftoffset, acmode, NULL);
 
     if (ctx && ret == CL_VIRUS)

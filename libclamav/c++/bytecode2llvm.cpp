@@ -232,6 +232,8 @@ class ScopedExceptionHandler {
 
 
 void do_shutdown() {
+    cli_dbgmsg_internal("DEBUG: in do_shutdown\n"); //CHR
+
     ScopedExceptionHandler handler;
     HANDLER_TRY(handler) {
 	// TODO: be on the safe side, and clear errors here,
@@ -1163,6 +1165,7 @@ public:
     }
 
    Function* generate() {
+    cli_dbgmsg_internal("DEBUG: in generate, Generate LLVM IR functions\n"); //CHR
         PrettyStackTraceString CrashInfo("Generate LLVM IR functions");
 	apiMap.irgenTimer.startTimer();
 	TypeMap = new LLVMTypeMapper(Context, bc->types + 4, bc->num_types - 5);
@@ -1170,7 +1173,9 @@ public:
 	    mdnodes.push_back(convertMDNode(i));
 	}
 
+    cli_dbgmsg_internal("DEBUG: in generate, # of global vars passed in from clamav=%d\n",cli_apicall_maxglobal - _FIRST_GLOBAL);//CHR
 	for (unsigned i=0;i<cli_apicall_maxglobal - _FIRST_GLOBAL;i++) {
+        cli_dbgmsg_internal("DEBUG: in generate, check global [%s]\n",cli_globals[i].name);//CHR
 	    unsigned id = cli_globals[i].globalid;
 	    constType *Ty = apiMap.get(cli_globals[i].type, NULL, NULL);
 	    /*if (const ArrayType *ATy = dyn_cast<ArrayType>(Ty))
@@ -1186,14 +1191,17 @@ public:
 	BitVector FakeGVs;
 	FakeGVs.resize(bc->num_globals);
 	globals.push_back(0);
+    cli_dbgmsg_internal("DEBUG: in generate, globals in bytecode: bc->num_globals=%d\n",bc->num_globals);//CHR
 	for (unsigned i=1;i<bc->num_globals;i++) {
 	    constType *Ty = mapType(bc->globaltys[i]);
+        cli_dbgmsg_internal("DEBUG: in generate, globaltys[%d]=%d\n",i,bc->globaltys[i]);//CHR
 
 	    // TODO: validate number of components against type_components
 	    unsigned c = 0;
 	    GlobalVariable *GV;
 	    if (isa<PointerType>(Ty)) {
 		unsigned g = bc->globals[i][1];
+        cli_dbgmsg_internal("DEBUG: in generate, bc->globals[%d][1]=%d\n",i,g);//CHR
 		if (GVoffsetMap.count(g)) {
 		    FakeGVs.set(i);
 		    globals.push_back(0);
@@ -1204,9 +1212,11 @@ public:
 	    GV = new GlobalVariable(*M, Ty, true,
 				    GlobalValue::InternalLinkage,
 				    C, "glob"+Twine(i));
+        cli_dbgmsg_internal("DEBUG: in generate, GV[%d] name=%s \n",i,GV->getName());//CHR
 	    globals.push_back(GV);
 	}
 	Function **Functions = new Function*[bc->num_func];
+        cli_dbgmsg_internal("DEBUG: in generate, [%d] functions in bytecode\n",bc->num_func); //CHR
 	for (unsigned j=0;j<bc->num_func;j++) {
 	    // Create LLVM IR Function
 	    const struct cli_bc_func *func = &bc->funcs[j];
@@ -1236,6 +1246,7 @@ public:
 	    // Create all BasicBlocks
 	    Function *F = Functions[j];
 	    BasicBlock **BB = new BasicBlock*[func->numBB];
+        cli_dbgmsg_internal("DEBUG: in generate, [%d] BBs in function[%d]\n",func->numBB,j); //CHR
 	    for (unsigned i=0;i<func->numBB;i++) {
 		BB[i] = BasicBlock::Create(Context, "", F);
 	    }
@@ -1246,6 +1257,7 @@ public:
 	    Function::arg_iterator I = F->arg_begin();
 	    assert(F->arg_size() == (unsigned)(func->numArgs + 1) && "Mismatched args");
 	    ++I;
+        cli_dbgmsg_internal("DEBUG: in generate, func->numArgs=%d, func->numValues=%d\n",func->numArgs,func->numValues);//CHR
 	    for (unsigned i=0;i<func->numArgs; i++) {
 		assert(I != F->arg_end());
 		Values[i] = &*I;
@@ -1259,14 +1271,17 @@ public:
 		}
 		Values[i] = Builder.CreateAlloca(mapType(func->types[i]));
 	    }
+        cli_dbgmsg_internal("DEBUG: in generate, func->numLocals=%d,func->numArgs=%d\n",func->numLocals,func->numArgs);//CHR
 	    numLocals = func->numLocals;
 	    numArgs = func->numArgs;
 
 	    if (FakeGVs.any()) {
+        cli_dbgmsg_internal("DEBUG: in generate, FakeGVs.any()\n");//CHR
 		Argument *Ctx = F->arg_begin();
 		for (unsigned i=0;i<bc->num_globals;i++) {
 		    if (!FakeGVs[i])
 			continue;
+             cli_dbgmsg_internal("DEBUG: in generate, [%d] for GEP\n",i);//CHR
 		    unsigned g = bc->globals[i][1];
 		    unsigned offset = GVoffsetMap[g];
 
@@ -1308,10 +1323,12 @@ public:
 	    }
 
 	    // Generate LLVM IR for each BB
+        cli_dbgmsg_internal("DEBUG: in generate, func->numBB=%d in function [%d]\n",func->numBB,j);//CHR
 	    for (unsigned i=0;i<func->numBB;i++) {
 		bool unreachable = false;
 		const struct cli_bc_bb *bb = &func->BB[i];
 		Builder.SetInsertPoint(BB[i]);
+        cli_dbgmsg_internal("DEBUG: in generate,bb->numInsts=%d in BB[%d]\n",bb->numInsts,i);//CHR
 		unsigned c = 0;
 		for (unsigned j=0;j<bb->numInsts;j++) {
 		    const struct cli_bc_inst *inst = &bb->insts[j];
@@ -1780,6 +1797,7 @@ public:
 	std::vector<constType*> args;
 	args.clear();
 	args.push_back(HiddenCtx);
+    cli_dbgmsg_internal("DEBUG: in generate, Functions[0]=%s\n",Functions[0]->getName());//CHR
 	FunctionType *Callable = FunctionType::get(Type::getInt32Ty(Context),
 						   args, false);
 
@@ -2111,8 +2129,10 @@ static int bytecode_execute(intptr_t code, struct cli_bc_ctx *ctx)
     // execute;
     HANDLER_TRY(handler) {
 	// setup exception handler to longjmp back here
+    cli_dbgmsg_internal("DEBUG: in bytecode_execute, code=%x\n",code);//CHR
 	uint32_t result = ((uint32_t (*)(struct cli_bc_ctx *))(intptr_t)code)(ctx);
 	*(uint32_t*)ctx->values = result;
+    cli_dbgmsg_internal("DEBUG: in bytecode_execute, result=%d\n",result);//CHR
 	return 0;
     }
     HANDLER_END(handler);
@@ -2123,6 +2143,7 @@ static int bytecode_execute(intptr_t code, struct cli_bc_ctx *ctx)
 int cli_vm_execute_jit(const struct cli_all_bc *bcs, struct cli_bc_ctx *ctx,
 		       const struct cli_bc_func *func)
 {
+    cli_dbgmsg_internal("DEBUG: in cli_vm_execute_jit\n"); //CHR
     int ret;
     struct timeval tv0, tv1;
     struct watchdog_item witem;
@@ -2189,6 +2210,7 @@ static void addFPasses(FunctionPassManager &FPM, bool trusted, const TargetData 
 
 int cli_bytecode_prepare_jit(struct cli_all_bc *bcs)
 {
+    cli_dbgmsg_internal("DEBUG: in cli_bytecode_prepare_jit\n"); //CHR
   if (!bcs->engine)
       return CL_EBYTECODE;
   ScopedExceptionHandler handler;
@@ -2226,6 +2248,7 @@ int cli_bytecode_prepare_jit(struct cli_all_bc *bcs)
 	addFunctionProtos(&CF, EE, M);
 
 	FunctionPassManager OurFPM(M), OurFPMUnsigned(M);
+ //   cli_dbgmsg_internal("DEBUG: in cli_bytecode_prepare_jit, getStringRepresentation=%s\n",(EE->getTargetData()->getStringRepresentation()));//CHR
 	M->setDataLayout(EE->getTargetData()->getStringRepresentation());
 	M->setTargetTriple(sys::getHostTriple());
 
@@ -2238,11 +2261,13 @@ int cli_bytecode_prepare_jit(struct cli_all_bc *bcs)
 
 	LLVMTypeMapper apiMap(bcs->engine->Context, cli_apicall_types, cli_apicall_maxtypes, HiddenCtx);
 	Function **apiFuncs = new Function *[cli_apicall_maxapi];
+    cli_dbgmsg_internal("DEBUG: in cli_bytecode_prepare_jit cli_apicall_maxapi=%d\n",cli_apicall_maxapi); //CHR
 	for (unsigned i=0;i<cli_apicall_maxapi;i++) {
 	    const struct cli_apicall *api = &cli_apicalls[i];
 	    constFunctionType *FTy = cast<FunctionType>(apiMap.get(69+api->type, NULL, NULL));
 	    Function *F = Function::Create(FTy, Function::ExternalLinkage,
 					   api->name, M);
+        //cli_dbgmsg_internal("DEBUG: in cli_bytecode_prepare_jit api name=%s and kind=%d\n",api->name,api->kind); //CHR
 	    void *dest;
 	    switch (api->kind) {
 		case 0:
@@ -2306,15 +2331,24 @@ int cli_bytecode_prepare_jit(struct cli_all_bc *bcs)
         EE->getPointerToFunction(SFail);
 
 	llvm::Function **Functions = new Function*[bcs->count];
+    cli_dbgmsg_internal("DEBUG: in cli_bytecode_prepare_jit, number of bytecode: %d\n",bcs->count); //CHR
 	for (unsigned i=0;i<bcs->count;i++) {
 	    const struct cli_bc *bc = &bcs->all_bcs[i];
 	    if (bc->state == bc_skip || bc->state == bc_interp) {
 		Functions[i] = 0;
 		continue;
 	    }
+        cli_dbgmsg_internal("DEBUG: in cli_bytecode_prepare_jit, Codegen for bytecode: [%d]\n",i); //CHR
+        cli_dbgmsg_internal("DEBUG: in cli_bytecode_prepare_jit, lsig=[%s]\n",bc->lsig); //CHR
+        int j=0;
+        cli_dbgmsg_internal("DEBUG: in cli_bytecode_prepare_jit virname count: [%d] with prefix: [%s]\n", bc->vnames_cnt, bc->vnameprefix); //CHR
+        for (j=0;j<bc->vnames_cnt;++j){ //CHR
+            cli_dbgmsg_internal("DEBUG: in virname: [%s]\n", bc->vnames[j]); //CHR
+        }
 	    LLVMCodegen Codegen(bc, M, &CF, bcs->engine->compiledFunctions, EE,
 				OurFPM, OurFPMUnsigned, apiFuncs, apiMap);
 	    Function *F = Codegen.generate();
+        cli_dbgmsg_internal("DEBUG: in cli_bytecode_prepare_jit, generated code for [%s]\n",F->getName());
 	    if (!F) {
 		cli_errmsg("[Bytecode JIT]: JIT codegen failed\n");
 		return CL_EBYTECODE;
@@ -2367,7 +2401,9 @@ int cli_bytecode_prepare_jit(struct cli_all_bc *bcs)
 	    const struct cli_bc_func *func = &bcs->all_bcs[i].funcs[0];
 	    if (!Functions[i])
 		continue;// not JITed
+        cli_dbgmsg_internal("DEBUG: get function address...\n"); //CHR
 	    bcs->engine->compiledFunctions[func] = EE->getPointerToFunction(Functions[i]);
+        cli_dbgmsg_internal("DEBUG: function address at [0x%X]\n",(unsigned int )(bcs->engine->compiledFunctions[func]));
 	    bcs->all_bcs[i].state = bc_jit;
 	}
 	delete [] Functions;
@@ -2415,8 +2451,10 @@ int bytecode_init(void)
     // If we have a native target, initialize it to ensure it is linked in and
     // usable by the JIT.
 #ifndef AC_APPLE_UNIVERSAL_BUILD
+    cli_dbgmsg_internal("DEBUG: in InitializeNativeTarget\n"); //CHR
     InitializeNativeTarget();
 #else
+    cli_dbgmsg_internal("DEBUG: in InitializeAllTargets\n"); //CHR
     InitializeAllTargets();
 #endif
 
@@ -2442,6 +2480,8 @@ int cli_bytecode_init_jit(struct cli_all_bc *bcs, unsigned dconfmask)
 
 int cli_bytecode_done_jit(struct cli_all_bc *bcs, int partial)
 {
+    cli_dbgmsg_internal("DEBUG: in cli_bytecode_done_jit\n"); //CHR
+
     LLVMApiScopedLock scopedLock;
     if (bcs->engine) {
 	if (bcs->engine->EE) {

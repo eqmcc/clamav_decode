@@ -660,6 +660,8 @@ void JIT::jitTheFunction(Function *F, const MutexGuard &locked) {
 ///
 void *JIT::getPointerToFunction(Function *F) {
 
+  //  cli_dbgmsg_internal("DEBUG: in getPointerToFunction, get function address...\n"); //CHR
+
   if (void *Addr = getPointerToGlobalIfAvailable(F))
     return Addr;   // Check if function already code gen'd
 

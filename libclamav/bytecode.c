@@ -851,6 +851,7 @@ static int parseApis(struct cli_bc *bc, unsigned char *buffer)
 	return CL_BREAK;
     }
     calls = readNumber(buffer, &offset, len, &ok);
+    cli_infomsg(NULL,"DEBUG: in parseApis calls=%d\n",calls); //CHR
     if (!ok)
 	return CL_EMALFDB;
     if (calls > maxapi) {
@@ -867,6 +868,10 @@ static int parseApis(struct cli_bc *bc, unsigned char *buffer)
 	cli_errmsg("Out of memory allocating apity2ty\n");
 	return CL_EMEM;
     }
+
+  //  int j=0;
+    //for (;j<maxapi;++j) cli_infomsg(NULL,"DEBUG: in parseApis cli_apicalls[%d].name=%s\n",j,cli_apicalls[j].name); //CHR
+
     for (i=0;i < calls; i++) {
 	unsigned id = readNumber(buffer, &offset, len, &ok);
 	uint16_t tid = readTypeID(bc, buffer, &offset, len, &ok);
@@ -878,6 +883,8 @@ static int parseApis(struct cli_bc *bc, unsigned char *buffer)
 	    ok = 0;
 	}
 	/* API ids start from 1 */
+    cli_infomsg(NULL,"DEBUG: in parseApis id=%d, tid=%d, name=%s\n",id,tid,name); //CHR
+
 	id--;
 	if (ok && name && strcmp(cli_apicalls[id].name, name)) {
 	    cli_errmsg("bytecode: API %u name mismatch: %s expected %s\n", id, name, cli_apicalls[id].name);
@@ -988,6 +995,7 @@ static int parseGlobals(struct cli_bc *bc, unsigned char *buffer)
 	return CL_EMEM;
     }
     bc->num_globals = numglobals;
+    cli_infomsg(NULL,"DEBUG: in parseGlobals num_globals=%d\n",numglobals); //CHR
     if (!ok)
 	return CL_EMALFDB;
     for (i=0;i<numglobals;i++) {
@@ -1090,6 +1098,7 @@ static int parseFunctionHeader(struct cli_bc *bc, unsigned fn, unsigned char *bu
     }
     offset++;
     func->numLocals = readNumber(buffer, &offset, len, &ok);
+    cli_infomsg(NULL,"DEBUG: in parseFunctionHeader numLocals=%d\n", func->numLocals); //CHR
     if (!ok) {
 	cli_errmsg("Invalid number of arguments/locals\n");
 	return CL_EMALFDB;
@@ -1119,6 +1128,7 @@ static int parseFunctionHeader(struct cli_bc *bc, unsigned fn, unsigned char *bu
     }
     offset++;
     func->numInsts = readNumber(buffer, &offset, len, &ok);
+    cli_infomsg(NULL,"DEBUG: in numInsts=%d\n", func->numInsts); //CHR
     if (!ok ){
 	cli_errmsg("Invalid instructions count\n");
 	return CL_EMALFDB;
@@ -1132,6 +1142,7 @@ static int parseFunctionHeader(struct cli_bc *bc, unsigned fn, unsigned char *bu
 	return CL_EMEM;
     }
     func->numBB = readNumber(buffer, &offset, len, &ok);
+    cli_infomsg(NULL,"DEBUG: in parseFunctionHeader numBB =%d\n", func->numBB); //CHR
     if (!ok) {
 	cli_errmsg("Invalid basic block count\n");
 	return CL_EMALFDB;
@@ -1481,6 +1492,7 @@ int cli_bytecode_load(struct cli_bc *bc, FILE *f, struct cli_dbio *dbio, int tru
 		state = PARSE_BC_APIS;
 		break;
 	    case PARSE_BC_APIS:
+        cli_dbgmsg("DEBUG: in PARSE_BC_APIS\n"); //CHR
 		rc = parseApis(bc, (unsigned char*)buffer);
 		if (rc == CL_BREAK) /* skip */ {
 		    bc->state = bc_skip;
@@ -1524,6 +1536,7 @@ int cli_bytecode_load(struct cli_bc *bc, FILE *f, struct cli_dbio *dbio, int tru
 		    end = 1;
 		    break;
 		}
+        cli_infomsg(NULL,"DEBUG: will do parseFunctionHeader current_func=%d\n", current_func); //CHR
 		rc = parseFunctionHeader(bc, current_func, (unsigned char*)buffer);
 		if (rc != CL_SUCCESS) {
 		    cli_errmsg("Error at bytecode line %u\n", row);
@@ -1694,6 +1707,7 @@ int cli_bytecode_run(const struct cli_all_bc *bcs, const struct cli_bc *bc, stru
 
 	ctx->on_jit = 1;
 	cli_event_time_start(jit_ev, BCEV_EXEC_TIME);
+    cli_infomsg(NULL,"DEBUG: in run lsig funcid=%d\n", ctx->funcid); //CHR
 	ret = cli_vm_execute_jit(bcs, ctx, &bc->funcs[ctx->funcid]);
 	cli_event_time_stop(jit_ev, BCEV_EXEC_TIME);
 

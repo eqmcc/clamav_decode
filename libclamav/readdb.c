@@ -1535,6 +1535,8 @@ static int cli_loadcbc(FILE *fs, struct cl_engine *engine, unsigned int *signo, 
         }
     }
     sigs++;
+    cli_infomsg(NULL,"DEBUG: in cli_ loadcbc kind=%d\n",bc->kind); //CHR
+
     if (bc->kind != BC_LOGICAL) {
 	if (bc->lsig) {
 	    /* runlsig will only flip a status bit, not report a match,
