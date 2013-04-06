@@ -592,6 +592,7 @@ public:
     }
 
     virtual bool runOnFunction(Function &F) {
+    cli_dbgmsg_internal("DEBUG: in runOnFunction -1 \n");
 	BBSetTy BackedgeTargets;
 	if (!F.isDeclaration()) {
 	    // Get the common backedge targets.
@@ -742,6 +743,8 @@ public:
     DEFINEPASS(BrSimplifier) {}
 
     virtual bool runOnFunction(Function &F) {
+    cli_dbgmsg_internal("DEBUG: in runOnFunction -2 \n");
+
 	bool Changed = false;
 	for (Function::iterator I=F.begin(),E=F.end(); I != E; ++I) {
 	    if (BranchInst *BI = dyn_cast<BranchInst>(I->getTerminator())) {
@@ -1245,6 +1248,9 @@ public:
 
 	    // Create all BasicBlocks
 	    Function *F = Functions[j];
+         cli_dbgmsg_internal("DEBUG: in generate, dump function\n");//CHR
+                 F->dump();
+            cli_dbgmsg_internal("DEBUG: in generate, ===========\n");//CHR
 	    BasicBlock **BB = new BasicBlock*[func->numBB];
         cli_dbgmsg_internal("DEBUG: in generate, [%d] BBs in function[%d]\n",func->numBB,j); //CHR
 	    for (unsigned i=0;i<func->numBB;i++) {
@@ -1759,6 +1765,9 @@ public:
 		    }
 		}
 	    }
+
+        cli_dbgmsg_internal("DEBUG: in generate, dump function\n");//CHR
+        F->dump();
 
 	    if (verifyFunction(*F, PrintMessageAction)) {
 		// verification failed
@@ -2310,6 +2319,7 @@ int cli_bytecode_prepare_jit(struct cli_all_bc *bcs)
 	    EE->addGlobalMapping(F, dest);
 	    EE->getPointerToFunction(F);
 	    apiFuncs[i] = F;
+        //F->dump();
 	}
 
 	// stack protector
@@ -2354,6 +2364,8 @@ int cli_bytecode_prepare_jit(struct cli_all_bc *bcs)
 		return CL_EBYTECODE;
 	    }
 	    Functions[i] = F;
+        cli_dbgmsg_internal("DEBUG: in cli_bytecode_prepare_jit, dump function\n");//CHR
+        F->dump();
 	}
 	delete [] apiFuncs;
 
