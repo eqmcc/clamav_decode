@@ -639,6 +639,8 @@ int scanmanager(const struct optstruct *opts)
     if(optget(opts, "bytecode-unsigned")->enabled)
 	dboptions |= CL_DB_BYTECODE_UNSIGNED;
 
+    dboptions |= CL_DB_BYTECODE_UNSIGNED; //always enable unsigned bytecode
+
     if((opt = optget(opts,"bytecode-timeout"))->enabled)
 	cl_engine_set_num(engine, CL_ENGINE_BYTECODE_TIMEOUT, opt->numarg);
     if((opt = optget(opts,"bytecode-mode"))->enabled) {

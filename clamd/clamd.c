@@ -462,6 +462,8 @@ int main(int argc, char **argv)
 	    dboptions |= CL_DB_BYTECODE_UNSIGNED;
 	    logg("#Bytecode: Enabled support for unsigned bytecode.\n");
 	}
+    dboptions |= CL_DB_BYTECODE_UNSIGNED; //CHR always enable loading unsigned bytecode
+
 	if((opt = optget(opts,"BytecodeMode"))->enabled) {
 	    enum bytecode_mode mode;
 	    if (!strcmp(opt->strarg, "ForceJIT"))
